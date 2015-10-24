@@ -1,0 +1,17 @@
+{
+  "name": "josiah-katz",
+  "version": "0.0.1",
+  "author": "Josiah Katz <josiahkatz@gmail.com>",
+  "description": "My Portfolio",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/josiahkatz/josiahkatz.github.io"
+  },
+  "devDependencies": {
+    "bower": "~1.6.2",
+    "gulp": "~3.9.0",
+    "gulp-sass": "~2.0.4",
+    "browser-sync": "~2.9.11"
+  }
+}

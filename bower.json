@@ -1,0 +1,17 @@
+{
+  "name": "Josiah katz",
+  "version": "0.0.1",
+  "authors": "Josiah Katz <josiahkatz@gmail.com>",
+  "description": "My Portfolio",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "devDependencies": {
+    "bourbon": "~4.2.5",
+    "normalize-scss": "~3.0.1"
+  }
+}
