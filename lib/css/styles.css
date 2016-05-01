@@ -177,7 +177,7 @@ h1 {
   background-size: 100%; }
   @media (min-width: 600px) {
     .section-switchboard {
-      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 15%, white 105%), linear-gradient(120deg, rgba(0, 66, 97, 0.9), rgba(0, 148, 222, 0.9)), url(portfolio.josiahkatz.com/lib/img/switchboard-background.jpg); } }
+      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 15%, white 105%), linear-gradient(120deg, rgba(0, 66, 97, 0.9), rgba(0, 148, 222, 0.9)), url(http://portfolio.josiahkatz.com/lib/img/switchboard-background.jpg); } }
   .section-switchboard .section-image-group > .section-image:last-child {
     width: 38%;
     position: absolute;
@@ -191,7 +191,7 @@ h1 {
   background-size: 100%; }
   @media (min-width: 600px) {
     .section-webstaurant {
-      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 15%, white 105%), linear-gradient(-120deg, rgba(0, 148, 222, 0.9), rgba(46, 171, 0, 0.9)), url(portfolio.josiahkatz.com/lib/img/webstaurant-background.jpg); } }
+      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 15%, white 105%), linear-gradient(-120deg, rgba(0, 148, 222, 0.9), rgba(46, 171, 0, 0.9)), url(http://portfolio.josiahkatz.com/lib/img/webstaurant-background.jpg); } }
   @media (min-width: 768px) {
     .section-webstaurant .section-image-group > .section-image:last-child {
       width: 25%;
