@@ -172,9 +172,12 @@ h1 {
   padding: 20px 0 0 20px; }
 
 .section-switchboard {
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 15%, white 105%), linear-gradient(120deg, rgba(0, 66, 97, 0.9), rgba(0, 148, 222, 0.9)), url(/lib/img/switchboard-background.jpg);
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 15%, white 105%), linear-gradient(120deg, rgba(0, 66, 97, 0.9), rgba(0, 148, 222, 0.9));
   background-position: top center;
   background-size: 100%; }
+  @media (min-width: 600px) {
+    .section-switchboard {
+      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 15%, white 105%), linear-gradient(120deg, rgba(0, 66, 97, 0.9), rgba(0, 148, 222, 0.9)), url(portfolio.josiahkatz.com/lib/img/switchboard-background.jpg); } }
   .section-switchboard .section-image-group > .section-image:last-child {
     width: 38%;
     position: absolute;
@@ -183,9 +186,12 @@ h1 {
     border: 1px solid rgba(0, 0, 0, 0.1); }
 
 .section-webstaurant {
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 15%, white 105%), linear-gradient(-120deg, rgba(0, 148, 222, 0.9), rgba(46, 171, 0, 0.9)), url(/lib/img/webstaurant-background.jpg);
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 15%, white 105%), linear-gradient(-120deg, rgba(0, 148, 222, 0.9), rgba(46, 171, 0, 0.9));
   background-position: top center;
   background-size: 100%; }
+  @media (min-width: 600px) {
+    .section-webstaurant {
+      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 15%, white 105%), linear-gradient(-120deg, rgba(0, 148, 222, 0.9), rgba(46, 171, 0, 0.9)), url(portfolio.josiahkatz.com/lib/img/webstaurant-background.jpg); } }
   @media (min-width: 768px) {
     .section-webstaurant .section-image-group > .section-image:last-child {
       width: 25%;
@@ -349,7 +355,7 @@ h1 {
 @font-face {
   font-family: 'fontello';
   src: url("../font/fontello.eot?16389758");
-  src: url("../font/fontello.eot?16389758#iefix") format("embedded-opentype"), url("../font/fontello.svg?16389758#fontello") format("svg");
+  src: url("../font/fontello.eot?16389758#iefix") format("embedded-opentype");
   font-weight: normal;
   font-style: normal; }
 

@@ -191,8 +191,13 @@ h1 {
   &-switchboard {
     background-image:
       linear-gradient(to bottom, rgba(#FFF, 0) 15%, rgba(#FFF, 1) 105%),
-      linear-gradient(120deg, rgba(#004261, 0.9), rgba(#0094de, 0.9)),
-      url(/lib/img/switchboard-background.jpg);
+      linear-gradient(120deg, rgba(#004261, 0.9), rgba(#0094de, 0.9));
+    @media (min-width: 600px) {
+      background-image:
+        linear-gradient(to bottom, rgba(#FFF, 0) 15%, rgba(#FFF, 1) 105%),
+        linear-gradient(120deg, rgba(#004261, 0.9), rgba(#0094de, 0.9)),
+        url(portfolio.josiahkatz.com/lib/img/switchboard-background.jpg);
+    }
       background-position: top center;
       background-size: 100%;
 
@@ -257,8 +262,13 @@ h1 {
   &-webstaurant {
     background-image:
       linear-gradient(to bottom, rgba(#FFF, 0) 15%, rgba(#FFF, 1) 105%),
+      linear-gradient(-120deg, rgba(#0094de, 0.9), rgba(#2eab00, 0.9));
+    @media (min-width: 600px) {
+      background-image:
+      linear-gradient(to bottom, rgba(#FFF, 0) 15%, rgba(#FFF, 1) 105%),
       linear-gradient(-120deg, rgba(#0094de, 0.9), rgba(#2eab00, 0.9)),
-      url(/lib/img/webstaurant-background.jpg);
+      url(portfolio.josiahkatz.com/lib/img/webstaurant-background.jpg);
+    }
     background-position: top center;
     background-size: 100%;
 
@@ -404,8 +414,7 @@ h1 {
 @font-face {
   font-family: 'fontello';
   src: url('../font/fontello.eot?16389758');
-  src: url('../font/fontello.eot?16389758#iefix') format('embedded-opentype'),
-       url('../font/fontello.svg?16389758#fontello') format('svg');
+  src: url('../font/fontello.eot?16389758#iefix') format('embedded-opentype');
   font-weight: normal;
   font-style: normal;
 }
