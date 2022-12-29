@@ -4,7 +4,7 @@
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
 body {
-	font-family: Verdana, sans-serif;
+	font-family: "Manrope", sans-serif;
 	margin: auto;
 	padding: 20px;
 	max-width: 65ch;
@@ -64,4 +64,8 @@ blockquote {
 	padding: 2px 0px 2px 20px;
 	margin: 0px;
 	font-style: italic;
+}
+
+h1, h2, h3 {
+	font-family: "DM Serif Display", sans-serif;
 }
