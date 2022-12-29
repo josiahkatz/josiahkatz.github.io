@@ -4,12 +4,9 @@
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
 body {
-	font-family: "Manrope", sans-serif;
 	margin: auto;
-	padding: 20px;
-	max-width: 65ch;
+	padding: 0;
 	text-align: left;
-	background-color: #fff;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	line-height: 1.5;
@@ -66,6 +63,42 @@ blockquote {
 	font-style: italic;
 }
 
-h1, h2, h3 {
-	font-family: "DM Serif Display", sans-serif;
+/*-- Color Variables */
+
+:root {
+	--color-mint: #F3FAF6;
+	--color-forest: #002D13;
+}
+
+/*-- Layout */
+
+body {
+	/* font-family: "Manrope", sans-serif; */
+	background-color: var(--color-mint);
+	color: var(--color-forest);
+}
+
+main {
+	width: 80%;
+	margin: auto;
+}
+
+/*-- Type */
+
+h1 {
+	font-family: "Manrope";
+}
+
+h2, h3, .big-type {
+	font-family: "DM Serif Display", serif;
+}
+
+.big-type {
+	font-size: 20vw;
+	line-height: 18vw;
+	letter-spacing: -0.5vw;
+	
+	text-align: center;
+	display: block;
+	margin: -3.3vw 0 0;
 }
