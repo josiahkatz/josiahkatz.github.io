@@ -3,6 +3,7 @@
   https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
+html, body {height: 100%;}
 body {
 	margin: auto;
 	padding: 0;
@@ -66,22 +67,33 @@ body {
 	font-family: "Manrope", sans-serif;
 	background-color: var(--color-mint);
 	color: var(--color-forest);
+
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
 }
 
 main {
-	width: 80%;
-	margin: auto;
+	width: auto;
+	margin: 0 20px;
+	
+	
 }
-
+@media (min-width:600px) {
+	main {
+		width:80%;
+		margin: 0 auto;
+	}
+}
 /*-- Type */
 
 h1 {
 	font-family: "Manrope";
-	font-size: 30px;
-	line-height: 1em;
+	font-size: 28px;
+	line-height: 1.1em;
 	font-weight: 800;
 	text-transform: uppercase;
-	letter-spacing: 4px;
+	letter-spacing: 3px;
 }
 	h1 span {
 		display: block;
@@ -93,6 +105,7 @@ h1 {
 @media (min-width:1200px) {
 	h1 {
 		font-size: 38px;
+		letter-spacing: 4px;
 	}
 		h1 span {
 			float: right;
@@ -105,15 +118,31 @@ h2, h3, .big-type {
 }
 
 p {
-	font-size: 23px;
+	font-size: 20px;
 	letter-spacing: 1px;
 }
 
-.big-type {
-	font-size: 20vw;
-	line-height: 18vw;
-	letter-spacing: -0.5vw;
-	text-align: center;
-	
-	margin: -3.3vw 0 0;
+a {
+	color: var(--color-forest);
+	border-bottom: 2px solid #D0ECDC;
+	text-decoration: none;
 }
+a:hover {
+	background-color: #D0ECDC;
+}
+
+.big-type {
+	font-size: 40vw;
+	line-height: 28vw;
+	letter-spacing: -0.5vw;	
+	word-wrap: normal;
+	margin: -3vw -3vw 0;
+}
+	@media (min-width:600px) {
+		.big-type {
+			font-size: 22vw;
+			line-height: 18vw;
+			margin: -3vw -3vw 0;
+		}
+	}
+
