@@ -13,7 +13,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 	<body>
 		<p class="big-type">Josiah Katz</p>
 		<main>
-			<!-- <Header title={SITE_TITLE} /> -->
+			<Header title={SITE_TITLE} />
 			<h1>Josiah Katz, VP of Design & Media <span>York, PA</span></h1>
 			<p>As the head of the creative teams at <a href="https://www.webstaurantstore.com" target="_blank">WebstaurantStore</a>, I'm responsible for leading a team of ~150 people who handle our user experiences, front-end development, graphic design, photography, and videography.</p>
 			
@@ -22,3 +22,30 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 		<Footer />
 	</body>
 </html>
+<style>
+	/*-- Body - Custom Homepage Flexbox */
+	@media (min-width:600px) {
+		body {
+			display: flex;
+		}
+		main {
+			width:80%;
+			margin: 0 auto;
+		}
+	}
+	/*-- Big Type */
+	.big-type {
+		font-size: 40vw;
+		line-height: 28vw;
+		letter-spacing: -0.5vw;	
+		word-wrap: normal;
+		margin: 0 -3vw 0;
+	}
+		@media (min-width:600px) {
+			.big-type {
+				font-size: 22vw;
+				line-height: 18vw;
+				margin: -3vw -3vw 0;
+			}
+		}
+</style>

@@ -78,18 +78,8 @@ body {
 main {
 	width: auto;
 	margin: 0 20px;
-	
-	
 }
-@media (min-width:600px) {
-	body {
-		display: flex;
-	}
-	main {
-		width:80%;
-		margin: 0 auto;
-	}
-}
+
 /*-- Type */
 
 h1 {
@@ -134,19 +124,3 @@ a {
 a:hover {
 	background-color: #D0ECDC;
 }
-
-.big-type {
-	font-size: 40vw;
-	line-height: 28vw;
-	letter-spacing: -0.5vw;	
-	word-wrap: normal;
-	margin: 0 -3vw 0;
-}
-	@media (min-width:600px) {
-		.big-type {
-			font-size: 22vw;
-			line-height: 18vw;
-			margin: -3vw -3vw 0;
-		}
-	}
-
