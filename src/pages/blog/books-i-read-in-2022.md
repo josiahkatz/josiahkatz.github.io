@@ -2,7 +2,8 @@
 layout: "../../layouts/BlogPost.astro"
 title: "Books I Read in 2022"
 description: "Lorem ipsum dolor sit amet"
-pubDate: "Jan 02 2023"
+pubDate: "Jan 10 2023"
+heroImage: "/books.jpg"
 ---
 
 Intro paragraph about what I'm doing here and why
@@ -21,11 +22,11 @@ Intro paragraph about what I'm doing here and why
 
 05.	***Out of Office*, Anne Helen Petersen and Charlie Warzel** ⭐︎⭐︎ - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. 
 
-06.	***You’re Not Listening*, Kate Murphy** ⭐︎⭐︎⭐︎⭐︎ - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. 
+06.	***You’re Not Listening*, Kate Murphy** ⭐︎⭐︎⭐︎⭐︎ - This was our first work Book Club read. Was a really good reminder to listen, be curious and ask more questions.
 
-07.	***How (Not) to Read the Bible*, Dan Kimball** ⭐︎⭐︎⭐︎⭐︎ - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. 
+07.	***How (Not) to Read the Bible*, Dan Kimball** ⭐︎⭐︎⭐︎⭐︎ - Slighty  academic, but maybe at a high-school level. Enjoyed digging into some of the controversies of the Bible. The subtitle really says it all: "Making Sense of the Anti-women, Anti-science, Pro-violence, Pro-slavery and Other Crazy-Sounding Parts of Scripture"
 
-08.	***You Are Not Your Own*, Alan Noble** ⭐︎⭐︎⭐︎⭐︎⭐︎ - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. 
+08.	***You Are Not Your Own*, Alan Noble** ⭐︎⭐︎⭐︎⭐︎⭐︎ - This was my favorite book I read in 2022. Modern society has create a kind of zoochosis for us as humans: You have to be your own person and be completely yourself, work every day to discover and express yourself and use  techniques and methods perfected by society to improve your life and conquer your obstacles. Or, maybe we don't belong to ourselves?
 
 09.	***The Power of Regret*, Daniel Pink** ⭐︎⭐︎⭐︎⭐︎ - This was an audio book that I listened to a lot while training for my hike. I really wish I would have had the physical book. Felt a bit self-helpy, but my biggest takeaway was "Feeling is for thinking. Thinking is for doing." Regret should be used to form behavior instead of letting it become your character"  And then a bonus thought "If you are overthinking write, if you are underthinking read"
 
