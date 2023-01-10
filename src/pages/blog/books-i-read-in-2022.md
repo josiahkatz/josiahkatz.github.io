@@ -6,66 +6,140 @@ pubDate: "Jan 10 2023"
 heroImage: "/books.jpg"
 ---
 
-Intro paragraph about what I'm doing here and why
-Intro paragraph about what I'm doing here and why
-Intro paragraph about what I'm doing here and why
-Intro paragraph about what I'm doing here and why
-Intro paragraph about what I'm doing here and why
+## todo
+- Instagram stories?
+- proof/grammar
+- finish blog styles
+- add navigation and blog landing page styles
 
-01. ***At Your Best*, Carey Nieuwhof** ⭐︎⭐︎⭐︎⭐︎ - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. 
+## What this is
+Two summers ago, I rediscovered my love for reading on a vacation and dove headfirst into buying 5 books at a time and finishing them. I kept track of the books I read in 2021 and for set a goal to read 25 books in 2022. I've "published" these books on social media, but that feels performative and honestly, doesn't feel like it belongs to me. So while this is still public and I'll post to social media, this is MY website and I love the idea of publically documenting my thoughts on my books.
 
-02. ***The God of the Garden*, Andrew Peterson** ⭐︎⭐︎⭐︎⭐︎ - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. 
+## What this isn't
+That being said, my memory is fuzzy going back a year ago. Doing this review, I definitely remember pieces and momements, but this isn't a record of the best points of each book. This is more of a record of what I read and what I remember of it. Early last year, I thought I was going to do a mini book report of the best quotes and ideas from each book. I ended up doing 3 or 4 and found it too overwhelming. And again, ended up using social to post quotes and interesting thoughts as I went. 
 
-03. ***Team Topologies*, Matthew Skelton and Manuel Pais** ⭐︎⭐︎⭐︎ - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. 
+## Dunbar's Number
+One concept that follow me throughout a couple books was Dunbar's number. You can intimately know 1 person, have 5 close friends, 15 best friends, 50 good friends, 150 friends and then outside of that 500 acquaintances, 1500 known names and 5000 known faces. This includes work and personal life. This idea really stuck with me as I've been trying to understand what it means to have friends at a closer level AND figure out how to lead a team that crossed 150 people. I by no means have it figured out, but those numbers and groups have crossed my mind many times.
 
-04. ***Where the Light Fell*, Philip Yancey** ⭐︎⭐︎⭐︎⭐︎⭐︎ - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. 
+## Genre
+Another theme you'll see here is a large dicotemy of design/work books and Christian faith books, sprinkled with some other topics and like 3 fiction books. As I've been lining up books to read for 2023, I see this playing out again, except with more fiction. These are the thoughts that dominate my thinking.
 
-05.	***Out of Office*, Anne Helen Petersen and Charlie Warzel** ⭐︎⭐︎ - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. 
+And with that long preamble done, here are the 29 books I read this year (honestly, if I knew I was gonna get to 29, I would have pushed a little harder for 30 books)
 
-06.	***You’re Not Listening*, Kate Murphy** ⭐︎⭐︎⭐︎⭐︎ - This was our first work Book Club read. Was a really good reminder to listen, be curious and ask more questions.
+## Books I Read in 2022
 
-07.	***How (Not) to Read the Bible*, Dan Kimball** ⭐︎⭐︎⭐︎⭐︎ - Slighty  academic, but maybe at a high-school level. Enjoyed digging into some of the controversies of the Bible. The subtitle really says it all: "Making Sense of the Anti-women, Anti-science, Pro-violence, Pro-slavery and Other Crazy-Sounding Parts of Scripture"
+1.  ***At Your Best*, Carey Nieuwhof** 
+   
+    ⭐︎⭐︎⭐︎⭐︎ - "Nobody will ever ask you to accompklish your top priorities. They will only ask you to accomplish theirs" This book really setup my year up to make sure I was available to do my best work, with the right people, at the right times. 
 
-08.	***You Are Not Your Own*, Alan Noble** ⭐︎⭐︎⭐︎⭐︎⭐︎ - This was my favorite book I read in 2022. Modern society has create a kind of zoochosis for us as humans: You have to be your own person and be completely yourself, work every day to discover and express yourself and use  techniques and methods perfected by society to improve your life and conquer your obstacles. Or, maybe we don't belong to ourselves?
+2.  ***The God of the Garden*, Andrew Peterson** 
+    
+    ⭐︎⭐︎⭐︎⭐︎ - I remember being inspired by this book it was beautifully written. But even looking at my notes, I still don't really remember what it was about. I definitely felt inspired to invest in a Home for our family.
 
-09.	***The Power of Regret*, Daniel Pink** ⭐︎⭐︎⭐︎⭐︎ - This was an audio book that I listened to a lot while training for my hike. I really wish I would have had the physical book. Felt a bit self-helpy, but my biggest takeaway was "Feeling is for thinking. Thinking is for doing." Regret should be used to form behavior instead of letting it become your character"  And then a bonus thought "If you are overthinking write, if you are underthinking read"
+3.  ***Team Topologies*, Matthew Skelton and Manuel Pais** 
+   
+    ⭐︎⭐︎⭐︎ - This was helpful way to thinking about growing and maintaining larger technology teams and controlling how they work together. Probably could have learned as much from a blog post, but still helpful. 
 
-10.	***Build*, Tony Fadell** ⭐︎⭐︎⭐︎ - Huge anticipation for this, was a little bit of a letdown, but really liked getting in Fadell's mind. Bunch of great quotes. The first three releases for your product: "You make the product. You fix the product. You build the business" and "To be a great designer, you have to notice problems"
+4.  ***Where the Light Fell*, Philip Yancey** 
+   
+    ⭐︎⭐︎⭐︎⭐︎⭐︎ - This was disturbing, depressing and beautiful at the same time (like a good memorir should be!) Yancey was born in the late 40's to a childhood full of polio, failed faith healings, fundamentialism, anti-integration, racisim, KKK, poverty, loss, fear, political upheaval, emotional and spirtual abuse and much more.
 
-11.	***Deep Work*, Cal Newport** ⭐︎⭐︎⭐︎⭐︎⭐︎ - Always good to read books that others reference in their books. Deep Work was a DEEP reminder that our modern workplace isn't always condusive to work. Definitely made me take another look at what I'm doing and when.
+05.	***Out of Office*, Anne Helen Petersen and Charlie Warzel** 
 
-12.	***The Laws of Simplicity*, John Madea** ⭐︎⭐︎⭐︎⭐︎⭐︎ - I've reread this book a number of times. It's a classic design book for me now. Whenever a designer or developer asks for a book reccomendation, this is my go to. Meant a LOT to me early in my career. The last page is 👌
+    ⭐︎⭐︎ - I was really hoping for a book that would help me understand how to run a remote team better in a post-covid world. This felt very journalistic and I don't remember much of it other than not getting much out of it.
 
-13.	***The Life We're Looking For*, Andy Crouch** ⭐︎⭐︎⭐︎⭐︎ - We're all chasing "magic" in our lives with technology. Maybe that's not great for personhood and true community. I'm still pretty excited about ChatGPT and Dall-e though, but I'm pretty sure it's gonna ruin a bunch of creative fields. 
+06.	***You’re Not Listening*, Kate Murphy** 
 
-14.	***The Deeply Formed Life*, Rich Villas** ⭐︎⭐︎⭐︎⭐︎ - “Whether we know it or not, see it or not, or understand it or not, we are always at risk of being shallowly formed. We are formed by our false selves, our families of origin, the highly manipulated presentations of social media, and the value system of a world that determines worth based on accomplishments, possessions, efficiency, intellectual acumen, and gifts.”
+    ⭐︎⭐︎⭐︎⭐︎ - This was our first work Book Club read. Was a really good reminder to listen, be curious and ask more questions. As much as I feel it's my purpose to lead and drive conversation, I should spend just as much time listening to where the conversation goes. 
 
-15.	***Why We Sleep*, Matthew Walker** ⭐︎⭐︎⭐︎⭐︎ - This, of course, made me value sleep MUCH more. In my twenties, I took a lack of sleep as a badge of honor. Now I'm never apologizing for a nap again (clear head and recharged engery) and planning to live a long, healthy life. Here's to 7 to 8 hours a night!
+07.	***How (Not) to Read the Bible*, Dan Kimball** 
 
-16.	***The Power of Moments*, Chip Heath & Dan Heath** ⭐︎⭐︎⭐︎ - This was a good "beach read". Nothing too Earth shattering. There are a bunch of tatics you should use occasionally to make moments stick out to people in your life. The "multiply milestones" levels were interesting enought that I wrote them out in a Note.
+    ⭐︎⭐︎⭐︎⭐︎ - Slighty  academic, but maybe at a high-school level. Enjoyed digging into some of the controversies of the Bible. The subtitle really says it all: "Making Sense of the Anti-women, Anti-science, Pro-violence, Pro-slavery and Other Crazy-Sounding Parts of Scripture"
 
-17.	***Family Discipleship*, Matt Chandler** ⭐︎⭐︎⭐︎ - A good mix of practical and thoughtful opportunities. Super high AND low pressure, all at the same time. Feels like something I'll reference as our family grows up. Some great quotes from other people I found in here: “The moment when I am most repelled by a child's behavior, that is my sign to draw the very closest to that child” -Ann Voskamp and "It is easier to build strong children than to repair broken men.” -Frederick Douglass
+08.	***You Are Not Your Own*, Alan Noble** 
 
-18.	***The Psychology of Money*, Morgan Housel** ⭐︎⭐︎⭐︎ - I've never read a financial book outside of Dave Ramsey, lots of simple lessons, nothing too complicated. You will win some, you will lose some. Losing is the cost on winning. "The purpose of margin of safety is to render the forecast unnecessary" Outlier events play an enormous role in historical data. 
+    ⭐︎⭐︎⭐︎⭐︎⭐︎ - This was my favorite book I read in 2022. Modern society has create a kind of zoochosis for us as humans: You have to be your own person and be completely yourself, work every day to discover and express yourself and use  techniques and methods perfected by society to improve your life and conquer your obstacles. Or, maybe we don't belong to ourselves?
 
-19.	***I Guess I Haven’t Learned that Yet*, Shauna Niequist** ⭐︎⭐︎⭐︎ - My wife read this and then assigned it to me. It was nice change of pace to read a memoir, made me want to move to New York City.
+09.	***The Power of Regret*, Daniel Pink** 
 
-20.	***No Compromise*, Melody Green** ⭐︎⭐︎⭐︎⭐︎ - Super inspiring bio on an early CCM artist. Definitely a man of the 70's who was always moving fast, tripping over himself, and tripping on some LSD. Loved getting a look into his earnest, journaled thoughts. I think it helped me be a little more truthful with my own journaling.
+    ⭐︎⭐︎⭐︎⭐︎ - This was an audio book that I listened to a lot while training for my hike. I really wish I would have had the physical book. Felt a bit self-helpy, but my biggest takeaway was "Feeling is for thinking. Thinking is for doing." Regret should be used to form behavior instead of letting it become your character"  And then a bonus thought "If you are overthinking write, if you are underthinking read"
 
-21. ***A Non-Anxious Presence*, Mark Sayers** ⭐︎⭐︎⭐︎⭐︎ - This was a super helpful book on how our personal lives, communities, workplaces, country, and world is changing. Complicated environments required efficiency. The incoming complex environment will require adaptability. “Fake realities will create fake humans, which will lead to a disastrous cascade of crises in which fake humans will generate fake reality and then sell them to other humans, turning them, eventually, into forgeries of themselves." 
+10.	***Build*, Tony Fadell** 
 
-22.	***Micro*, Michael Crichton** ⭐︎⭐︎ - My wife grabbed me two fiction books before we went away for the weekend to a family cabin. This was one of them. I've loved almost every Michael Crichton book I read. Really couldn't get into the "Honey, We Shrunk this Kids" techno thriller.
+    ⭐︎⭐︎⭐︎ - Huge anticipation for this, was a little bit of a letdown, but really liked getting in Fadell's mind. Bunch of great quotes. The first three releases for your product: "You make the product. You fix the product. You build the business" and "To be a great designer, you have to notice problems"
 
-23.	***The 5th Wave*, Rick Yancey** ⭐︎⭐︎ - This was the second fiction book for my weekend away. It was turned into a movie. I enjoyed the concept of the alien invasion, but that's about it. Young Adult fiction is fine, I'll reread the Hunger Games next time.
+11.	***Deep Work*, Cal Newport** 
 
-24. ***Spiritual Leadership*, Oswald Sanders** ⭐︎⭐︎⭐︎⭐︎⭐︎ - The book title felt a little presumptuous, but I was glad to read something by an old dead guy! Written in the 60’s but revised a couple times. I appreciate the cover design, especially over the 60’s version. The chapter on "Can you become a Leader" was intense!
+    ⭐︎⭐︎⭐︎⭐︎⭐︎ - Always good to read books that others reference in their books. Deep Work was a DEEP reminder that our modern workplace isn't always condusive to work. Definitely made me take another look at what I'm doing and when.
 
-25. ***Onward*, Howard Schultz** ⭐︎⭐︎⭐︎⭐︎ - I picked this up at our local thrift store on a whim and really enjoyed it. I like Starbucks coffee AND I like local hipster brands too. Loved getting an inside look at the difficult decisions Schultz had to make when we came back as CEO to turn around the company during the Great Recession.
+12.	***The Laws of Simplicity*, John Madea** 
 
-26.	***Free-Range Kids*, Lenore Skenazy** ⭐︎⭐︎⭐︎⭐︎ - TBH, this felt like it was written to uptight mom's. I definitely felt like I have permission to let my kids explore and do a bit more self-guided learning. I've alernatively been calling this "Cage Free Kids", a MUCH better title.
+    ⭐︎⭐︎⭐︎⭐︎⭐︎ - I've reread this book a number of times. It's a classic design book for me now. Whenever a designer or developer asks for a book reccomendation, this is my go to. Meant a LOT to me early in my career. The last page is 👌
 
-27. ***Spiritual Discipleship*, Oswald Sanders** ⭐︎⭐︎⭐︎⭐︎ - Not as good as Spiritual Discipleship, but worked through it pretty quickly. Planning to the read the whole trilogy again once I finished Spirtual Maturity.   
+13.	***The Life We're Looking For*, Andy Crouch** 
 
-28.	***Designing Your Life*, Bill Burnett & Dave Evans** ⭐️⭐︎ - I really took my time working through this, but in the end didn't enjoy it. I was gonna use this as a book club option at work, but it was really about exploring career and life path changes I prototyped some different ideas for my life, but in the end I'm pretty happy with the one I'm on.
+    ⭐︎⭐︎⭐︎⭐︎ - We're all chasing "magic" in our lives with technology. Maybe that's not great for personhood and true community. I'm still pretty excited about ChatGPT and Dall-e though, but I'm pretty sure it's gonna ruin a bunch of creative fields. 
 
-29.	***Levitation Wakes*, James S. A. Corey** ⭐︎⭐︎⭐︎⭐︎ -  It was great to restart the series, I actually intended to reread the whole series this year so I could read the ninth book. So, squeezee one in!
+14.	***The Deeply Formed Life*, Rich Villas** 
+
+    ⭐︎⭐︎⭐︎⭐︎ - “Whether we know it or not, see it or not, or understand it or not, we are always at risk of being shallowly formed. We are formed by our false selves, our families of origin, the highly manipulated presentations of social media, and the value system of a world that determines worth based on accomplishments, possessions, efficiency, intellectual acumen, and gifts.”
+
+15.	***Why We Sleep*, Matthew Walker** 
+
+    ⭐︎⭐︎⭐︎⭐︎ - This, of course, made me value sleep MUCH more. In my twenties, I took a lack of sleep as a badge of honor. Now I'm never apologizing for a nap again (clear head and recharged engery) and planning to live a long, healthy life. Here's to 7 to 8 hours a night!
+
+16.	***The Power of Moments*, Chip Heath & Dan Heath**
+
+     ⭐︎⭐︎⭐︎ - This was a good "beach read". Nothing too Earth shattering. There are a bunch of tatics you should use occasionally to make moments stick out to people in your life. The "multiply milestones" levels were interesting enought that I wrote them out in a Note.
+
+17.	***Family Discipleship*, Matt Chandler** 
+
+    ⭐︎⭐︎⭐︎ - A good mix of practical and thoughtful opportunities. Super high AND low pressure, all at the same time. Feels like something I'll reference as our family grows up. Some great quotes from other people I found in here: “The moment when I am most repelled by a child's behavior, that is my sign to draw the very closest to that child” -Ann Voskamp and "It is easier to build strong children than to repair broken men.” -Frederick Douglass
+
+18.	***The Psychology of Money*, Morgan Housel** 
+
+    ⭐︎⭐︎⭐︎ - I've never read a financial book outside of Dave Ramsey, lots of simple lessons, nothing too complicated. You will win some, you will lose some. Losing is the cost on winning. "The purpose of margin of safety is to render the forecast unnecessary" Outlier events play an enormous role in historical data. 
+
+19.	***I Guess I Haven’t Learned that Yet*, Shauna Niequist** 
+
+    ⭐︎⭐︎⭐︎ - My wife read this and then assigned it to me. It was nice change of pace to read a memoir, made me want to move to New York City.
+
+20.	***No Compromise*, Melody Green** 
+
+    ⭐︎⭐︎⭐︎⭐︎ - Super inspiring bio on an early CCM artist. Definitely a man of the 70's who was always moving fast, tripping over himself, and tripping on some LSD. Loved getting a look into his earnest, journaled thoughts. I think it helped me be a little more truthful with my own journaling.
+
+21. ***A Non-Anxious Presence*, Mark Sayers** 
+
+    ⭐︎⭐︎⭐︎⭐︎ - This was a super helpful book on how our personal lives, communities, workplaces, country, and world is changing. Complicated environments required efficiency. The incoming complex environment will require adaptability. “Fake realities will create fake humans, which will lead to a disastrous cascade of crises in which fake humans will generate fake reality and then sell them to other humans, turning them, eventually, into forgeries of themselves." 
+
+22.	***Micro*, Michael Crichton** 
+
+    ⭐︎⭐︎ - My wife grabbed me two fiction books before we went away for the weekend to a family cabin. This was one of them. I've loved almost every Michael Crichton book I read. Really couldn't get into the "Honey, We Shrunk this Kids" techno thriller.
+
+23.	***The 5th Wave*, Rick Yancey** 
+
+    ⭐︎⭐︎ - This was the second fiction book for my weekend away. It was turned into a movie. I enjoyed the concept of the alien invasion, but that's about it. Young Adult fiction is fine, I'll reread the Hunger Games next time.
+
+24. ***Spiritual Leadership*, Oswald Sanders** 
+
+    ⭐︎⭐︎⭐︎⭐︎⭐︎ - The book title felt a little presumptuous, but I was glad to read something by an old dead guy! Written in the 60’s but revised a couple times. I appreciate the cover design, especially over the 60’s version. The chapter on "Can you become a Leader" was intense!
+
+25. ***Onward*, Howard Schultz** 
+    
+    ⭐︎⭐︎⭐︎⭐︎ - I picked this up at our local thrift store on a whim and really enjoyed it. I like Starbucks coffee AND I like local hipster brands too. Loved getting an inside look at the difficult decisions Schultz had to make when we came back as CEO to turn around the company during the Great Recession.
+
+26.	***Free-Range Kids*, Lenore Skenazy** 
+
+    ⭐︎⭐︎⭐︎⭐︎ - TBH, this felt like it was written to uptight mom's. I definitely felt like I have permission to let my kids explore and do a bit more self-guided learning. I've alernatively been calling this "Cage Free Kids", a MUCH better title.
+
+27. ***Spiritual Discipleship*, Oswald Sanders** 
+    
+    ⭐︎⭐︎⭐︎⭐︎ - Not as good as Spiritual Discipleship, but worked through it pretty quickly. Planning to the read the whole trilogy again once I finished Spirtual Maturity.   
+
+28.	***Designing Your Life*, Bill Burnett & Dave Evans** 
+    
+    ⭐️⭐︎ - I really took my time working through this, but in the end didn't enjoy it. I was gonna use this as a book club option at work, but it was really about exploring career and life path changes I prototyped some different ideas for my life, but in the end I'm pretty happy with the one I'm on.
+
+29.	***Levitation Wakes*, James S. A. Corey** 
+
+    ⭐︎⭐︎⭐︎⭐︎ -  It was great to restart the series, I actually intended to reread the whole series this year so I could read the ninth book. So, squeezee one in!
