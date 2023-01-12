@@ -107,13 +107,19 @@ h1 {
 		}
 }
 
+h2 {
+	font-size: 40px;
+	margin: 0 0 10px;
+}
+
 h2, h3, .big-type {
 	font-family: "DM Serif Display", serif;
 }
 
 p {
-	font-size: 20px;
-	letter-spacing: 1px;
+	font-size: 18px;
+	letter-spacing: 0.5px;
+	margin: 0 0 20px;
 }
 
 a {
@@ -123,4 +129,46 @@ a {
 }
 a:hover {
 	background-color: #D0ECDC;
+}
+
+
+/* -- Book Styles to Inline */
+
+.book {
+    display:flex;
+	align-items: center;
+	margin-bottom: 40px;
+	gap: 20px;
+}
+.book img {
+    width: 150px;
+}
+
+@media (max-width:600px) {
+	.book {
+		flex-direction: column;
+		align-items: flex-start;
+	}	
+	.book img {
+		width: 100px;
+	}
+}
+
+.book ol {
+	list-style-position: inside;
+	margin: 0;
+	padding: 0;
+}
+.book ol p {
+	display: inline;
+}
+.book ol p:last-child {
+	display: block;
+	margin: 10px 0 0;
+}
+.book strong,
+.book li::marker {
+	font-family: "DM Serif Display", serif;
+	font-size: 30px;
+	line-height: 35px;
 }
