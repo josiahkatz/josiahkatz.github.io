@@ -14,7 +14,7 @@ This website is a work in-progress. Instead of keeping my todo list in an Apple 
 - [ ] Replace the default image above this
 - [ ] Create blog listing page
 - [ ] Create social Images
-- [ ] Accessibly review
+- [ ] Review accessibly
 - [ ] Automatically show now playing from Last.fm
 - [ ] Portfolio or Case Study?
 

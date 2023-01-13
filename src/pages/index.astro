@@ -11,9 +11,9 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
+		<Header title={SITE_TITLE} />
 		<p class="big-type">Josiah Katz</p>
 		<main>
-			<Header title={SITE_TITLE} />
 			<h1>Josiah Katz, VP of Design & Media <span>York, PA</span></h1>
 			<p>As the head of the creative teams at <a href="https://www.webstaurantstore.com" target="_blank">WebstaurantStore</a>, I'm responsible for leading a team of ~150 people who handle our user experiences, front-end development, graphic design, photography, and videography.</p>
 			
@@ -24,9 +24,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 </html>
 <style>
 	/*-- Body - Custom Homepage Flexbox */
+
 	@media (min-width:600px) {
 		body {
 			display: flex;
+			align-items: center;
 		}
 		main {
 			width:80%;
