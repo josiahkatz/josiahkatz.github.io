@@ -346,7 +346,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 28.	***Designing Your Life*, Bill Burnett & Dave Evans** 
     
-    ⭐️⭐︎ - I took my time working through this, but in the end, I didn't love it. It was about exploring career and life path changes with design principles. I prototyped some different ideas for my life, but in the end, I'm pretty happy with the one I'm on!
+    ⭐︎⭐︎ - I took my time working through this, but in the end, I didn't love it. It was about exploring career and life path changes with design principles. I prototyped some different ideas for my life, but in the end, I'm pretty happy with the one I'm on!
 
 </div>
 
