@@ -3,7 +3,7 @@ layout: "../layouts/BlogPost.astro"
 title: "Todo List"
 description: "Lorem ipsum dolor sit amet"
 updatedDate: "Jan 13, 2022"
-heroImage: "/placeholder-about.jpg"
+heroImage: "/optimus.jpg"
 ---
 
 This website is a work in-progress. Instead of keeping my todo list in an Apple note, I decided to track my progress and ideas here.

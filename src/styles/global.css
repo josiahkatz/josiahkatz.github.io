@@ -4,8 +4,12 @@
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
 html, body {
-	height: 100%; 
 	overflow-x: hidden;
+}
+@media (min-height:650px) {
+	html, body {
+		height: 100%; 
+	}
 }
 body {
 	margin: auto;
@@ -19,8 +23,16 @@ body {
 a {
 	color: #3273dc;
 }
+.active {
+	border: none;
+}
+nav {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
 nav a {
-	margin-right: 10px;
+	margin: 0 10px;
 }
 textarea {
 	width: 100%;
@@ -72,7 +84,6 @@ body {
 	background-color: var(--color-mint);
 	color: var(--color-forest);
 
-	justify-content: center;
 	flex-direction: column;
 }
 
