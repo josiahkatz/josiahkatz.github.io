@@ -1,7 +1,7 @@
 ---
 layout: "../../layouts/BlogPost.astro"
 title: "Books I Read in 2022"
-description: "Lorem ipsum dolor sit amet"
+description: "In 2021, I rediscovered my love for reading on a summer vacation and dove headfirst into buying 5 books at a time. Informally, I shared that list on social media and set a goal to read 25 books in 2022. After finishing 29 books in 2022, I decided to publish, MOSTLY for myself, what I read and build a website to record it."
 pubDate: "Jan 13, 2023"
 heroImage: "/books.jpg"
 ---
