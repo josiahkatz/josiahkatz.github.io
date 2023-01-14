@@ -7,6 +7,6 @@ import critters from "astro-critters";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://josiahkatz.com',
   integrations: [mdx(), sitemap(), critters()]
 });
