@@ -73,7 +73,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/0735291365-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/0735291365-L.jpg" alt="Book Cover of At Your Best, Carey Nieuwhof" />
 
 1. ***At Your Best*, Carey Nieuwhof** 
 
@@ -83,7 +83,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9781087736952-L.jpg" alt="Book Cover of *The God of the Garden by Andrew Peterson" />
+ <img src="https://covers.openlibrary.org/b/isbn/9781087736952-L.jpg" alt="Book Cover of The God of the Garden by Andrew Peterson" />
 
 2.  ***The God of the Garden*, Andrew Peterson** 
     
@@ -93,7 +93,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/1942788819-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/1942788819-L.jpg" alt="Book Cover of Team Topologies, Matthew Skelton and Manuel Pais" />
 
 3.  ***Team Topologies*, Matthew Skelton and Manuel Pais** 
    
@@ -103,7 +103,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9780593238509-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/9780593238509-L.jpg" alt="Book Cover of Where the Light Fell, Philip Yancey" />
 
 4.  ***Where the Light Fell*, Philip Yancey** 
    
@@ -113,7 +113,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/0593320093-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/0593320093-L.jpg" alt="Book Cover of Out of Office, Anne Helen Petersen and Charlie Warzel" />
 
 5.	***Out of Office*, Anne Helen Petersen and Charlie Warzel** 
 
@@ -123,7 +123,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9781250297198-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/9781250297198-L.jpg" alt="Book Cover of You’re Not Listening, Kate Murphy" />
 
 6.	***You’re Not Listening*, Kate Murphy** 
 
@@ -133,7 +133,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9780310113768-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/9780310113768-L.jpg" alt="Book Cover of How (Not) to Read the Bible, Dan Kimball" />
 
 7.	***How (Not) to Read the Bible*, Dan Kimball** 
 
@@ -143,7 +143,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9780830847839-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/9780830847839-L.jpg" alt="Book Cover of You Are Not Your Own, Alan Noble" />
 
 8.	***You Are Not Your Own*, Alan Noble** 
 
@@ -153,7 +153,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9780735210653-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/9780735210653-L.jpg" alt="Book Cover of The Power of Regret, Daniel Pink" />
 
 9.	***The Power of Regret*, Daniel Pink** 
 
@@ -162,7 +162,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/978-1787634114-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/978-1787634114-L.jpg" alt="Book Cover of Build, Tony Fadell" />
 
 10.	***Build*, Tony Fadell** 
 
@@ -172,7 +172,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9781455586691-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/9781455586691-L.jpg" alt="Book Cover of Deep Work, Cal Newport" />
 
 11.	***Deep Work*, Cal Newport** 
 
@@ -182,7 +182,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/0262134721-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/0262134721-L.jpg" alt="Book Cover of The Laws of Simplicity, John Madea" />
 
 12.	***The Laws of Simplicity*, John Madea** 
 
@@ -192,7 +192,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9780593237342-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/9780593237342-L.jpg" alt="Book Cover of The Life We're Looking For, Andy Crouch" />
 
 13.	***The Life We're Looking For*, Andy Crouch** 
 
@@ -202,7 +202,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9780525654384-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/9780525654384-L.jpg" alt="Book Cover of The Deeply Formed Life, Rich Villas" />
 
 14.	***The Deeply Formed Life*, Rich Villas** 
 
@@ -212,7 +212,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/1501144324-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/1501144324-L.jpg" alt="Book Cover of Why We Sleep, Matthew Walker" />
 
 15.	***Why We Sleep*, Matthew Walker** 
 
@@ -222,7 +222,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9781501147760-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/9781501147760-L.jpg" alt="Book Cover of The Power of Moments, Chip Heath & Dan Heath" />
 
 16.	***The Power of Moments*, Chip Heath & Dan Heath**
 
@@ -232,7 +232,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9781433566325-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/9781433566325-L.jpg" alt="Book Cover of Family Discipleship, Matt Chandler & Adam Griffin" />
 
 17.	***Family Discipleship*, Matt Chandler & Adam Griffin** 
 
@@ -242,7 +242,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/0857197681-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/0857197681-L.jpg" alt="Book Cover of The Psychology of Money, Morgan Housel" />
 
 18.	***The Psychology of Money*, Morgan Housel** 
 
@@ -252,7 +252,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/0310355591-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/0310355591-L.jpg" alt="Book Cover of I Guess I Haven’t Learned that Yet, Shauna Niequist" />
 
 19.	***I Guess I Haven’t Learned that Yet*, Shauna Niequist** 
 
@@ -262,7 +262,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/1565074564-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/1565074564-L.jpg" alt="Book Cover of No Compromise, Melody Green" />
 
 20.	***No Compromise*, Melody Green** 
 
@@ -272,7 +272,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9780802428578-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/9780802428578-L.jpg" alt="Book Cover of A Non-Anxious Presence, Mark Sayers" />
 
 21.	***A Non-Anxious Presence*, Mark Sayers** 
 
@@ -282,7 +282,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9780060873028-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/id/13136600-L.jpg" alt="Book Cover of Micro, Michael Crichton" />
 
 22.	***Micro*, Michael Crichton** 
 
@@ -292,7 +292,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9780142425831-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/9780142425831-L.jpg" alt="Book Cover of The 5th Wave, Rick Yancey" />
 
 23.	***The 5th Wave*, Rick Yancey** 
 
@@ -302,7 +302,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/080248221X-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/080248221X-L.jpg" alt="Book Cover of Spiritual Leadership, Oswald Sanders" />
 
 24.	***Spiritual Leadership*, Oswald Sanders** 
 
@@ -312,7 +312,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
-  <img src="https://covers.openlibrary.org/b/isbn/1605292885-L.jpg" alt="Book Cover of " />
+  <img src="https://covers.openlibrary.org/b/isbn/1605292885-L.jpg" alt="Book Cover of Onward, Howard Schultz" />
 
 25.	***Onward*, Howard Schultz** 
 
@@ -322,7 +322,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9781119782162-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/9781119782162-L.jpg" alt="Book Cover of Free-Range Kids, Lenore Skenazy" />
 
 26.	***Free-Range Kids*, Lenore Skenazy** 
 
@@ -332,7 +332,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/0802416691-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/0802416691-L.jpg" alt="Book Cover of Spiritual Discipleship, Oswald Sanders" />
 
 27. ***Spiritual Discipleship*, Oswald Sanders**
     
@@ -342,7 +342,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/1101875321-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/1101875321-L.jpg" alt="Book Cover of Designing Your Life, Bill Burnett & Dave Evans" />
 
 28.	***Designing Your Life*, Bill Burnett & Dave Evans** 
     
@@ -352,7 +352,7 @@ I had visions of making this better, but by the end of writing, designing and co
 
 <div class="book">
 
- <img src="https://covers.openlibrary.org/b/isbn/9780316129084-L.jpg" alt="Book Cover of " />
+ <img src="https://covers.openlibrary.org/b/isbn/9780316129084-L.jpg" alt="Book Cover of Leviathan Wakes, James S. A. Corey" />
 
 29.	***Leviathan Wakes*, James S. A. Corey** 
 
