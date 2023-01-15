@@ -64,9 +64,9 @@ In 2021, I rediscovered my love for reading on a summer vacation and dove headfi
 You'll see here a large dichotomy of design/work books and Christian faith books. This represents a bit chunk of my life and thinking. As I've been lining up books to read for 2023, I see this playing out again, except with a bit more fiction.
 
 ## What this isn't
-That being said, my memory is pretty fuzzy going back a year ago. I only remember bits and pieces, so this isn't a record of the best points or even fully what I "learned". It's a record, a unfair, star rating and a comment on each book. 
+That being said, my memory is pretty fuzzy going back a year ago. I only remember bits and pieces, so this isn't a record of the best points or even fully what I "learned". It's a record, an unfair star rating and a comment on each book. 
 
-I had visions of making this better, but by the end of writing, designing and coding, 3 things that I've become slow and underpracticed in, it is what it is. See Book #10, first you make the product. Then you fix the product. Then you build the business. Here's to making a product!
+I had visions of making this better, but by the end of writing, designing and coding, three things that I've become slow and underpracticed in, it is what it is. See Book #10, first you make the product. Then you fix the product. Then you build the business. Here's to making a product!
 
 
 ## 29 Books I Read in 2022
