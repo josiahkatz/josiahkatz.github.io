@@ -2,21 +2,23 @@
 layout: "../layouts/BlogPost.astro"
 title: "Todo List"
 description: "Lorem ipsum dolor sit amet"
-updatedDate: "Jan 13, 2022"
-heroImage: "/optimus.jpg"
+updatedDate: "Oct 18, 2023"
+heroImage: ""
 ---
 
 This website is a work in-progress. Instead of keeping my todo list in an Apple note, I decided to track my progress and ideas here.
 
 ## Todo
-- [ ] Dark mode
+
 - [ ] Clean up the CSS I mangled finishing my first blog post
-- [ ] Replace the default image above this
 - [ ] Create blog listing page
 - [ ] Create social Images
-- [ ] Review accessibly
+- [ ] Review accessibility
 - [ ] Automatically show now playing from Last.fm
 - [ ] Portfolio or Case Study?
+- [X] Replace the default image above this
+- [X] Dark mode
+- [X] Favicon
 
 ## Blog Posts
 - [X] 2022 Books
