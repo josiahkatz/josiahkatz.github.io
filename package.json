@@ -16,11 +16,9 @@
     "@astrojs/sitemap": "^1.0.0",
     "@fontsource/dm-serif-display": "^4.5.9",
     "@fontsource/manrope": "^4.5.12",
-    "astro": "^3.3.2",
+    "astro": "^2.10.15",
     "astro-critters": "^1.1.24",
-    "remark": "^14.0.2"
-  },
-  "devDependencies": {
+    "remark": "^14.0.2",
     "typescript": "^5.2.2"
   }
 }
