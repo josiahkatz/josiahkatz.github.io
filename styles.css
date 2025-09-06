@@ -1,3 +1,4 @@
+/* Base styles copied from src/styles/global.css */
 /*
   The CSS in this style tag is based off of Bear Blog's default CSS.
   https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
@@ -8,7 +9,7 @@ html, body {
 }
 @media (min-height:650px) {
 	html, body {
-		height: 100%; 
+		height: 100%;
 	}
 }
 body {
@@ -69,15 +70,13 @@ blockquote {
 	font-style: italic;
 }
 
-/*-- Color Variables */
-
+/* Color Variables */
 :root {
 	--color-mint: #F3FAF6;
 	--color-highlight: #D0ECDC;
 	--color-forest: #002D13;
 	--color-forest-rgb: 0,45,19;
 }
-
 @media (prefers-color-scheme: dark) {
 	:root {
 		--color-mint:  #19221d;
@@ -85,10 +84,9 @@ blockquote {
 		--color-forest: #F3FAF6;
 		--color-forest-rgb: 12,23,17;
 	}
-  }
+}
 
-/*-- Layout */
-
+/* Layout */
 body {
 	font-family: "Manrope", sans-serif;
 	background-color: var(--color-mint);
@@ -102,8 +100,7 @@ main {
 	margin: 0 20px;
 }
 
-/*-- Type */
-
+/* Type */
 h1 {
 	font-size: 28px;
 	line-height: 1.1em;
@@ -147,16 +144,16 @@ p {
 }
 
 @media (min-width:600px) {
-	h2 {
-		font-size: 40px;
-		line-height: 42px;
-	}
-	
-	p {
-		font-size: 18px;
-		letter-spacing: 0.5px;
-		margin: 0 0 20px;
-	}
+    h2 {
+        font-size: 40px;
+        line-height: 42px;
+    }
+
+    p {
+        font-size: 20px;
+        letter-spacing: 0.5px;
+        margin: 0 0 20px;
+    }
 }
 
 a {
@@ -167,3 +164,50 @@ a {
 a:hover {
 	background-color: var(--color-highlight);
 }
+
+/* Header/Footer component styles from src/components */
+header {
+	display: flex;
+	position: relative;
+	justify-content: center;
+	z-index: 1;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin: 20px 0;
+}
+.name.active {
+	display: none;
+}
+footer {
+	padding: 25px;
+	text-align: center;
+}
+
+/* Homepage-specific styles from src/pages/index.astro */
+@media (min-width:600px) {
+	body {
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+	}
+	main {
+		width:80%;
+		margin: 0 auto;
+	}
+}
+/* Big Type */
+.big-type {
+	font-size: 40vw;
+	line-height: 28vw;
+	letter-spacing: -0.5vw;
+	word-wrap: normal;
+	margin: 0 -3vw 0;
+}
+@media (min-width:600px) {
+	.big-type {
+		font-size: 22vw;
+		line-height: 18vw;
+	}
+}
+/* Paragraph size: 14px <600px, 20px ≥600px */
