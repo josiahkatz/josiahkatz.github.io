@@ -5,7 +5,7 @@ export const config = {
     limit: 6,
   },
   youtube: {
-    apiKey: "AIzaSyDkC2Rv3vFCnUhY76sV4V2eH-TTCg1_hFk",
+    apiKey: "AIzaSyBpHl87DXJppiGF-m3rDiPJxn02vm6KbHY",
     channelId: "UCOowjG18_IrwCGqvZYgHA7g",
     maxResults: 5,
   },
