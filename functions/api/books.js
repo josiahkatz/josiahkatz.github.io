@@ -40,11 +40,11 @@ export async function onRequestGet({ request, env }) {
     printType: "books",
   });
 
-  const response = await fetch(url.toString());
-  const data = await response.json();
+  const upstreamResponse = await fetch(url.toString());
+  const data = await upstreamResponse.json();
 
   const response = new Response(JSON.stringify(data), {
-    status: response.status,
+    status: upstreamResponse.status,
     headers: {
       "Content-Type": "application/json",
       "Cache-Control": "public, max-age=0, s-maxage=86400",

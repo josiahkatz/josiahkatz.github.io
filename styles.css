@@ -182,7 +182,7 @@ header {
 	font-weight: 800;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	margin: 20px 0 100px;
+	margin: 20px 0 7vw;
 }
 header .site-nav {
 	width: min(1000px, 90vw);
@@ -275,7 +275,7 @@ footer {
 	line-height: 28vw;
 	letter-spacing: -0.5vw;
 	word-wrap: normal;
-	margin: 0 -3vw 0;
+	margin: 0 -3.5vw 0;
 }
 @media (min-width:600px) {
 	.big-type {
