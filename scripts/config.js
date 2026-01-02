@@ -11,7 +11,7 @@ export const config = {
   },
   books: {
     openLibraryUser: "josiahkatz",
-    googleBooksApiKey: "AIzaSyDkC2Rv3vFCnUhY76sV4V2eH-TTCg1_hFk",
+    googleBooksApiKey: "AIzaSyBpHl87DXJppiGF-m3rDiPJxn02vm6KbHY",
     limit: 6,
   },
 };
