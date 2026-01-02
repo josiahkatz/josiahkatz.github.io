@@ -25,8 +25,14 @@
   </head>
   <body>
     <header>
-      <nav>
-        <a class="name active" href="/">Josiah Katz</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a class="site-avatar" href="/" aria-label="Josiah Katz homepage">
+          <img src="./images/avatar.jpg" alt="Josiah Katz">
+        </a>
+        <div class="site-links">
+          <a href="/work.html">Work</a>
+          <a href="/about.html">About</a>
+        </div>
       </nav>
     </header>
     <div>
@@ -34,6 +40,38 @@
       <main>
         <h1>Josiah Katz, VP of Design &amp; Media <span>York, PA</span></h1>
         <p>As a leader of the product and marketing teams at <a href="https://www.webstaurantstore.com" target="_blank">WebstaurantStore</a>, I'm responsible for the creative problem solvers who handle our user experiences, front-end development, graphic design, photography, 3D rendering, videography and social&nbsp;media.</p>
+
+        <section class="media-section" id="now-playing">
+          <div class="section-header">
+            <div>
+              <h2>Recently Played</h2>
+              <p class="section-kicker" data-lastfm-status aria-live="polite">Loading Last.fm activity.</p>
+            </div>
+            <a class="section-link" href="https://www.last.fm/user/josiahkatz" target="_blank" rel="noopener">View profile</a>
+          </div>
+          <ul class="media-row" data-lastfm-list></ul>
+        </section>
+
+        <section class="media-section" id="videos">
+          <div class="section-header">
+            <div>
+              <h2>Recent Uploads</h2>
+              <p class="section-kicker" data-youtube-status aria-live="polite">Loading YouTube videos.</p>
+            </div>
+            <a class="section-link" href="https://www.youtube.com/josiahkatz" target="_blank" rel="noopener noreferrer">View channel</a>
+          </div>
+          <ul class="media-row" data-youtube-list></ul>
+        </section>
+
+        <section class="media-section" id="books">
+          <div class="section-header">
+            <div>
+              <h2>Recently Read</h2>
+              <p class="section-kicker" data-books-status aria-live="polite">Loading book list.</p>
+            </div>
+          </div>
+          <ul class="media-row" data-books-list></ul>
+        </section>
       </main>
     </div>
     <footer>
@@ -44,5 +82,7 @@
         <a href="https://youtube.com/josiahkatz" target="_blank" rel="noopener noreferrer">YouTube</a>
       </nav>
     </footer>
+    <script type="module" src="./scripts/main.js"></script>
+    <script type="module" src="./scripts/livereload.js"></script>
   </body>
 </html>
