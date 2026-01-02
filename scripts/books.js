@@ -145,20 +145,14 @@ const buildGoogleBooksQuery = (title, author) => {
 };
 
 const fetchGoogleBooksCover = async (title, author) => {
-  if (!config.books.googleBooksApiKey) return "";
-
   const query = buildGoogleBooksQuery(title, author);
   if (!query) return "";
 
-  const url = new URL("https://www.googleapis.com/books/v1/volumes");
-  url.search = new URLSearchParams({
+  const url = `/api/books?${new URLSearchParams({
     q: query,
-    key: config.books.googleBooksApiKey,
-    maxResults: "1",
-    printType: "books",
-  });
+  })}`;
 
-  const response = await fetch(url.toString());
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Google Books error ${response.status}`);
   }
@@ -193,10 +187,8 @@ const fetchGoogleBooksCover = async (title, author) => {
   return upgraded;
 };
 
-const applyGoogleBooksCovers = async (books) => {
-  if (!config.books.googleBooksApiKey) return books;
-
-  return Promise.all(
+const applyGoogleBooksCovers = async (books) =>
+  Promise.all(
     books.map(async (book) => {
       try {
         const coverUrl = await fetchGoogleBooksCover(book.title, book.author);
@@ -206,7 +198,6 @@ const applyGoogleBooksCovers = async (books) => {
       }
     })
   );
-};
 
 export const initBooks = async () => {
   const listEl = document.querySelector("[data-books-list]");
@@ -258,9 +249,8 @@ export const initBooks = async () => {
       return;
     }
 
-    statusEl.textContent = config.books.googleBooksApiKey
-      ? "Updated from Open Library + Google Books"
-      : "Updated from Open Library. Add Google Books API key for missing covers.";
+    statusEl.textContent =
+      "Updated from Open Library; covers from Google Books when available.";
 
     const cards = books.map((book) => createBookCard(book));
     listEl.replaceChildren(...cards);

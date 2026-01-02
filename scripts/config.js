@@ -5,13 +5,11 @@ export const config = {
     limit: 6,
   },
   youtube: {
-    apiKey: "AIzaSyBpHl87DXJppiGF-m3rDiPJxn02vm6KbHY",
     channelId: "UCOowjG18_IrwCGqvZYgHA7g",
     maxResults: 5,
   },
   books: {
     openLibraryUser: "josiahkatz",
-    googleBooksApiKey: "AIzaSyBpHl87DXJppiGF-m3rDiPJxn02vm6KbHY",
     limit: 6,
   },
 };

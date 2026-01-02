@@ -200,10 +200,9 @@ export const initYouTube = async () => {
   const limit = config.youtube.maxResults || 6;
   renderSkeleton(listEl, limit);
 
-  if (!config.youtube.apiKey || !config.youtube.channelId) {
-    renderPlaceholder(listEl, limit, "Add YouTube API key", "scripts/config.js");
-    statusEl.textContent =
-      "Add your YouTube API key and channel ID in scripts/config.js.";
+  if (!config.youtube.channelId) {
+    renderPlaceholder(listEl, limit, "Add YouTube channel ID", "scripts/config.js");
+    statusEl.textContent = "Add your YouTube channel ID in scripts/config.js.";
     return;
   }
 
@@ -226,24 +225,20 @@ export const initYouTube = async () => {
     return;
   }
 
-  const url = new URL("https://www.googleapis.com/youtube/v3/search");
-  url.search = new URLSearchParams({
-    key: config.youtube.apiKey,
+  const url = `/api/youtube?${new URLSearchParams({
     channelId: config.youtube.channelId,
-    part: "snippet",
-    order: "date",
     maxResults: String(limit),
-    type: "video",
-  });
+  })}`;
 
   try {
-    const response = await fetch(url.toString());
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`YouTube error ${response.status}`);
     }
 
     const data = await response.json();
     const items = data?.items || [];
+    const durationsById = data?.durationsById || {};
 
     if (!items.length) {
       statusEl.textContent = "No recent videos found.";
@@ -251,35 +246,15 @@ export const initYouTube = async () => {
       return;
     }
 
-    const ids = items
-      .map((video) => video.id?.videoId)
-      .filter(Boolean)
-      .join(",");
+    const formattedDurationsById = Object.fromEntries(
+      Object.entries(durationsById).map(([id, duration]) => [
+        id,
+        formatDuration(duration),
+      ])
+    );
 
-    let durations = new Map();
-    if (ids) {
-      const detailsUrl = new URL("https://www.googleapis.com/youtube/v3/videos");
-      detailsUrl.search = new URLSearchParams({
-        key: config.youtube.apiKey,
-        id: ids,
-        part: "contentDetails",
-      });
-
-      const detailsResponse = await fetch(detailsUrl.toString());
-      if (detailsResponse.ok) {
-        const details = await detailsResponse.json();
-        durations = new Map(
-          (details?.items || []).map((item) => [
-            item.id,
-            formatDuration(item.contentDetails?.duration),
-          ])
-        );
-      }
-    }
-
-    const durationsById = Object.fromEntries(durations.entries());
-    renderVideos(listEl, items, durationsById);
-    writeCache(cacheKey, { items, durationsById });
+    renderVideos(listEl, items, formattedDurationsById);
+    writeCache(cacheKey, { items, durationsById: formattedDurationsById });
     statusEl.textContent = "Updated from YouTube.";
   } catch (error) {
     if (cached?.payload?.items?.length) {

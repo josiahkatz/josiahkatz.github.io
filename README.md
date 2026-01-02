@@ -6,7 +6,7 @@ This is a flat HTML/CSS site with no build tools or dependencies.
 
 - `index.html` — Homepage content.
 - `styles.css` — Consolidated styles.
-- `scripts/config.js` — API keys and usernames.
+- `scripts/config.js` — Usernames and IDs
 
 ## Local Preview
 
@@ -37,22 +37,29 @@ Edit `scripts/config.js` to configure the feeds.
 1. Create an API key: `https://www.last.fm/api/account/create`
 2. Set `lastfm.apiKey` and `lastfm.user`.
 
-### YouTube
+### YouTube (via Cloudflare Pages Functions)
 
 1. Create a project in Google Cloud Console.
 2. Enable "YouTube Data API v3".
-3. Create an API key and restrict HTTP referrers:
-   - `http://localhost:*`
-   - `http://127.0.0.1:*`
-   - `https://josiahkatz.com/*`
-   - `https://www.josiahkatz.com/*`
-4. Set `youtube.apiKey` and `youtube.channelId`.
+3. Create an API key.
+4. Leave application restrictions set to "None" (server-side calls from Cloudflare won't send a referrer).
+5. In Cloudflare Pages, set environment variable `YOUTUBE_API_KEY`.
+6. Set `youtube.channelId` in `scripts/config.js`.
 
 ### Books (Open Library + Google Books covers)
 
 1. Open Library: set `books.openLibraryUser` (your Open Library username).
-2. Google Books: enable "Books API" in Google Cloud, create an API key, and add the same HTTP referrers as YouTube.
-3. Set `books.googleBooksApiKey`.
+2. Google Books: enable "Books API" in Google Cloud and create an API key.
+3. Leave application restrictions set to "None" (server-side calls from Cloudflare won't send a referrer).
+4. In Cloudflare Pages, set environment variable `GOOGLE_BOOKS_API_KEY`.
+
+### Cloudflare Pages Functions
+
+This repo includes Pages Functions for the proxy endpoints:
+- `/api/youtube` uses `YOUTUBE_API_KEY`
+- `/api/books` uses `GOOGLE_BOOKS_API_KEY`
+
+These functions keep API keys out of the browser and Git.
 
 ## Live Reload + API Calls
 
@@ -62,6 +69,21 @@ To fetch live data again:
 - Stop the dev server, or
 - Open the site on a non-localhost domain, or
 - Clear `localStorage` key `livereload-active`.
+
+## Local API Testing (Optional)
+
+If you want to test the proxy endpoints locally, run Cloudflare Pages dev:
+
+```
+npx wrangler pages dev .
+```
+
+Create a local `.dev.vars` file (do not commit) with:
+
+```
+YOUTUBE_API_KEY=your_key
+GOOGLE_BOOKS_API_KEY=your_key
+```
 
 ## Deploy
 
