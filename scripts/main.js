@@ -1,35 +1,27 @@
+import { config } from "./config.js";
 import { initLastfm } from "./lastfm.js";
 import { initYouTube } from "./youtube.js";
 import { initBooks } from "./books.js";
 
-const LIVE_RELOAD_KEY = "livereload-active";
-const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "0.0.0.0"]);
-
-const setLiveReloadState = (value) => {
+const getLiveDataEnabled = async () => {
   try {
-    window.localStorage.setItem(LIVE_RELOAD_KEY, value ? "true" : "false");
+    const response = await fetch("/api/settings", { cache: "no-store" });
+    if (response.ok) {
+      const data = await response.json();
+      if (typeof data.liveDataEnabled === "boolean") {
+        return data.liveDataEnabled;
+      }
+    }
   } catch (error) {
-    // Ignore storage errors.
-  }
-};
-
-const checkLiveReload = async () => {
-  if (!LOCAL_HOSTS.has(window.location.hostname)) {
-    setLiveReloadState(false);
-    return;
+    // Settings endpoint not available.
   }
 
-  try {
-    const response = await fetch("/__livereload-check", { cache: "no-store" });
-    setLiveReloadState(response.ok);
-  } catch (error) {
-    setLiveReloadState(false);
-  }
+  return config.liveDataEnabled !== false;
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await checkLiveReload();
-  initLastfm();
-  initYouTube();
-  initBooks();
+  const liveDataEnabled = await getLiveDataEnabled();
+  initLastfm({ liveDataEnabled });
+  initYouTube({ liveDataEnabled });
+  initBooks({ liveDataEnabled });
 });

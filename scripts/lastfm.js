@@ -1,15 +1,6 @@
 import { config } from "./config.js";
 
 const LASTFM_ROOT = "https://ws.audioscrobbler.com/2.0/";
-const LIVE_RELOAD_KEY = "livereload-active";
-
-const isLiveReloadActive = () => {
-  try {
-    return window.localStorage.getItem(LIVE_RELOAD_KEY) === "true";
-  } catch (error) {
-    return false;
-  }
-};
 
 const createSkeletonCard = () => {
   const card = document.createElement("li");
@@ -169,7 +160,7 @@ const createTrackCard = (track, coverUrl) => {
   return card;
 };
 
-export const initLastfm = async () => {
+export const initLastfm = async ({ liveDataEnabled = true } = {}) => {
   const listEl = document.querySelector("[data-lastfm-list]");
   const statusEl = document.querySelector("[data-lastfm-status]");
 
@@ -178,9 +169,9 @@ export const initLastfm = async () => {
   const limit = config.lastfm.limit || 6;
   renderSkeleton(listEl, limit);
 
-  if (isLiveReloadActive()) {
-    renderPlaceholder(listEl, limit, "Live reload active", "API calls paused");
-    statusEl.textContent = "Live reload active. API calls paused.";
+  if (!liveDataEnabled) {
+    renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch tracks");
+    statusEl.textContent = "Live data disabled.";
     return;
   }
 

@@ -1,15 +1,5 @@
 import { config } from "./config.js";
 
-const LIVE_RELOAD_KEY = "livereload-active";
-
-const isLiveReloadActive = () => {
-  try {
-    return window.localStorage.getItem(LIVE_RELOAD_KEY) === "true";
-  } catch (error) {
-    return false;
-  }
-};
-
 const createSkeletonCard = () => {
   const card = document.createElement("li");
   card.className = "media-card media-card--placeholder";
@@ -199,7 +189,7 @@ const applyGoogleBooksCovers = async (books) =>
     })
   );
 
-export const initBooks = async () => {
+export const initBooks = async ({ liveDataEnabled = true } = {}) => {
   const listEl = document.querySelector("[data-books-list]");
   const statusEl = document.querySelector("[data-books-status]");
 
@@ -208,9 +198,9 @@ export const initBooks = async () => {
   const limit = config.books.limit || 6;
   renderSkeleton(listEl, limit);
 
-  if (isLiveReloadActive()) {
-    renderPlaceholder(listEl, limit, "Live reload active", "API calls paused");
-    statusEl.textContent = "Live reload active. API calls paused.";
+  if (!liveDataEnabled) {
+    renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch books");
+    statusEl.textContent = "Live data disabled.";
     return;
   }
 

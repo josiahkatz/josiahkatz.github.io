@@ -6,27 +6,19 @@ This is a flat HTML/CSS site with no build tools or dependencies.
 
 - `index.html` — Homepage content.
 - `styles.css` — Consolidated styles.
-- `scripts/config.js` — Usernames and IDs
+- `scripts/config.js` — Usernames and IDs (no API keys stored here).
 
-## Local Preview
+## Local Preview (MVP)
 
-For live reload on code changes, run:
-
-```
-node ./scripts/dev-server.mjs
-```
-
-Then visit `http://localhost:8080`. To use a different port:
+Use Cloudflare Pages dev to serve HTML + Functions:
 
 ```
-PORT=8090 node ./scripts/dev-server.mjs
+npx wrangler pages dev . --ip 127.0.0.1 --port 8788
 ```
 
-If you prefer a simple static server without live reload, you can run:
+Then visit `http://127.0.0.1:8788`.
 
-```
-python3 -m http.server 8080
-```
+To restart after changing `.dev.vars`, stop the process (`Ctrl+C`) and run the command again.
 
 ## API Setup
 
@@ -58,31 +50,24 @@ Edit `scripts/config.js` to configure the feeds.
 This repo includes Pages Functions for the proxy endpoints:
 - `/api/youtube` uses `YOUTUBE_API_KEY`
 - `/api/books` uses `GOOGLE_BOOKS_API_KEY`
+- `/api/settings` exposes `LIVE_DATA_ENABLED`
 
 These functions keep API keys out of the browser and Git.
 
-## Live Reload + API Calls
+## Live Data Toggle
 
-When the live-reload dev server is running, API calls are paused to avoid quota usage. The UI will show a "Live reload active" status.
-
-To fetch live data again:
-- Stop the dev server, or
-- Open the site on a non-localhost domain, or
-- Clear `localStorage` key `livereload-active`.
-
-## Local API Testing (Optional)
-
-If you want to test the proxy endpoints locally, run Cloudflare Pages dev:
+The front-end checks `/api/settings` for a `LIVE_DATA_ENABLED` flag. Set it in Cloudflare (prod) and in `.dev.vars` (local):
 
 ```
-npx wrangler pages dev .
+LIVE_DATA_ENABLED=true
 ```
 
-Create a local `.dev.vars` file (do not commit) with:
+Set to `false` to pause all live API calls (Last.fm, YouTube, Open Library, Google Books).
+
+If you want a static preview without Functions, set `liveDataEnabled: false` in `scripts/config.js` and run:
 
 ```
-YOUTUBE_API_KEY=your_key
-GOOGLE_BOOKS_API_KEY=your_key
+python3 -m http.server 8080
 ```
 
 ## Deploy

@@ -1,14 +1,5 @@
 import { config } from "./config.js";
 
-const LIVE_RELOAD_KEY = "livereload-active";
-const isLiveReloadActive = () => {
-  try {
-    return window.localStorage.getItem(LIVE_RELOAD_KEY) === "true";
-  } catch (error) {
-    return false;
-  }
-};
-
 const createSkeletonCard = () => {
   const card = document.createElement("li");
   card.className = "media-card media-card--placeholder";
@@ -191,7 +182,7 @@ const renderVideos = (listEl, items, durationsById) => {
   listEl.replaceChildren(...cards);
 };
 
-export const initYouTube = async () => {
+export const initYouTube = async ({ liveDataEnabled = true } = {}) => {
   const listEl = document.querySelector("[data-youtube-list]");
   const statusEl = document.querySelector("[data-youtube-status]");
 
@@ -208,13 +199,13 @@ export const initYouTube = async () => {
 
   const cacheKey = `youtube-cache:${config.youtube.channelId}:${limit}`;
   const cached = readCache(cacheKey);
-  if (isLiveReloadActive()) {
+  if (!liveDataEnabled) {
     if (cached?.payload?.items?.length) {
       renderVideos(listEl, cached.payload.items, cached.payload.durationsById);
-      statusEl.textContent = "Live reload active. Showing cached videos.";
+      statusEl.textContent = "Live data off. Showing cached videos.";
     } else {
-      renderPlaceholder(listEl, limit, "Live reload active", "API calls paused");
-      statusEl.textContent = "Live reload active. API calls paused.";
+      renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch videos");
+      statusEl.textContent = "Live data disabled.";
     }
     return;
   }

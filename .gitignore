@@ -19,9 +19,6 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-# local dev pid
-.server-*.pid
-
 # wrangler
 .wrangler/
 .wrangler-state/
