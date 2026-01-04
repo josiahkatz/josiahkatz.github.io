@@ -279,9 +279,11 @@ footer {
 }
 @media (min-width:600px) {
 	.big-type {
-		font-size: 22vw;
-		line-height: 18vw;
+		font-size: 18vw;
+		line-height: 14.5vw;
 		margin: 0 -1.5vw 0;
+		white-space: nowrap;
+		text-align: center;
 	}
 }
 @media (min-width:600px) and (max-width:900px) {
