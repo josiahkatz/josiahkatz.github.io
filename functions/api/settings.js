@@ -8,8 +8,9 @@ const parseBoolean = (value, fallback = true) => {
 
 export async function onRequestGet({ env }) {
   const liveDataEnabled = parseBoolean(env.LIVE_DATA_ENABLED, true);
+  const stravaEnabled = parseBoolean(env.STRAVA_ENABLED, true);
 
-  return new Response(JSON.stringify({ liveDataEnabled }), {
+  return new Response(JSON.stringify({ liveDataEnabled, stravaEnabled }), {
     headers: {
       "Content-Type": "application/json",
       "Cache-Control": "no-store",

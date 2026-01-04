@@ -13,4 +13,8 @@ export const config = {
     openLibraryUser: "josiahkatz",
     limit: 6,
   },
+  strava: {
+    enabled: true,
+    limit: 6,
+  },
 };

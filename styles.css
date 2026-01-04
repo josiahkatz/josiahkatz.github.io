@@ -396,11 +396,44 @@ footer {
 .media-card__cover--tall {
 	aspect-ratio: 2 / 3;
 }
+.media-card__cover--activity {
+	aspect-ratio: 1 / 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(140deg, rgba(208, 236, 220, 0.9), rgba(243, 250, 246, 0.8));
+}
 .media-card__cover img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 	display: block;
+}
+.activity-icon {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 28px;
+	font-weight: 800;
+	letter-spacing: 2px;
+	color: var(--color-forest);
+	text-transform: uppercase;
+}
+.activity-stats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 6px;
+	font-size: 12px;
+	color: rgba(var(--color-forest-rgb), 0.7);
+}
+.activity-stat {
+	padding: 2px 8px;
+	border-radius: 999px;
+	border: 1px solid var(--color-highlight);
+	background-color: var(--color-surface-muted);
 }
 .media-card__badge {
 	position: absolute;

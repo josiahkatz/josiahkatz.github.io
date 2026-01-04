@@ -2,6 +2,7 @@
 
 ## Scope
 - Added API-driven media sections (Last.fm now playing, YouTube videos, books) to the homepage.
+- Added Strava recent workouts module with a server-side proxy and sanitization.
 - Built client-side UI for cards, placeholders, badges, and status messaging.
 - Switched YouTube and Google Books API calls to Cloudflare Pages Functions proxies.
 - Added a live data toggle via `/api/settings` using `LIVE_DATA_ENABLED`.
@@ -13,6 +14,7 @@
 - Use Open Library for reading data with Google Books for covers (always prefer Google Books when available).
 - YouTube + Google Books API keys live in Cloudflare Pages environment variables (not in Git/browser).
 - Live data can be toggled on/off via Cloudflare env vars and `.dev.vars`.
+- Strava data is fetched server-side, sanitized, and cached before returning to the browser.
 - Avatar is grayscale with subtle site-color tint (adjusted for brightness).
 
 ## File Changes
@@ -31,16 +33,20 @@
   - Fetches recent tracks from Last.fm.
   - Album art now uses iTunes Search first, then Last.fm fallback.
 
+- `scripts/strava.js`
+  - Fetches recent workouts from `/api/strava/recent`.
+  - Renders type, date, distance, duration, and elevation.
+
 - `scripts/youtube.js`
   - Fetches video list from `/api/youtube` proxy.
   - Renders duration badges.
   - LocalStorage caching (15 min) with stale fallback.
-  - Skips API calls when live reload flag is active.
+  - Honors live data toggle from `/api/settings`.
 
 - `scripts/books.js`
   - Reads Open Library shelves.
   - Uses Google Books proxy for covers (always attempts).
-  - Skips API calls when live reload flag is active.
+  - Honors live data toggle from `/api/settings`.
 
 - `scripts/config.js`
   - Stores usernames and IDs only (no API keys).
@@ -56,6 +62,13 @@
 - `functions/api/books.js`
   - Cloudflare Pages Function proxy for Google Books.
   - Edge caching via `caches.default`.
+
+- `functions/api/strava/recent.js`
+  - Cloudflare Pages Function proxy for Strava activities.
+  - Sanitizes fields and caches results.
+
+- `functions/api/strava/exchange.js`
+  - One-time OAuth exchange for refresh tokens (kept disabled).
 
 - `README.md`
   - Updated setup instructions for proxies and local dev.
@@ -76,6 +89,11 @@
   YOUTUBE_API_KEY=...
   GOOGLE_BOOKS_API_KEY=...
   LIVE_DATA_ENABLED=true
+  STRAVA_CLIENT_ID=...
+  STRAVA_CLIENT_SECRET=...
+  STRAVA_REFRESH_TOKEN=...
+  STRAVA_ENABLED=true
+  STRAVA_EXCHANGE_ENABLED=false
   ```
 
 ## Cloudflare Pages Env Vars
