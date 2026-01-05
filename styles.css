@@ -159,28 +159,36 @@ main {
 
 /* Type */
 h1 {
+	font-size: 32px;
+	line-height: 1.2em;
+	font-weight: 700;
+	text-transform: none;
+	letter-spacing: 0.5px;
+}
+
+.home h1 {
 	font-size: 28px;
 	line-height: 1.1em;
 	font-weight: 800;
 	text-transform: uppercase;
 	letter-spacing: 3px;
 }
-	h1 span {
-		display: block;
-		font-size:50%;
-		margin-top: 8px;
-		letter-spacing: 2px;
-	}
+.home h1 span {
+	display: block;
+	font-size: 50%;
+	margin-top: 8px;
+	letter-spacing: 2px;
+}
 
 @media (min-width:1200px) {
-	h1 {
+	.home h1 {
 		font-size: 38px;
 		letter-spacing: 4px;
 	}
-		h1 span {
-			float: right;
-			margin-top: 2px;
-		}
+	.home h1 span {
+		float: right;
+		margin-top: 2px;
+	}
 }
 
 h2 {
@@ -223,7 +231,7 @@ a:hover {
 }
 
 /* Header/Footer component styles from src/components */
-header {
+.site-header {
 	display: flex;
 	position: relative;
 	justify-content: center;
@@ -233,13 +241,13 @@ header {
 	letter-spacing: 1px;
 	margin: 20px 0 7vw;
 }
-header .site-nav {
+.site-header .site-nav {
 	width: min(1000px, 90vw);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
-header .site-avatar {
+.site-header .site-avatar {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -251,10 +259,10 @@ header .site-avatar {
 	position: relative;
 	border: 2px solid transparent;
 }
-header .site-avatar:hover {
+.site-header .site-avatar:hover {
 	border: 2px solid var(--color-highlight);
 }
-header .site-avatar img {
+.site-header .site-avatar img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
@@ -262,7 +270,7 @@ header .site-avatar img {
 	filter: grayscale(100%) contrast(1.02);
 	opacity: 0.95;
 }
-header .site-avatar::after {
+.site-header .site-avatar::after {
 	content: "";
 	position: absolute;
 	inset: 0;
@@ -271,18 +279,18 @@ header .site-avatar::after {
 	opacity: 0.08;
 	pointer-events: none;
 }
-header .site-avatar:hover img {
+.site-header .site-avatar:hover img {
 	filter: none;
 	opacity: 1;
 }
-header .site-avatar:hover::after {
+.site-header .site-avatar:hover::after {
 	opacity: 0.04;
 }
-header .site-links {
+.site-header .site-links {
 	display: flex;
 	gap: 30px;
 }
-header .site-links a {
+.site-header .site-links a {
 	margin: 0;
 	font-size: 12px;
 	letter-spacing: 3px;
@@ -293,14 +301,14 @@ footer {
 }
 
 @media (max-width:600px) {
-	header .site-links {
+	.site-header .site-links {
 		gap: 18px;
 	}
-	header .site-links a {
+	.site-header .site-links a {
 		font-size: 11px;
 		letter-spacing: 2px;
 	}
-	header .site-avatar {
+	.site-header .site-avatar {
 		width: 48px;
 		height: 48px;
 	}
@@ -308,13 +316,13 @@ footer {
 
 /* Homepage-specific styles from src/pages/index.astro */
 @media (min-width:600px) {
-	body {
+	body.home {
 		display: flex;
 		align-items: stretch;
 		justify-content: space-around;
 	}
-	main {
-		width:80%;
+	body.home main {
+		width: 80%;
 		margin: 0 auto;
 	}
 }

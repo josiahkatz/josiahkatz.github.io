@@ -175,8 +175,9 @@ const createVideoCard = (video, duration) => {
   return card;
 };
 
-const renderVideos = (listEl, items, durationsById) => {
-  const cards = items.map((video) =>
+const renderVideos = (listEl, items, durationsById, limit) => {
+  const trimmed = Number.isFinite(limit) ? items.slice(0, limit) : items;
+  const cards = trimmed.map((video) =>
     createVideoCard(video, durationsById[video.id?.videoId] || "")
   );
   listEl.replaceChildren(...cards);
@@ -201,7 +202,12 @@ export const initYouTube = async ({ liveDataEnabled = true } = {}) => {
   const cached = readCache(cacheKey);
   if (!liveDataEnabled) {
     if (cached?.payload?.items?.length) {
-      renderVideos(listEl, cached.payload.items, cached.payload.durationsById);
+      renderVideos(
+        listEl,
+        cached.payload.items,
+        cached.payload.durationsById,
+        limit
+      );
       statusEl.textContent = "Live data off. Showing cached videos.";
     } else {
       renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch videos");
@@ -211,7 +217,12 @@ export const initYouTube = async ({ liveDataEnabled = true } = {}) => {
   }
 
   if (cached?.isFresh) {
-    renderVideos(listEl, cached.payload.items, cached.payload.durationsById);
+    renderVideos(
+      listEl,
+      cached.payload.items,
+      cached.payload.durationsById,
+      limit
+    );
     statusEl.textContent = "Showing cached YouTube videos.";
     return;
   }
@@ -244,12 +255,17 @@ export const initYouTube = async ({ liveDataEnabled = true } = {}) => {
       ])
     );
 
-    renderVideos(listEl, items, formattedDurationsById);
+    renderVideos(listEl, items, formattedDurationsById, limit);
     writeCache(cacheKey, { items, durationsById: formattedDurationsById });
     statusEl.textContent = "Updated from YouTube.";
   } catch (error) {
     if (cached?.payload?.items?.length) {
-      renderVideos(listEl, cached.payload.items, cached.payload.durationsById);
+      renderVideos(
+        listEl,
+        cached.payload.items,
+        cached.payload.durationsById,
+        limit
+      );
       statusEl.textContent =
         "Showing cached YouTube videos (API unavailable).";
       return;
