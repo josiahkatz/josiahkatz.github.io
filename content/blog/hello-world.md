@@ -1,11 +1,11 @@
 ---
 title: Hello World
 date: 2026-01-10
-summary: A longer look at how we align product, brand, and media teams around repeatable systems.
+summary: This is my first post with my shiny new Eleventy blogging system.
 tags: [design, AI, web design]
 featured_image: /images/blog-placeholder.svg
 ---
-This is my first post with my shiny new Eleventy blogging system. This post is here to give me something to write CSS against and to test the system.
+This post is here to give me something to write CSS against and to test the system.
 
 Here are some future ideas and a convenient list to test ordered lists.
 
