@@ -25,13 +25,13 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addCollection("blogPosts", (collectionApi) =>
     collectionApi
-      .getFilteredByGlob("content/blog/posts/*.md")
+      .getFilteredByGlob("content/blog/*.md")
       .sort((a, b) => b.date - a.date)
   );
 
   eleventyConfig.addCollection("tagList", (collectionApi) => {
     const tags = new Set();
-    collectionApi.getFilteredByGlob("content/blog/posts/*.md").forEach((item) => {
+    collectionApi.getFilteredByGlob("content/blog/*.md").forEach((item) => {
       (item.data.tags || [])
         .filter((tag) => tag !== "blog")
         .forEach((tag) => tags.add(tag));
@@ -39,12 +39,20 @@ module.exports = function (eleventyConfig) {
     return [...tags].sort();
   });
 
+  eleventyConfig.addCollection("notes", (collectionApi) =>
+    collectionApi
+      .getFilteredByGlob("content/notes/*.md")
+      .sort((a, b) => b.date - a.date)
+  );
+
   eleventyConfig.addPassthroughCopy("index.html");
   eleventyConfig.addPassthroughCopy("styles.css");
   eleventyConfig.addPassthroughCopy("scripts");
   eleventyConfig.addPassthroughCopy("images");
   eleventyConfig.addPassthroughCopy("data");
   eleventyConfig.addPassthroughCopy("favicon.svg");
+  eleventyConfig.addPassthroughCopy("admin");
+  eleventyConfig.addPassthroughCopy("assets");
 
   return {
     dir: {

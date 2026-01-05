@@ -665,6 +665,43 @@ main.blog {
 	border-radius: 20px;
 	border: 1px solid var(--color-highlight);
 }
+.notes-list {
+	display: grid;
+	gap: 20px;
+}
+.note-card,
+.note-page {
+	padding: 20px;
+	border-radius: 16px;
+	border: 1px solid var(--color-highlight);
+	background-color: var(--color-surface);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+.note-text {
+	margin: 0 0 10px;
+	font-size: 18px;
+}
+.note-link {
+	margin: 0 0 10px;
+	font-size: 14px;
+	word-break: break-word;
+}
+.note-image {
+	width: 100%;
+	border-radius: 16px;
+	border: 1px solid var(--color-highlight);
+	margin: 10px 0;
+}
+.note-body {
+	font-size: 16px;
+	line-height: 1.6;
+}
+.note-permalink {
+	margin-top: 12px;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}
 .post-back {
 	margin-top: 32px;
 	font-size: 12px;

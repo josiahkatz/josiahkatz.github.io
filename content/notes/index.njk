@@ -1,0 +1,38 @@
+---
+layout: layouts/base.njk
+title: Notes
+description: Short updates and quick links.
+permalink: /notes/
+mainClass: blog
+---
+<section class="notes-index">
+  <div class="blog-header">
+    <h1 class="blog-title">Notes</h1>
+    <p class="blog-subtitle">Short updates, links, and quick observations.</p>
+    <div class="blog-actions">
+      <a class="section-link" href="/notes/feed.xml">RSS</a>
+    </div>
+  </div>
+  <div class="notes-list">
+    {% for note in collections.notes %}
+      <article class="note-card">
+        <p class="post-meta">
+          <time datetime="{{ note.date.toISOString() }}">{{ note.date | readableDate }}</time>
+        </p>
+        <p class="note-text">{{ note.data.text }}</p>
+        {% if note.data.url %}
+          <p class="note-link"><a href="{{ note.data.url }}" target="_blank" rel="noopener">{{ note.data.url }}</a></p>
+        {% endif %}
+        {% if note.data.image %}
+          <img class="note-image" src="{{ note.data.image }}" alt="">
+        {% endif %}
+        {% if note.templateContent %}
+          <div class="note-body">
+            {{ note.templateContent | safe }}
+          </div>
+        {% endif %}
+        <p class="note-permalink"><a href="{{ note.url }}">Permalink</a></p>
+      </article>
+    {% endfor %}
+  </div>
+</section>

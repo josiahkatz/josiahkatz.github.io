@@ -1,18 +1,23 @@
 # Personal Site (Static + Blog)
 
-This is a mostly static HTML/CSS site. Eleventy is used only to generate the blog into `dist/`; the homepage and existing assets are passed through unchanged.
+This is a mostly static HTML/CSS site. Eleventy is used only to generate the blog and notes into `dist/`; the homepage and existing assets are passed through unchanged.
 
 ## Files
 
 - `index.html` - Homepage content.
 - `styles.css` - Consolidated styles.
 - `scripts/config.js` - Usernames and IDs (no API keys stored here).
-- `content/blog/posts/` - Markdown blog posts.
+- `content/blog/` - Markdown blog posts and blog templates.
+- `content/notes/` - Markdown notes (short, tweet-style entries).
 - `content/blog/index.njk` - Blog index template.
 - `content/blog/tags.njk` - Tag pages generator.
 - `content/blog/feed.xml.njk` - RSS feed template.
+- `content/notes/index.njk` - Notes index template.
+- `content/notes/feed.xml.njk` - Notes RSS feed template.
 - `content/_includes/layouts/` - Eleventy layouts.
 - `content/_data/site.json` - Site metadata for feeds and OpenGraph.
+- `admin/` - Decap CMS admin UI.
+- `assets/uploads/` - Uploaded media from Decap CMS.
 
 ## Blog URLs
 
@@ -20,6 +25,9 @@ This is a mostly static HTML/CSS site. Eleventy is used only to generate the blo
 - Post permalinks: `/blog/YYYY/MM/slug/`
 - Tag pages: `/blog/tags/<tag>/`
 - RSS feed: `/blog/feed.xml`
+- Notes index: `/notes/`
+- Note permalinks: `/notes/YYYY/MM/slug/`
+- Notes RSS: `/notes/feed.xml`
 
 ## Local Development (with Functions)
 
@@ -60,6 +68,58 @@ python3 -m http.server --directory dist 8080
 - Build command: `npm run build`
 - Output directory: `dist`
 - Functions live in `/functions` (no changes needed)
+
+## Decap CMS (Admin UI)
+
+The admin UI lives at `/admin/`.
+
+### GitHub OAuth setup (Cloudflare Pages Functions)
+
+Create a GitHub OAuth App:
+
+1. Go to `https://github.com/settings/developers` → OAuth Apps → New OAuth App.
+2. Homepage URL: `https://josiahkatz.com`
+3. Authorization callback URL: `https://josiahkatz.com/auth/callback`
+
+Set Cloudflare Pages env vars:
+
+```
+GITHUB_CLIENT_ID=...
+GITHUB_CLIENT_SECRET=...
+```
+
+The auth endpoints are provided by Pages Functions:
+- `/auth` (starts OAuth)
+- `/auth/callback` (completes OAuth)
+
+### Local dev for /admin
+
+For local login, either:
+
+1) Create a second GitHub OAuth app with callback `http://127.0.0.1:8788/auth/callback`, then temporarily set `admin/config.yml` `base_url` to `http://127.0.0.1:8788`, or\n2) Temporarily change your OAuth app callback URL to the local URL above while testing.
+
+### Content models
+
+Blog posts live in `content/blog/` with front matter:
+
+```
+title: ...
+date: 2026-01-01
+summary: ...
+tags: [design, leadership]
+featured_image: /assets/uploads/example.jpg
+```
+
+Notes live in `content/notes/` with front matter:
+
+```
+date: 2026-01-01
+text: Short update here.
+url: https://example.com (optional)
+image: /assets/uploads/example.jpg (optional)
+```
+
+Uploaded images are stored in `assets/uploads/` and served at `/assets/uploads/`.
 
 ## API Setup
 
