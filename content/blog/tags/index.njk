@@ -1,0 +1,22 @@
+---
+layout: layouts/base.njk
+title: Blog Tags
+description: Browse posts by topic.
+permalink: /blog/tags/
+mainClass: blog
+---
+<section class="blog-index">
+  <div class="blog-header">
+    <h1 class="blog-title">Tags</h1>
+    <p class="blog-subtitle">Browse posts by topic.</p>
+  </div>
+  <div class="tag-grid">
+    {% for tag in collections.tagList %}
+      <a class="tag-card" href="/blog/tags/{{ tag | slugify }}/">
+        <span>{{ tag }}</span>
+        <span class="tag-count">{{ collections.blogPosts | filterByTag(tag) | length }} posts</span>
+      </a>
+    {% endfor %}
+  </div>
+  <p class="post-back"><a href="/blog/">Back to Blog</a></p>
+</section>

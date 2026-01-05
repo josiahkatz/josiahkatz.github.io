@@ -1,0 +1,6 @@
+node_modules
+.dev.vars
+.wrangler
+.wrangler-state
+session.md
+README.md

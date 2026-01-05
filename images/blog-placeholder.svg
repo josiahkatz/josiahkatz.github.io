@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-label="Placeholder image">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d0ecdc"/>
+      <stop offset="100%" stop-color="#f3faf6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="700" fill="url(#g)"/>
+  <rect x="80" y="80" width="1040" height="540" rx="36" fill="none" stroke="#002d13" stroke-opacity="0.2" stroke-width="6"/>
+  <text x="120" y="190" fill="#002d13" font-family="Manrope, sans-serif" font-size="48" font-weight="700" letter-spacing="4">BLOG IMAGE</text>
+  <text x="120" y="260" fill="#002d13" font-family="Manrope, sans-serif" font-size="24" letter-spacing="2" opacity="0.6">Replace with a featured image when ready.</text>
+</svg>

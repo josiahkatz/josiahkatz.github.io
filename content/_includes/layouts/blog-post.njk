@@ -1,0 +1,28 @@
+---
+layout: layouts/base.njk
+mainClass: blog
+---
+<article class="blog-post">
+  <header class="post-header">
+    <p class="post-meta">
+      <time datetime="{{ page.date.toISOString() }}">{{ page.date | readableDate }}</time>
+      {% if tags %}
+        <span class="post-tags">
+          {% for tag in tags | sort %}
+            {% if tag != "blog" %}
+              <a href="/blog/tags/{{ tag | slugify }}/">{{ tag }}</a>
+            {% endif %}
+          {% endfor %}
+        </span>
+      {% endif %}
+    </p>
+    <h1 class="post-title">{{ title }}</h1>
+    {% if summary %}
+      <p class="post-summary">{{ summary }}</p>
+    {% endif %}
+  </header>
+  <div class="post-body">
+    {{ content | safe }}
+  </div>
+  <p class="post-back"><a href="/blog/">Back to Blog</a></p>
+</article>

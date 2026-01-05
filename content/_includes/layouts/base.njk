@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% set pageTitle = title or site.name %}
+    {% set metaDescription = summary or description or site.description %}
+    {% set canonicalUrl = page.url | absoluteUrl(site.url) %}
+    {% set ogImage = (featured_image or site.ogImage) | absoluteUrl(site.url) %}
+    <title>{{ pageTitle }}{% if pageTitle != site.name %} | {{ site.name }}{% endif %}</title>
+    <meta name="title" content="{{ pageTitle }}">
+    <meta name="description" content="{{ metaDescription }}">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="canonical" href="{{ canonicalUrl }}">
+    <meta property="og:type" content="{{ ogType or "website" }}">
+    <meta property="og:url" content="{{ canonicalUrl }}">
+    <meta property="og:title" content="{{ pageTitle }}">
+    <meta property="og:description" content="{{ metaDescription }}">
+    <meta property="og:image" content="{{ ogImage }}">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ canonicalUrl }}">
+    <meta property="twitter:title" content="{{ pageTitle }}">
+    <meta property="twitter:description" content="{{ metaDescription }}">
+    <meta property="twitter:image" content="{{ ogImage }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="site-marquee" aria-label="Under construction notice">
+      <div class="site-marquee__track">
+        <div class="site-marquee__group">
+          <span>UNDER CONSTRUCTION</span>
+          <span aria-hidden="true">UNDER CONSTRUCTION</span>
+          <span aria-hidden="true">UNDER CONSTRUCTION</span>
+          <span aria-hidden="true">UNDER CONSTRUCTION</span>
+          <span aria-hidden="true">UNDER CONSTRUCTION</span>
+          <span aria-hidden="true">UNDER CONSTRUCTION</span>
+        </div>
+        <div class="site-marquee__group" aria-hidden="true">
+          <span>UNDER CONSTRUCTION</span>
+          <span>UNDER CONSTRUCTION</span>
+          <span>UNDER CONSTRUCTION</span>
+          <span>UNDER CONSTRUCTION</span>
+          <span>UNDER CONSTRUCTION</span>
+          <span>UNDER CONSTRUCTION</span>
+        </div>
+      </div>
+    </div>
+    <header>
+      <nav class="site-nav" aria-label="Primary">
+        <a class="site-avatar" href="/" aria-label="Josiah Katz homepage">
+          <img src="/images/avatar.jpg" alt="Josiah Katz">
+        </a>
+        <div class="site-links">
+          <a href="/blog/">Blog</a>
+        </div>
+      </nav>
+    </header>
+    <main class="{{ mainClass or "page" }}">
+      {{ content | safe }}
+    </main>
+    <footer>
+      <nav>
+        <a href="https://instagram.com/josiahkatz" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.last.fm/user/josiahkatz" target="_blank" rel="noopener noreferrer">Last.fm</a>
+        <a href="https://www.linkedin.com/in/josiahkatz" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://youtube.com/josiahkatz" target="_blank" rel="noopener noreferrer">YouTube</a>
+      </nav>
+    </footer>
+  </body>
+</html>

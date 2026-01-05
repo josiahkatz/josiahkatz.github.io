@@ -1,24 +1,65 @@
-# Personal Site (Static)
+# Personal Site (Static + Blog)
 
-This is a flat HTML/CSS site with no build tools or dependencies.
+This is a mostly static HTML/CSS site. Eleventy is used only to generate the blog into `dist/`; the homepage and existing assets are passed through unchanged.
 
 ## Files
 
 - `index.html` - Homepage content.
 - `styles.css` - Consolidated styles.
 - `scripts/config.js` - Usernames and IDs (no API keys stored here).
+- `content/blog/posts/` - Markdown blog posts.
+- `content/blog/index.njk` - Blog index template.
+- `content/blog/tags.njk` - Tag pages generator.
+- `content/blog/feed.xml.njk` - RSS feed template.
+- `content/_includes/layouts/` - Eleventy layouts.
+- `content/_data/site.json` - Site metadata for feeds and OpenGraph.
 
-## Local Preview (MVP)
+## Blog URLs
 
-Use Cloudflare Pages dev to serve HTML + Functions:
+- Blog index: `/blog/`
+- Post permalinks: `/blog/YYYY/MM/slug/`
+- Tag pages: `/blog/tags/<tag>/`
+- RSS feed: `/blog/feed.xml`
+
+## Local Development (with Functions)
+
+Install dependencies once:
 
 ```
-npx wrangler pages dev . --ip 127.0.0.1 --port 8788
+npm install
+```
+
+Start Eleventy in watch mode (rebuilds into `dist/`):
+
+```
+npm run dev
+```
+
+In another terminal, run Cloudflare Pages dev:
+
+```
+npx wrangler pages dev dist --ip 127.0.0.1 --port 8788
 ```
 
 Then visit `http://127.0.0.1:8788`.
 
-To restart after changing `.dev.vars`, stop the process (`Ctrl+C`) and run the command again.
+To rebuild once:
+
+```
+npm run build
+```
+
+To preview without Functions, serve `dist/` directly:
+
+```
+python3 -m http.server --directory dist 8080
+```
+
+## Cloudflare Pages Build
+
+- Build command: `npm run build`
+- Output directory: `dist`
+- Functions live in `/functions` (no changes needed)
 
 ## API Setup
 
@@ -106,13 +147,9 @@ To disable only Strava, set:
 STRAVA_ENABLED=false
 ```
 
-If you want a static preview without Functions, set `liveDataEnabled: false` in `scripts/config.js` and run:
-
-```
-python3 -m http.server 8080
-```
+If you want a static preview without Functions, set `liveDataEnabled: false` in `scripts/config.js`, run `npm run build`, and serve `dist/`.
 
 ## Deploy
 
-- GitHub Pages: Push to `main` on a `username.github.io` repo, or enable Pages for this repo.
-- Any static host (Netlify, Vercel, S3, etc.): Serve the repo root.
+- Cloudflare Pages: set the build command to `npm run build` and output to `dist`.
+- Any static host (Netlify, Vercel, S3, etc.): serve the `dist/` directory.
