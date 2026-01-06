@@ -565,7 +565,8 @@ footer {
 }
 
 /* Blog */
-main.blog {
+main.blog,
+main.page {
 	width: min(900px, 90vw);
 	margin: 0 auto 80px;
 }
