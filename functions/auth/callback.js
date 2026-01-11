@@ -28,7 +28,16 @@ const buildHtmlResponse = (payload, isSuccess) => `<!doctype html>
 </html>`;
 
 export async function onRequestGet({ request, env }) {
+  const debugEnabled = String(env.AUTH_DEBUG).toLowerCase() === "true";
+  const log = (...args) => {
+    if (debugEnabled) console.log("[auth:callback]", ...args);
+  };
+
   if (!env.GITHUB_CLIENT_ID || !env.GITHUB_CLIENT_SECRET) {
+    log("Missing OAuth env vars", {
+      hasClientId: Boolean(env.GITHUB_CLIENT_ID),
+      hasClientSecret: Boolean(env.GITHUB_CLIENT_SECRET),
+    });
     return new Response("Missing GitHub OAuth credentials", { status: 500 });
   }
 
@@ -37,12 +46,19 @@ export async function onRequestGet({ request, env }) {
   const state = url.searchParams.get("state");
   const cookies = parseCookies(request.headers.get("Cookie") || "");
   const expectedState = cookies.decap_state;
+  log("Callback hit", {
+    hasCode: Boolean(code),
+    state: state ? state.slice(0, 8) : null,
+    expectedState: expectedState ? expectedState.slice(0, 8) : null,
+    origin: url.origin,
+  });
 
   if (!code) {
     return new Response("Missing code", { status: 400 });
   }
 
   if (expectedState && state !== expectedState) {
+    log("State mismatch", { state, expectedState });
     return new Response("Invalid state", { status: 400 });
   }
 
@@ -63,6 +79,13 @@ export async function onRequestGet({ request, env }) {
 
   const tokenData = await tokenResponse.json();
   const accessToken = tokenData.access_token;
+  log("Token response", {
+    status: tokenResponse.status,
+    ok: tokenResponse.ok,
+    hasAccessToken: Boolean(accessToken),
+    error: tokenData.error,
+    errorDescription: tokenData.error_description,
+  });
 
   if (!tokenResponse.ok || !accessToken) {
     const payload = { error: "Authorization failed" };

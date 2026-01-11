@@ -15,7 +15,13 @@ const buildStateCookie = (state, isSecure) => {
 };
 
 export async function onRequestGet({ request, env }) {
+  const debugEnabled = String(env.AUTH_DEBUG).toLowerCase() === "true";
+  const log = (...args) => {
+    if (debugEnabled) console.log("[auth]", ...args);
+  };
+
   if (!env.GITHUB_CLIENT_ID) {
+    log("Missing GITHUB_CLIENT_ID");
     return new Response("Missing GITHUB_CLIENT_ID", { status: 500 });
   }
 
@@ -23,6 +29,7 @@ export async function onRequestGet({ request, env }) {
   const origin = url.origin;
   const state = crypto.randomUUID();
   const redirectUri = `${origin}/auth/callback`;
+  log("Init auth", { origin, redirectUri });
 
   const authUrl = new URL(GITHUB_AUTHORIZE_URL);
   authUrl.search = new URLSearchParams({
