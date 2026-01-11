@@ -8,7 +8,11 @@ const parseCookies = (cookieHeader = "") =>
     return acc;
   }, {});
 
-const buildHtmlResponse = (payload, isSuccess) => `<!doctype html>
+const buildHtmlResponse = (payload, isSuccess) => {
+  const payloadJson = JSON.stringify(payload)
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'");
+  return `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -17,7 +21,7 @@ const buildHtmlResponse = (payload, isSuccess) => `<!doctype html>
   <body>
     <script>
       (function () {
-        var message = 'authorization:github:${isSuccess ? "success" : "error"}:' + JSON.stringify(${payload});
+        var message = 'authorization:github:${isSuccess ? "success" : "error"}:' + '${payloadJson}';
         if (window.opener) {
           window.opener.postMessage(message, '*');
         }
@@ -26,6 +30,7 @@ const buildHtmlResponse = (payload, isSuccess) => `<!doctype html>
     </script>
   </body>
 </html>`;
+};
 
 export async function onRequestGet({ request, env }) {
   const debugEnabled = String(env.AUTH_DEBUG).toLowerCase() === "true";
@@ -89,7 +94,7 @@ export async function onRequestGet({ request, env }) {
 
   if (!tokenResponse.ok || !accessToken) {
     const payload = { error: "Authorization failed" };
-    return new Response(buildHtmlResponse(JSON.stringify(payload), false), {
+    return new Response(buildHtmlResponse(payload, false), {
       status: 502,
       headers: {
         "Content-Type": "text/html",
@@ -110,7 +115,7 @@ export async function onRequestGet({ request, env }) {
     "decap_state=; Path=/auth/callback; Max-Age=0; SameSite=Lax"
   );
 
-  return new Response(buildHtmlResponse(JSON.stringify(payload), true), {
+  return new Response(buildHtmlResponse(payload, true), {
     headers,
   });
 }
