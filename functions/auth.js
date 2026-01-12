@@ -15,13 +15,7 @@ const buildStateCookie = (state, isSecure) => {
 };
 
 export async function onRequestGet({ request, env }) {
-  const debugEnabled = String(env.AUTH_DEBUG).toLowerCase() === "true";
-  const log = (...args) => {
-    if (debugEnabled) console.log("[auth]", ...args);
-  };
-
   if (!env.GITHUB_CLIENT_ID) {
-    log("Missing GITHUB_CLIENT_ID");
     return new Response("Missing GITHUB_CLIENT_ID", { status: 500 });
   }
 
@@ -30,8 +24,6 @@ export async function onRequestGet({ request, env }) {
   const state = crypto.randomUUID();
   const redirectUri = `${origin}/auth/callback`;
   const scope = url.searchParams.get("scope") || "public_repo";
-  log("Requested scope", scope);
-  log("Init auth", { origin, redirectUri });
 
   const authUrl = new URL(GITHUB_AUTHORIZE_URL);
   authUrl.search = new URLSearchParams({
@@ -42,7 +34,8 @@ export async function onRequestGet({ request, env }) {
   });
 
   const headers = new Headers({
-    Location: authUrl.toString(),
+    "Content-Type": "text/html",
+    "Cache-Control": "no-store",
   });
 
   headers.set(
@@ -50,5 +43,41 @@ export async function onRequestGet({ request, env }) {
     buildStateCookie(state, url.protocol === "https:")
   );
 
-  return new Response(null, { status: 302, headers });
+  const authUrlString = authUrl.toString();
+  const responseHtml = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Authorizing...</title>
+  </head>
+  <body>
+    <script>
+      (function () {
+        var authUrl = ${JSON.stringify(authUrlString)};
+        var origin = ${JSON.stringify(origin)};
+        var redirected = false;
+        var redirect = function () {
+          if (redirected) return;
+          redirected = true;
+          window.location.href = authUrl;
+        };
+        if (!window.opener) {
+          redirect();
+          return;
+        }
+        window.opener.postMessage("authorizing:github", origin);
+        window.addEventListener("message", function onMessage(event) {
+          if (event.origin !== origin) return;
+          if (event.data === "authorizing:github") {
+            window.removeEventListener("message", onMessage);
+            redirect();
+          }
+        });
+        setTimeout(redirect, 1500);
+      })();
+    </script>
+  </body>
+</html>`;
+
+  return new Response(responseHtml, { status: 200, headers });
 }

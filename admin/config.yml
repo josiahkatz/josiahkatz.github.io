@@ -2,7 +2,8 @@ backend:
   name: github
   repo: josiahkatz/josiahkatz.github.io
   branch: master
-  auth_endpoint: https://josiahkatz.com/auth
+  base_url: https://josiahkatz.com
+  auth_endpoint: auth
 
 publish_mode: simple
 
@@ -34,3 +35,11 @@ collections:
       - { label: "URL", name: "url", widget: "string", required: false }
       - { label: "Image", name: "image", widget: "image", required: false }
       - { label: "Body", name: "body", widget: "markdown", required: false }
+
+local:
+  backend:
+    name: github
+    repo: josiahkatz/josiahkatz.github.io
+    branch: master
+    base_url: http://127.0.0.1:8788
+    auth_endpoint: auth

@@ -94,6 +94,8 @@ The auth endpoints are provided by Pages Functions:
 
 ### Local dev for /admin
 
+When running on `localhost` or `127.0.0.1`, the admin UI automatically uses the `local` config overrides from `admin/config.yml`.
+
 For local login, either:
 
 1) Create a second GitHub OAuth app with callback `http://127.0.0.1:8788/auth/callback`, or
