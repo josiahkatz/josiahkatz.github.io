@@ -29,13 +29,15 @@ export async function onRequestGet({ request, env }) {
   const origin = url.origin;
   const state = crypto.randomUUID();
   const redirectUri = `${origin}/auth/callback`;
+  const scope = url.searchParams.get("scope") || "public_repo";
+  log("Requested scope", scope);
   log("Init auth", { origin, redirectUri });
 
   const authUrl = new URL(GITHUB_AUTHORIZE_URL);
   authUrl.search = new URLSearchParams({
     client_id: env.GITHUB_CLIENT_ID,
     redirect_uri: redirectUri,
-    scope: "public_repo",
+    scope,
     state,
   });
 
