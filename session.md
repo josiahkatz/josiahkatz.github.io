@@ -1,78 +1,83 @@
 # Session Summary (2026-01-02)
 
 ## Scope
-- Added API-driven media sections (Last.fm now playing, YouTube videos, books) to the homepage.
-- Added Strava recent workouts module with a server-side proxy and sanitization.
-- Built client-side UI for cards, placeholders, badges, and status messaging.
-- Switched YouTube and Google Books API calls to Cloudflare Pages Functions proxies.
-- Added a live data toggle via `/api/settings` using `LIVE_DATA_ENABLED`.
-- Implemented caching to reduce API quota usage.
-- Updated header styling to match new navigation/avatar layout.
+- Added API-driven media sections (Last.fm now playing, YouTube videos, books, Strava workouts) to the homepage.
+- Built server-side proxies for API calls with caching and a live-data toggle to protect quotas and keys.
+- Added a minimal Eleventy blog + notes system without converting the whole site to a framework.
+- Integrated Decap CMS at `/admin/` with GitHub OAuth via Cloudflare Pages Functions.
+- Updated header/nav/avatar styles, badges, dark mode tuning, and blog-specific typography scoping.
 
 ## Key Decisions
-- Use Last.fm for music data; add iTunes Search for album art fallback.
-- Use Open Library for reading data with Google Books for covers (always prefer Google Books when available).
-- YouTube + Google Books API keys live in Cloudflare Pages environment variables (not in Git/browser).
-- Live data can be toggled on/off via Cloudflare env vars and `.dev.vars`.
-- Strava data is fetched server-side, sanitized, and cached before returning to the browser.
-- Avatar is grayscale with subtle site-color tint (adjusted for brightness).
+- Last.fm provides music data; iTunes Search is used for album art fallback.
+- Open Library supplies book data; Google Books is always used for covers.
+- YouTube/Google Books/Strava API keys live server-side in Cloudflare env vars, never in the browser.
+- Live data is gated by `/api/settings` using `LIVE_DATA_ENABLED`.
+- Strava responses are sanitized server-side to strip all location or map fields.
+- Decap CMS uses GitHub backend with custom auth endpoints (`/auth`, `/auth/callback`).
+- Local admin config is handled via `CMS_ENV=local` overrides in `admin/config.yml`.
+- Eleventy outputs to `dist` and passes through existing static assets unchanged.
 
 ## File Changes
 - `index.html`
-  - Added Now Playing, Recent Videos, and Books sections with status lines.
-  - Added JS module includes.
-  - Updated header markup to include avatar + Work/About links.
+  - Added Now Playing, Recent Videos, Books, and Strava sections.
+  - Added JS module includes for media sections.
+  - Added header/nav + marquee bar and `body.home` class for scoping.
 
 - `styles.css`
-  - Added media section layout, cards, placeholders, and badge styling.
-  - Added avatar styles (grayscale + tint overlay).
-  - Updated dark mode variables for subtlety.
-  - Adjusted header spacing for new nav.
+  - Added media card layouts, badges, placeholders, and dark mode adjustments.
+  - Added avatar styling (grayscale + tint).
+  - Scoped typography so blog pages are not affected by homepage styles.
 
 - `scripts/lastfm.js`
-  - Fetches recent tracks from Last.fm.
-  - Album art now uses iTunes Search first, then Last.fm fallback.
-
-- `scripts/strava.js`
-  - Fetches recent workouts from `/api/strava/recent`.
-  - Renders type, date, distance, duration, and elevation.
+  - Fetches recent tracks from Last.fm; uses iTunes Search for album art fallback.
 
 - `scripts/youtube.js`
-  - Fetches video list from `/api/youtube` proxy.
-  - Renders duration badges.
-  - LocalStorage caching (15 min) with stale fallback.
+  - Fetches from `/api/youtube`, renders duration badges, decodes titles, caches responses.
   - Honors live data toggle from `/api/settings`.
 
 - `scripts/books.js`
-  - Reads Open Library shelves.
-  - Uses Google Books proxy for covers (always attempts).
+  - Fetches Open Library data, uses Google Books covers via `/api/books`.
   - Honors live data toggle from `/api/settings`.
 
-- `scripts/config.js`
-  - Stores usernames and IDs only (no API keys).
-  - `youtube.channelId` and `books.openLibraryUser` are required.
+- `scripts/strava.js`
+  - Fetches `/api/strava/recent` and renders sanitized activity fields.
 
 - `scripts/main.js`
   - Fetches `/api/settings` before triggering API modules.
 
 - `functions/api/youtube.js`
-  - Cloudflare Pages Function proxy for YouTube (search + durations).
-  - Edge caching via `caches.default`.
+  - Cloudflare Pages proxy for YouTube with caching.
 
 - `functions/api/books.js`
-  - Cloudflare Pages Function proxy for Google Books.
-  - Edge caching via `caches.default`.
+  - Cloudflare Pages proxy for Google Books with caching.
 
 - `functions/api/strava/recent.js`
-  - Cloudflare Pages Function proxy for Strava activities.
-  - Sanitizes fields and caches results.
+  - Cloudflare Pages proxy for Strava with sanitization + caching.
 
-- `functions/api/strava/exchange.js`
-  - One-time OAuth exchange for refresh tokens (kept disabled).
+- `functions/api/settings.js`
+  - Exposes `LIVE_DATA_ENABLED` for toggling live API calls.
+
+- `functions/auth.js`
+  - OAuth init for Decap (adds Netlify-style handshake + redirect).
+
+- `functions/auth/callback.js`
+  - Exchanges code, posts success message to opener, clears state cookie.
+
+- `admin/index.html`
+  - Loads Decap CMS and sets `CMS_ENV=local` for localhost/127.0.0.1.
+
+- `admin/config.yml`
+  - GitHub backend config, media uploads, blog + notes collections.
+  - `local` overrides for auth on `http://127.0.0.1:8788`.
+
+- Eleventy files
+  - `.eleventy.js`, `.eleventyignore`, `package.json`, `package-lock.json`.
+  - `content/blog/` (posts, index, tags, feed).
+  - `content/notes/` (notes, index, feed).
+  - `content/_includes/layouts/` (base, blog-post, note, tag).
 
 - `README.md`
-  - Updated setup instructions for proxies and local dev.
-  - Added notes about API keys living in Cloudflare env vars.
+  - Build/dev commands, Eleventy structure, Decap setup, OAuth steps.
 
 - `.gitignore`
   - Added `.dev.vars`, `.wrangler/`, `.wrangler-state/`.
@@ -82,27 +87,25 @@
   ```
   npx wrangler pages dev . --ip 127.0.0.1 --port 8788
   ```
-  Then open `http://127.0.0.1:8788`.
-
-- `.dev.vars` (not committed):
+- Eleventy build:
   ```
-  YOUTUBE_API_KEY=...
-  GOOGLE_BOOKS_API_KEY=...
-  LIVE_DATA_ENABLED=true
-  STRAVA_CLIENT_ID=...
-  STRAVA_CLIENT_SECRET=...
-  STRAVA_REFRESH_TOKEN=...
-  STRAVA_ENABLED=true
-  STRAVA_EXCHANGE_ENABLED=false
+  npm run build
   ```
+- Decap CMS local OAuth:
+  - GitHub OAuth app callback: `http://127.0.0.1:8788/auth/callback`
+  - `.dev.vars` needs `GITHUB_CLIENT_ID` + `GITHUB_CLIENT_SECRET`.
 
 ## Cloudflare Pages Env Vars
 - `YOUTUBE_API_KEY`
 - `GOOGLE_BOOKS_API_KEY`
-
-These should be unrestricted keys (no HTTP referrer restriction) because requests are server-side.
+- `LIVE_DATA_ENABLED`
+- `STRAVA_CLIENT_ID`
+- `STRAVA_CLIENT_SECRET`
+- `STRAVA_REFRESH_TOKEN`
+- `GITHUB_CLIENT_ID`
+- `GITHUB_CLIENT_SECRET`
 
 ## Known Notes
-- YouTube/Google Books quota limits can block responses; proxy will still be functional.
-- Work page files were intentionally deleted.
+- YouTube/Google Books quotas can block responses; caching mitigates but does not remove limits.
+- Work page files were intentionally removed after experimentation.
 - Wrangler requires Node v20+.
