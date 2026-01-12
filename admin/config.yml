@@ -2,7 +2,7 @@ backend:
   name: github
   repo: josiahkatz/josiahkatz.github.io
   branch: master
-  auth_endpoint: /auth
+  auth_endpoint: https://josiahkatz.com/auth
 
 publish_mode: simple
 
