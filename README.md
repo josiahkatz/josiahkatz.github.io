@@ -96,7 +96,8 @@ The auth endpoints are provided by Pages Functions:
 
 For local login, either:
 
-1) Create a second GitHub OAuth app with callback `http://127.0.0.1:8788/auth/callback`, then temporarily set `admin/config.yml` `base_url` to `http://127.0.0.1:8788`, or\n2) Temporarily change your OAuth app callback URL to the local URL above while testing.
+1) Create a second GitHub OAuth app with callback `http://127.0.0.1:8788/auth/callback`, or
+2) Temporarily change your OAuth app callback URL to the local URL above while testing.
 
 ### Content models
 
