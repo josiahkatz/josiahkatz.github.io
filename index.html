@@ -21,9 +21,34 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;800&display=swap" rel="stylesheet">
+    <link rel="dns-prefetch" href="https://ws.audioscrobbler.com">
+    <link rel="dns-prefetch" href="https://itunes.apple.com">
+    <link rel="dns-prefetch" href="https://www.googleapis.com">
     <link rel="stylesheet" href="./styles.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Josiah Katz",
+      "jobTitle": "VP of Design & Media",
+      "url": "https://josiahkatz.com",
+      "image": "https://josiahkatz.com/optimus.jpg",
+      "sameAs": [
+        "https://instagram.com/josiahkatz",
+        "https://www.last.fm/user/josiahkatz",
+        "https://www.linkedin.com/in/josiahkatz",
+        "https://youtube.com/josiahkatz"
+      ],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "WebstaurantStore",
+        "url": "https://www.webstaurantstore.com"
+      }
+    }
+    </script>
   </head>
   <body class="home">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div class="site-marquee" aria-label="Under construction notice">
       <div class="site-marquee__track">
         <div class="site-marquee__group">
@@ -56,7 +81,7 @@
     </header>
     <div>
       <p class="big-type">Josiah Katz</p>
-      <main>
+      <main id="main-content">
         <h1>Josiah Katz, VP of Design &amp; Media <span>York, PA</span></h1>
         <p>As a leader of the product and marketing teams at <a href="https://www.webstaurantstore.com" target="_blank">WebstaurantStore</a>, I'm responsible for the creative problem solvers who handle our user experiences, front-end development, graphic design, photography, 3D rendering, videography and social&nbsp;media.</p>
 
@@ -69,6 +94,9 @@
             <a class="section-link" href="https://www.last.fm/user/josiahkatz" target="_blank" rel="noopener">View profile</a>
           </div>
           <ul class="media-row" data-lastfm-list></ul>
+          <noscript>
+            <p class="section-note">JavaScript is required to load Last.fm activity. Please enable JavaScript or visit my <a href="https://www.last.fm/user/josiahkatz" target="_blank" rel="noopener">Last.fm profile</a> directly.</p>
+          </noscript>
         </section>
 
         <section class="media-section" id="videos">
@@ -80,6 +108,9 @@
             <a class="section-link" href="https://www.youtube.com/josiahkatz" target="_blank" rel="noopener noreferrer">View channel</a>
           </div>
           <ul class="media-row" data-youtube-list></ul>
+          <noscript>
+            <p class="section-note">JavaScript is required to load YouTube videos. Please enable JavaScript or visit my <a href="https://www.youtube.com/josiahkatz" target="_blank" rel="noopener noreferrer">YouTube channel</a> directly.</p>
+          </noscript>
         </section>
 
         <section class="media-section" id="books">
@@ -90,6 +121,9 @@
             </div>
           </div>
           <ul class="media-row" data-books-list></ul>
+          <noscript>
+            <p class="section-note">JavaScript is required to load book list.</p>
+          </noscript>
         </section>
 
         <section class="media-section" id="workouts" data-strava-section>
@@ -101,6 +135,9 @@
             <a class="section-link" href="https://www.strava.com/athletes/your-id" target="_blank" rel="noopener noreferrer">View profile</a>
           </div>
           <ul class="media-row" data-strava-list></ul>
+          <noscript>
+            <p class="section-note">JavaScript is required to load workout data. Please enable JavaScript or visit my <a href="https://www.strava.com/athletes/your-id" target="_blank" rel="noopener noreferrer">Strava profile</a> directly.</p>
+          </noscript>
         </section>
       </main>
     </div>

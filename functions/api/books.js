@@ -1,3 +1,5 @@
+import { checkEnvOrFail } from "../_shared/env-validation.js";
+
 export async function onRequestGet({ request, env }) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("q") || "";
@@ -13,15 +15,8 @@ export async function onRequestGet({ request, env }) {
     );
   }
 
-  if (!env.GOOGLE_BOOKS_API_KEY) {
-    return new Response(
-      JSON.stringify({ error: "Missing GOOGLE_BOOKS_API_KEY" }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-  }
+  const envError = checkEnvOrFail(env, ["GOOGLE_BOOKS_API_KEY"]);
+  if (envError) return envError;
 
   const cacheKey = new Request(
     `${new URL(request.url).origin}/api/books?q=${encodeURIComponent(query)}`
@@ -47,7 +42,7 @@ export async function onRequestGet({ request, env }) {
     status: upstreamResponse.status,
     headers: {
       "Content-Type": "application/json",
-      "Cache-Control": "public, max-age=0, s-maxage=86400",
+      "Cache-Control": "public, max-age=0, s-maxage=86400, stale-while-revalidate=172800",
     },
   });
 

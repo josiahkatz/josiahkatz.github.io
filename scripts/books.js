@@ -1,112 +1,37 @@
 import { config } from "./config.js";
+import {
+  renderSkeleton,
+  renderPlaceholder,
+  createMediaCard,
+  finishLoading,
+} from "./utils/cards.js";
+import { fetchWithRetry, formatTimestamp } from "./utils/fetch.js";
 
-const createSkeletonCard = () => {
-  const card = document.createElement("li");
-  card.className = "media-card media-card--placeholder";
+const updateStatus = (statusEl, message, timestamp = null, onRetry = null) => {
+  if (!statusEl) return;
 
-  const cover = document.createElement("div");
-  cover.className = "media-card__cover media-card__cover--tall";
+  statusEl.innerHTML = "";
+  statusEl.textContent = message;
 
-  const meta = document.createElement("div");
-  meta.className = "media-card__meta";
-
-  const line1 = document.createElement("div");
-  line1.className = "skeleton-line";
-
-  const line2 = document.createElement("div");
-  line2.className = "skeleton-line skeleton-line--short";
-
-  meta.append(line1, line2);
-  card.append(cover, meta);
-
-  return card;
-};
-
-const renderSkeleton = (listEl, count) => {
-  const cards = Array.from({ length: count }, () => createSkeletonCard());
-  listEl.replaceChildren(...cards);
-};
-
-const renderPlaceholder = (listEl, count, title, subtitle) => {
-  const cards = Array.from({ length: count }, () => {
-    const card = document.createElement("li");
-    card.className = "media-card media-card--placeholder";
-
-    const cover = document.createElement("div");
-    cover.className = "media-card__cover media-card__cover--tall";
-
-    const meta = document.createElement("div");
-    meta.className = "media-card__meta";
-
-    const titleEl = document.createElement("div");
-    titleEl.className = "media-card__title";
-    titleEl.textContent = title;
-
-    const subtitleEl = document.createElement("div");
-    subtitleEl.className = "media-card__subtitle";
-    subtitleEl.textContent = subtitle;
-
-    meta.append(titleEl, subtitleEl);
-    card.append(cover, meta);
-
-    return card;
-  });
-
-  listEl.replaceChildren(...cards);
-};
-
-const createBookCard = (book) => {
-  const card = document.createElement("li");
-  card.className = "media-card";
-
-  const link = document.createElement(book.link ? "a" : "div");
-  link.className = "media-card__link";
-
-  if (book.link) {
-    link.href = book.link;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
+  if (timestamp) {
+    const timeEl = document.createElement("span");
+    timeEl.className = "section-timestamp";
+    timeEl.textContent = `(${formatTimestamp(timestamp)})`;
+    statusEl.append(timeEl);
   }
 
-  const cover = document.createElement("div");
-  cover.className = "media-card__cover media-card__cover--tall";
-
-  if (book.coverUrl) {
-    const img = document.createElement("img");
-    img.src = book.coverUrl;
-    img.alt = book.title ? `${book.title} cover` : "Book cover";
-    img.loading = "lazy";
-    cover.append(img);
+  if (onRetry) {
+    const retryBtn = document.createElement("button");
+    retryBtn.className = "retry-button";
+    retryBtn.textContent = "Retry";
+    retryBtn.onclick = onRetry;
+    statusEl.append(" ", retryBtn);
   }
-
-  if (book.status) {
-    const badge = document.createElement("span");
-    badge.className = "media-card__badge";
-    badge.textContent = book.status;
-    cover.append(badge);
-  }
-
-  const meta = document.createElement("div");
-  meta.className = "media-card__meta";
-
-  const title = document.createElement("div");
-  title.className = "media-card__title";
-  title.textContent = book.title || "Untitled";
-
-  const subtitle = document.createElement("div");
-  subtitle.className = "media-card__subtitle";
-  subtitle.textContent = book.author || "";
-
-  meta.append(title, subtitle);
-  link.append(cover, meta);
-  card.append(link);
-
-  return card;
 };
 
 const fetchOpenLibraryShelf = async (user, shelf) => {
   const url = `https://openlibrary.org/people/${user}/books/${shelf}.json`;
-  const response = await fetch(url);
+  const response = await fetchWithRetry(url);
 
   if (!response.ok) {
     throw new Error(`Open Library error ${response.status}`);
@@ -142,7 +67,7 @@ const fetchGoogleBooksCover = async (title, author) => {
     q: query,
   })}`;
 
-  const response = await fetch(url);
+  const response = await fetchWithRetry(url);
   if (!response.ok) {
     throw new Error(`Google Books error ${response.status}`);
   }
@@ -196,15 +121,17 @@ export const initBooks = async ({ liveDataEnabled = true } = {}) => {
   if (!listEl || !statusEl) return;
 
   const limit = config.books.limit || 6;
-  renderSkeleton(listEl, limit);
 
-  if (!liveDataEnabled) {
-    renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch books");
-    statusEl.textContent = "Live data disabled.";
-    return;
-  }
+  const loadData = async () => {
+    renderSkeleton(listEl, limit);
+    updateStatus(statusEl, "Loading books.");
 
-  try {
+    if (!liveDataEnabled) {
+      renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch books");
+      updateStatus(statusEl, "Live data disabled.");
+      return;
+    }
+
     if (!config.books.openLibraryUser) {
       renderPlaceholder(
         listEl,
@@ -212,40 +139,61 @@ export const initBooks = async ({ liveDataEnabled = true } = {}) => {
         "Add Open Library username",
         "scripts/config.js"
       );
-      statusEl.textContent =
-        "Add your Open Library username in scripts/config.js.";
+      updateStatus(
+        statusEl,
+        "Add your Open Library username in scripts/config.js."
+      );
       return;
     }
 
-    const [current, read] = await Promise.all([
-      fetchOpenLibraryShelf(config.books.openLibraryUser, "currently-reading"),
-      fetchOpenLibraryShelf(config.books.openLibraryUser, "already-read"),
-    ]);
+    try {
+      const [current, read] = await Promise.all([
+        fetchOpenLibraryShelf(config.books.openLibraryUser, "currently-reading"),
+        fetchOpenLibraryShelf(config.books.openLibraryUser, "already-read"),
+      ]);
 
-    const currentBooks = current.map((book) => ({
-      ...book,
-      status: "Now Reading",
-    }));
-    const readBooks = read.map((book) => ({
-      ...book,
-      status: "",
-    }));
+      const currentBooks = current.map((book) => ({
+        ...book,
+        status: "Now Reading",
+      }));
+      const readBooks = read.map((book) => ({
+        ...book,
+        status: "",
+      }));
 
-    let books = [...currentBooks, ...readBooks].slice(0, limit);
-    books = await applyGoogleBooksCovers(books);
+      let books = [...currentBooks, ...readBooks].slice(0, limit);
+      books = await applyGoogleBooksCovers(books);
 
-    if (!books.length) {
-      renderPlaceholder(listEl, limit, "No books found", "Update Open Library");
-      return;
+      if (!books.length) {
+        renderPlaceholder(listEl, limit, "No books found", "Update Open Library");
+        updateStatus(statusEl, "No books found.", new Date(), loadData);
+        return;
+      }
+
+      const cards = books.map((book) =>
+        createMediaCard({
+          href: book.link || "#",
+          coverUrl: book.coverUrl,
+          coverAlt: book.title ? `${book.title} cover` : "Book cover",
+          title: book.title || "Untitled",
+          subtitle: book.author || "",
+          badge: book.status || null,
+          coverClass: "media-card__cover--tall",
+        })
+      );
+
+      listEl.replaceChildren(...cards);
+      finishLoading(listEl);
+      updateStatus(
+        statusEl,
+        "Updated from Open Library; covers from Google Books when available.",
+        new Date()
+      );
+    } catch (error) {
+      renderPlaceholder(listEl, limit, "Books unavailable", "Try again later");
+      updateStatus(statusEl, "Could not load book list.", null, loadData);
     }
+  };
 
-    statusEl.textContent =
-      "Updated from Open Library; covers from Google Books when available.";
-
-    const cards = books.map((book) => createBookCard(book));
-    listEl.replaceChildren(...cards);
-  } catch (error) {
-    statusEl.textContent = "Could not load book list.";
-    renderPlaceholder(listEl, limit, "Books unavailable", "Try again later");
-  }
+  await loadData();
 };

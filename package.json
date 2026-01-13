@@ -7,9 +7,16 @@
   },
   "scripts": {
     "build": "eleventy",
-    "dev": "eleventy --watch"
+    "dev": "eleventy --watch",
+    "serve": "npx wrangler pages dev . --ip 127.0.0.1 --port 8788",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
-    "@11ty/eleventy": "^2.0.1"
+    "@11ty/eleventy": "^2.0.1",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5"
   }
 }

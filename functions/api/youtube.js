@@ -1,3 +1,5 @@
+import { checkEnvOrFail } from "../_shared/env-validation.js";
+
 export async function onRequestGet({ request, env }) {
   const { searchParams } = new URL(request.url);
   const channelId = searchParams.get("channelId");
@@ -14,15 +16,8 @@ export async function onRequestGet({ request, env }) {
     );
   }
 
-  if (!env.YOUTUBE_API_KEY) {
-    return new Response(
-      JSON.stringify({ error: "Missing YOUTUBE_API_KEY" }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-  }
+  const envError = checkEnvOrFail(env, ["YOUTUBE_API_KEY"]);
+  if (envError) return envError;
 
   const cacheKey = new Request(
     `${new URL(request.url).origin}/api/youtube?channelId=${channelId}&maxResults=${maxResults}`
@@ -85,7 +80,7 @@ export async function onRequestGet({ request, env }) {
     {
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "public, max-age=0, s-maxage=600",
+        "Cache-Control": "public, max-age=0, s-maxage=600, stale-while-revalidate=3600",
       },
     }
   );

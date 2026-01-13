@@ -1,59 +1,11 @@
 import { config } from "./config.js";
-
-const createSkeletonCard = () => {
-  const card = document.createElement("li");
-  card.className = "media-card media-card--placeholder";
-
-  const cover = document.createElement("div");
-  cover.className = "media-card__cover media-card__cover--activity";
-
-  const meta = document.createElement("div");
-  meta.className = "media-card__meta";
-
-  const line1 = document.createElement("div");
-  line1.className = "skeleton-line";
-
-  const line2 = document.createElement("div");
-  line2.className = "skeleton-line skeleton-line--short";
-
-  meta.append(line1, line2);
-  card.append(cover, meta);
-
-  return card;
-};
-
-const renderSkeleton = (listEl, count) => {
-  const cards = Array.from({ length: count }, () => createSkeletonCard());
-  listEl.replaceChildren(...cards);
-};
-
-const renderPlaceholder = (listEl, count, title, subtitle) => {
-  const cards = Array.from({ length: count }, () => {
-    const card = document.createElement("li");
-    card.className = "media-card media-card--placeholder";
-
-    const cover = document.createElement("div");
-    cover.className = "media-card__cover media-card__cover--activity";
-
-    const meta = document.createElement("div");
-    meta.className = "media-card__meta";
-
-    const titleEl = document.createElement("div");
-    titleEl.className = "media-card__title";
-    titleEl.textContent = title;
-
-    const subtitleEl = document.createElement("div");
-    subtitleEl.className = "media-card__subtitle";
-    subtitleEl.textContent = subtitle;
-
-    meta.append(titleEl, subtitleEl);
-    card.append(cover, meta);
-
-    return card;
-  });
-
-  listEl.replaceChildren(...cards);
-};
+import {
+  renderSkeleton,
+  renderPlaceholder,
+  createMediaCard,
+  finishLoading,
+} from "./utils/cards.js";
+import { fetchWithRetry, formatTimestamp } from "./utils/fetch.js";
 
 const activityIconLabel = (type) => {
   const key = String(type || "").toLowerCase();
@@ -107,36 +59,32 @@ const createStat = (label, value) => {
   return stat;
 };
 
+const updateStatus = (statusEl, message, timestamp = null, onRetry = null) => {
+  if (!statusEl) return;
+
+  statusEl.innerHTML = "";
+  statusEl.textContent = message;
+
+  if (timestamp) {
+    const timeEl = document.createElement("span");
+    timeEl.className = "section-timestamp";
+    timeEl.textContent = `(${formatTimestamp(timestamp)})`;
+    statusEl.append(timeEl);
+  }
+
+  if (onRetry) {
+    const retryBtn = document.createElement("button");
+    retryBtn.className = "retry-button";
+    retryBtn.textContent = "Retry";
+    retryBtn.onclick = onRetry;
+    statusEl.append(" ", retryBtn);
+  }
+};
+
 const createActivityCard = (activity) => {
-  const card = document.createElement("li");
-  card.className = "media-card";
-
-  const link = document.createElement("a");
-  link.className = "media-card__link";
-  link.href = activity.strava_url || "https://www.strava.com";
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
-
-  const cover = document.createElement("div");
-  cover.className = "media-card__cover media-card__cover--activity";
-
   const icon = document.createElement("span");
   icon.className = "activity-icon";
   icon.textContent = activityIconLabel(activity.type);
-  cover.append(icon);
-
-  const meta = document.createElement("div");
-  meta.className = "media-card__meta";
-
-  const title = document.createElement("div");
-  title.className = "media-card__title";
-  title.textContent = activity.name || "Untitled activity";
-
-  const subtitle = document.createElement("div");
-  subtitle.className = "media-card__subtitle";
-  subtitle.textContent = [activity.type, formatDate(activity.start_date)]
-    .filter(Boolean)
-    .join(" - ");
 
   const stats = document.createElement("div");
   stats.className = "activity-stats";
@@ -150,11 +98,30 @@ const createActivityCard = (activity) => {
   const elevation = formatElevation(activity.total_elevation_gain_m);
   if (elevation) stats.append(createStat("", elevation));
 
-  meta.append(title, subtitle, stats);
-  link.append(cover, meta);
-  card.append(link);
+  return createMediaCard({
+    href: activity.strava_url || "https://www.strava.com",
+    customCoverContent: icon,
+    coverClass: "media-card__cover--activity",
+    title: activity.name || "Untitled activity",
+    subtitle: [activity.type, formatDate(activity.start_date)]
+      .filter(Boolean)
+      .join(" - "),
+    additionalContent: stats,
+  });
+};
 
-  return card;
+const fetchStravaData = async (limit) => {
+  const response = await fetchWithRetry(
+    `/api/strava/recent?${new URLSearchParams({
+      limit: String(limit),
+    })}`
+  );
+
+  if (!response.ok) {
+    throw new Error(`Strava error ${response.status}`);
+  }
+
+  return response.json();
 };
 
 export const initStrava = async ({ liveDataEnabled = true, stravaEnabled = true } = {}) => {
@@ -170,38 +137,36 @@ export const initStrava = async ({ liveDataEnabled = true, stravaEnabled = true 
   }
 
   const limit = config.strava?.limit || 6;
-  renderSkeleton(listEl, limit);
 
-  if (!liveDataEnabled) {
-    renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch workouts");
-    statusEl.textContent = "Live data disabled.";
-    return;
-  }
+  const loadData = async () => {
+    renderSkeleton(listEl, limit);
+    updateStatus(statusEl, "Loading Strava activity.");
 
-  try {
-    const response = await fetch(
-      `/api/strava/recent?${new URLSearchParams({
-        limit: String(limit),
-      })}`
-    );
-
-    if (!response.ok) {
-      throw new Error(`Strava error ${response.status}`);
-    }
-
-    const data = await response.json();
-    const activities = data?.activities || [];
-
-    if (!activities.length) {
-      renderPlaceholder(listEl, limit, "No recent workouts", "Check Strava");
-      statusEl.textContent = "No recent workouts found.";
+    if (!liveDataEnabled) {
+      renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch workouts");
+      updateStatus(statusEl, "Live data disabled.");
       return;
     }
 
-    const cards = activities.map((activity) => createActivityCard(activity));
-    listEl.replaceChildren(...cards);
-    statusEl.textContent = "Updated from Strava.";
-  } catch (error) {
-    section.hidden = true;
-  }
+    try {
+      const data = await fetchStravaData(limit);
+      const activities = data?.activities || [];
+
+      if (!activities.length) {
+        renderPlaceholder(listEl, limit, "No recent workouts", "Check Strava");
+        updateStatus(statusEl, "No recent workouts found.", new Date(), loadData);
+        return;
+      }
+
+      const cards = activities.map((activity) => createActivityCard(activity));
+      listEl.replaceChildren(...cards);
+      finishLoading(listEl);
+      updateStatus(statusEl, "Updated from Strava", new Date());
+    } catch (error) {
+      renderPlaceholder(listEl, limit, "Strava unavailable", "Try again later");
+      updateStatus(statusEl, "Could not load Strava activities.", null, loadData);
+    }
+  };
+
+  await loadData();
 };

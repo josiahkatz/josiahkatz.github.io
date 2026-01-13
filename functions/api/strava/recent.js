@@ -1,3 +1,5 @@
+import { checkEnvOrFail } from "../../_shared/env-validation.js";
+
 const STRAVA_TOKEN_URL = "https://www.strava.com/oauth/token";
 const STRAVA_ACTIVITIES_URL = "https://www.strava.com/api/v3/athlete/activities";
 const MAX_LIMIT = 10;
@@ -32,11 +34,6 @@ const sanitizeActivity = (activity) => ({
     : "https://www.strava.com",
 });
 
-const missingEnv = (env) =>
-  !env.STRAVA_CLIENT_ID ||
-  !env.STRAVA_CLIENT_SECRET ||
-  !env.STRAVA_REFRESH_TOKEN;
-
 export async function onRequestGet({ request, env }) {
   const liveDataEnabled = parseBoolean(env.LIVE_DATA_ENABLED, true);
   const stravaEnabled = parseBoolean(env.STRAVA_ENABLED, true);
@@ -50,12 +47,12 @@ export async function onRequestGet({ request, env }) {
     });
   }
 
-  if (missingEnv(env)) {
-    return new Response(JSON.stringify({ error: "Missing Strava credentials" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
+  const envError = checkEnvOrFail(env, [
+    "STRAVA_CLIENT_ID",
+    "STRAVA_CLIENT_SECRET",
+    "STRAVA_REFRESH_TOKEN",
+  ]);
+  if (envError) return envError;
 
   const url = new URL(request.url);
   const limit = parseLimit(url.searchParams.get("limit"));
@@ -113,7 +110,7 @@ export async function onRequestGet({ request, env }) {
   const response = new Response(JSON.stringify({ activities: sanitized }), {
     headers: {
       "Content-Type": "application/json",
-      "Cache-Control": "public, max-age=0, s-maxage=1800",
+      "Cache-Control": "public, max-age=0, s-maxage=1800, stale-while-revalidate=7200",
     },
   });
 
