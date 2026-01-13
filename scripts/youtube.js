@@ -1,59 +1,11 @@
 import { config } from "./config.js";
-
-const createSkeletonCard = () => {
-  const card = document.createElement("li");
-  card.className = "media-card media-card--placeholder";
-
-  const cover = document.createElement("div");
-  cover.className = "media-card__cover media-card__cover--wide";
-
-  const meta = document.createElement("div");
-  meta.className = "media-card__meta";
-
-  const line1 = document.createElement("div");
-  line1.className = "skeleton-line";
-
-  const line2 = document.createElement("div");
-  line2.className = "skeleton-line skeleton-line--short";
-
-  meta.append(line1, line2);
-  card.append(cover, meta);
-
-  return card;
-};
-
-const renderSkeleton = (listEl, count) => {
-  const cards = Array.from({ length: count }, () => createSkeletonCard());
-  listEl.replaceChildren(...cards);
-};
-
-const renderPlaceholder = (listEl, count, title, subtitle) => {
-  const cards = Array.from({ length: count }, () => {
-    const card = document.createElement("li");
-    card.className = "media-card media-card--placeholder";
-
-    const cover = document.createElement("div");
-    cover.className = "media-card__cover media-card__cover--wide";
-
-    const meta = document.createElement("div");
-    meta.className = "media-card__meta";
-
-    const titleEl = document.createElement("div");
-    titleEl.className = "media-card__title";
-    titleEl.textContent = title;
-
-    const subtitleEl = document.createElement("div");
-    subtitleEl.className = "media-card__subtitle";
-    subtitleEl.textContent = subtitle;
-
-    meta.append(titleEl, subtitleEl);
-    card.append(cover, meta);
-
-    return card;
-  });
-
-  listEl.replaceChildren(...cards);
-};
+import {
+  renderSkeleton,
+  renderPlaceholder,
+  createMediaCard,
+  finishLoading,
+} from "./utils/cards.js";
+import { fetchWithRetry, formatTimestamp } from "./utils/fetch.js";
 
 const CACHE_TTL_MS = 15 * 60 * 1000;
 
@@ -117,24 +69,32 @@ const formatDuration = (value) => {
   return parts.join(":");
 };
 
+const updateStatus = (statusEl, message, timestamp = null, onRetry = null) => {
+  if (!statusEl) return;
+
+  statusEl.innerHTML = "";
+  statusEl.textContent = message;
+
+  if (timestamp) {
+    const timeEl = document.createElement("span");
+    timeEl.className = "section-timestamp";
+    timeEl.textContent = `(${formatTimestamp(timestamp)})`;
+    statusEl.append(timeEl);
+  }
+
+  if (onRetry) {
+    const retryBtn = document.createElement("button");
+    retryBtn.className = "retry-button";
+    retryBtn.textContent = "Retry";
+    retryBtn.onclick = onRetry;
+    statusEl.append(" ", retryBtn);
+  }
+};
+
 const createVideoCard = (video, duration) => {
   const snippet = video.snippet || {};
   const videoId = video.id?.videoId;
   const titleText = decodeHtml(snippet.title) || "Untitled video";
-
-  const card = document.createElement("li");
-  card.className = "media-card";
-
-  const link = document.createElement("a");
-  link.className = "media-card__link";
-  link.href = videoId
-    ? `https://www.youtube.com/watch?v=${videoId}`
-    : `https://www.youtube.com/channel/${config.youtube.channelId}`;
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
-
-  const cover = document.createElement("div");
-  cover.className = "media-card__cover media-card__cover--wide";
 
   const imageUrl =
     snippet.thumbnails?.high?.url ||
@@ -142,37 +102,17 @@ const createVideoCard = (video, duration) => {
     snippet.thumbnails?.default?.url ||
     "";
 
-  if (imageUrl) {
-    const img = document.createElement("img");
-    img.src = imageUrl;
-    img.alt = `${titleText} thumbnail`;
-    img.loading = "lazy";
-    cover.append(img);
-  }
-
-  if (duration) {
-    const badge = document.createElement("span");
-    badge.className = "media-card__badge";
-    badge.textContent = duration;
-    cover.append(badge);
-  }
-
-  const meta = document.createElement("div");
-  meta.className = "media-card__meta";
-
-  const title = document.createElement("div");
-  title.className = "media-card__title";
-  title.textContent = titleText;
-
-  const subtitle = document.createElement("div");
-  subtitle.className = "media-card__subtitle";
-  subtitle.textContent = formatVideoDate(snippet.publishedAt) || "";
-
-  meta.append(title, subtitle);
-  link.append(cover, meta);
-  card.append(link);
-
-  return card;
+  return createMediaCard({
+    href: videoId
+      ? `https://www.youtube.com/watch?v=${videoId}`
+      : `https://www.youtube.com/channel/${config.youtube.channelId}`,
+    coverUrl: imageUrl,
+    coverAlt: `${titleText} thumbnail`,
+    coverClass: "media-card__cover--wide",
+    title: titleText,
+    subtitle: formatVideoDate(snippet.publishedAt) || "",
+    badge: duration || null,
+  });
 };
 
 const renderVideos = (listEl, items, durationsById, limit) => {
@@ -181,6 +121,21 @@ const renderVideos = (listEl, items, durationsById, limit) => {
     createVideoCard(video, durationsById[video.id?.videoId] || "")
   );
   listEl.replaceChildren(...cards);
+  finishLoading(listEl);
+};
+
+const fetchYouTubeData = async (limit) => {
+  const url = `/api/youtube?${new URLSearchParams({
+    channelId: config.youtube.channelId,
+    maxResults: String(limit),
+  })}`;
+
+  const response = await fetchWithRetry(url);
+  if (!response.ok) {
+    throw new Error(`YouTube error ${response.status}`);
+  }
+
+  return response.json();
 };
 
 export const initYouTube = async ({ liveDataEnabled = true } = {}) => {
@@ -190,88 +145,91 @@ export const initYouTube = async ({ liveDataEnabled = true } = {}) => {
   if (!listEl || !statusEl) return;
 
   const limit = config.youtube.maxResults || 6;
-  renderSkeleton(listEl, limit);
 
-  if (!config.youtube.channelId) {
-    renderPlaceholder(listEl, limit, "Add YouTube channel ID", "scripts/config.js");
-    statusEl.textContent = "Add your YouTube channel ID in scripts/config.js.";
-    return;
-  }
+  const loadData = async () => {
+    renderSkeleton(listEl, limit);
+    updateStatus(statusEl, "Loading YouTube videos.");
 
-  const cacheKey = `youtube-cache:${config.youtube.channelId}:${limit}`;
-  const cached = readCache(cacheKey);
-  if (!liveDataEnabled) {
-    if (cached?.payload?.items?.length) {
+    if (!liveDataEnabled) {
+      const cacheKey = `youtube-cache:${config.youtube.channelId}:${limit}`;
+      const cached = readCache(cacheKey);
+      if (cached?.payload?.items?.length) {
+        renderVideos(
+          listEl,
+          cached.payload.items,
+          cached.payload.durationsById,
+          limit
+        );
+        updateStatus(statusEl, "Live data off. Showing cached videos.");
+      } else {
+        renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch videos");
+        updateStatus(statusEl, "Live data disabled.");
+      }
+      return;
+    }
+
+    if (!config.youtube.channelId) {
+      renderPlaceholder(listEl, limit, "Add YouTube channel ID", "scripts/config.js");
+      updateStatus(statusEl, "Add your YouTube channel ID in scripts/config.js.");
+      return;
+    }
+
+    const cacheKey = `youtube-cache:${config.youtube.channelId}:${limit}`;
+    const cached = readCache(cacheKey);
+
+    if (cached?.isFresh) {
       renderVideos(
         listEl,
         cached.payload.items,
         cached.payload.durationsById,
         limit
       );
-      statusEl.textContent = "Live data off. Showing cached videos.";
-    } else {
-      renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch videos");
-      statusEl.textContent = "Live data disabled.";
-    }
-    return;
-  }
-
-  if (cached?.isFresh) {
-    renderVideos(
-      listEl,
-      cached.payload.items,
-      cached.payload.durationsById,
-      limit
-    );
-    statusEl.textContent = "Showing cached YouTube videos.";
-    return;
-  }
-
-  const url = `/api/youtube?${new URLSearchParams({
-    channelId: config.youtube.channelId,
-    maxResults: String(limit),
-  })}`;
-
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`YouTube error ${response.status}`);
-    }
-
-    const data = await response.json();
-    const items = data?.items || [];
-    const durationsById = data?.durationsById || {};
-
-    if (!items.length) {
-      statusEl.textContent = "No recent videos found.";
-      renderPlaceholder(listEl, limit, "No videos found", "Check channel ID");
+      updateStatus(statusEl, "Showing cached YouTube videos.");
       return;
     }
 
-    const formattedDurationsById = Object.fromEntries(
-      Object.entries(durationsById).map(([id, duration]) => [
-        id,
-        formatDuration(duration),
-      ])
-    );
+    try {
+      const data = await fetchYouTubeData(limit);
+      const items = data?.items || [];
+      const durationsById = data?.durationsById || {};
 
-    renderVideos(listEl, items, formattedDurationsById, limit);
-    writeCache(cacheKey, { items, durationsById: formattedDurationsById });
-    statusEl.textContent = "Updated from YouTube.";
-  } catch (error) {
-    if (cached?.payload?.items?.length) {
-      renderVideos(
-        listEl,
-        cached.payload.items,
-        cached.payload.durationsById,
-        limit
+      if (!items.length) {
+        renderPlaceholder(listEl, limit, "No videos found", "Check channel ID");
+        updateStatus(statusEl, "No recent videos found.", new Date(), loadData);
+        return;
+      }
+
+      const formattedDurationsById = Object.fromEntries(
+        Object.entries(durationsById).map(([id, duration]) => [
+          id,
+          formatDuration(duration),
+        ])
       );
-      statusEl.textContent =
-        "Showing cached YouTube videos (API unavailable).";
-      return;
-    }
 
-    statusEl.textContent = "Could not load YouTube videos.";
-    renderPlaceholder(listEl, limit, "YouTube unavailable", "Try again later");
-  }
+      renderVideos(listEl, items, formattedDurationsById, limit);
+      writeCache(cacheKey, { items, durationsById: formattedDurationsById });
+      updateStatus(statusEl, "Updated from YouTube", new Date());
+    } catch (error) {
+      if (cached?.payload?.items?.length) {
+        renderVideos(
+          listEl,
+          cached.payload.items,
+          cached.payload.durationsById,
+          limit
+        );
+        updateStatus(
+          statusEl,
+          "Showing cached YouTube videos (API unavailable).",
+          null,
+          loadData
+        );
+        return;
+      }
+
+      renderPlaceholder(listEl, limit, "YouTube unavailable", "Try again later");
+      updateStatus(statusEl, "Could not load YouTube videos.", null, loadData);
+    }
+  };
+
+  await loadData();
 };

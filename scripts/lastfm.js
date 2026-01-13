@@ -1,61 +1,13 @@
 import { config } from "./config.js";
+import {
+  renderSkeleton,
+  renderPlaceholder,
+  createMediaCard,
+  finishLoading,
+} from "./utils/cards.js";
+import { fetchWithRetry, formatTimestamp } from "./utils/fetch.js";
 
 const LASTFM_ROOT = "https://ws.audioscrobbler.com/2.0/";
-
-const createSkeletonCard = () => {
-  const card = document.createElement("li");
-  card.className = "media-card media-card--placeholder";
-
-  const cover = document.createElement("div");
-  cover.className = "media-card__cover";
-
-  const meta = document.createElement("div");
-  meta.className = "media-card__meta";
-
-  const line1 = document.createElement("div");
-  line1.className = "skeleton-line";
-
-  const line2 = document.createElement("div");
-  line2.className = "skeleton-line skeleton-line--short";
-
-  meta.append(line1, line2);
-  card.append(cover, meta);
-
-  return card;
-};
-
-const renderSkeleton = (listEl, count) => {
-  const cards = Array.from({ length: count }, () => createSkeletonCard());
-  listEl.replaceChildren(...cards);
-};
-
-const renderPlaceholder = (listEl, count, title, subtitle) => {
-  const cards = Array.from({ length: count }, () => {
-    const card = document.createElement("li");
-    card.className = "media-card media-card--placeholder";
-
-    const cover = document.createElement("div");
-    cover.className = "media-card__cover";
-
-    const meta = document.createElement("div");
-    meta.className = "media-card__meta";
-
-    const titleEl = document.createElement("div");
-    titleEl.className = "media-card__title";
-    titleEl.textContent = title;
-
-    const subtitleEl = document.createElement("div");
-    subtitleEl.className = "media-card__subtitle";
-    subtitleEl.textContent = subtitle;
-
-    meta.append(titleEl, subtitleEl);
-    card.append(cover, meta);
-
-    return card;
-  });
-
-  listEl.replaceChildren(...cards);
-};
 
 const getTrackImage = (track) => {
   const images = track?.image || [];
@@ -84,7 +36,7 @@ const fetchItunesArtwork = async (title, artist) => {
     limit: "1",
   });
 
-  const response = await fetch(url.toString());
+  const response = await fetchWithRetry(url.toString());
   if (!response.ok) {
     throw new Error(`iTunes error ${response.status}`);
   }
@@ -113,74 +65,29 @@ const getTrackArtist = (track) => {
   return track.artist?.["#text"] || track.artist?.name || "";
 };
 
-const createTrackCard = (track, coverUrl) => {
-  const card = document.createElement("li");
-  card.className = "media-card";
+const updateStatus = (statusEl, message, timestamp = null, onRetry = null) => {
+  if (!statusEl) return;
 
-  const link = document.createElement("a");
-  link.className = "media-card__link";
-  link.href = track.url || "https://www.last.fm/user/" + config.lastfm.user;
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
+  statusEl.innerHTML = "";
+  statusEl.textContent = message;
 
-  const cover = document.createElement("div");
-  cover.className = "media-card__cover";
-
-  if (coverUrl) {
-    const img = document.createElement("img");
-    img.src = coverUrl;
-    img.alt = track.name ? `${track.name} album art` : "Album art";
-    img.loading = "lazy";
-    cover.append(img);
+  if (timestamp) {
+    const timeEl = document.createElement("span");
+    timeEl.className = "section-timestamp";
+    timeEl.textContent = `(${formatTimestamp(timestamp)})`;
+    statusEl.append(timeEl);
   }
 
-  const nowPlaying = track?.["@attr"]?.nowplaying === "true";
-  if (nowPlaying) {
-    const badge = document.createElement("span");
-    badge.className = "media-card__badge";
-    badge.textContent = "Now playing";
-    cover.append(badge);
+  if (onRetry) {
+    const retryBtn = document.createElement("button");
+    retryBtn.className = "retry-button";
+    retryBtn.textContent = "Retry";
+    retryBtn.onclick = onRetry;
+    statusEl.append(" ", retryBtn);
   }
-
-  const meta = document.createElement("div");
-  meta.className = "media-card__meta";
-
-  const title = document.createElement("div");
-  title.className = "media-card__title";
-  title.textContent = track.name || "Untitled track";
-
-  const subtitle = document.createElement("div");
-  subtitle.className = "media-card__subtitle";
-  subtitle.textContent = getTrackArtist(track) || "Unknown artist";
-
-  meta.append(title, subtitle);
-  link.append(cover, meta);
-  card.append(link);
-
-  return card;
 };
 
-export const initLastfm = async ({ liveDataEnabled = true } = {}) => {
-  const listEl = document.querySelector("[data-lastfm-list]");
-  const statusEl = document.querySelector("[data-lastfm-status]");
-
-  if (!listEl || !statusEl) return;
-
-  const limit = config.lastfm.limit || 6;
-  renderSkeleton(listEl, limit);
-
-  if (!liveDataEnabled) {
-    renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch tracks");
-    statusEl.textContent = "Live data disabled.";
-    return;
-  }
-
-  if (!config.lastfm.apiKey) {
-    renderPlaceholder(listEl, limit, "Add Last.fm API key", "scripts/config.js");
-    statusEl.textContent = "Add your Last.fm API key in scripts/config.js.";
-    return;
-  }
-
+const fetchLastfmData = async (limit) => {
   const url = new URL(LASTFM_ROOT);
   url.search = new URLSearchParams({
     method: "user.getrecenttracks",
@@ -190,32 +97,73 @@ export const initLastfm = async ({ liveDataEnabled = true } = {}) => {
     limit: String(limit),
   });
 
-  try {
-    const response = await fetch(url.toString());
-    if (!response.ok) {
-      throw new Error(`Last.fm error ${response.status}`);
-    }
+  const response = await fetchWithRetry(url.toString());
+  if (!response.ok) {
+    throw new Error(`Last.fm error ${response.status}`);
+  }
 
-    const data = await response.json();
-    const tracks = data?.recenttracks?.track || [];
+  return response.json();
+};
 
-    if (!tracks.length) {
-      statusEl.textContent = "No recent tracks found.";
-      renderPlaceholder(listEl, limit, "No recent tracks", "Check Last.fm profile");
+export const initLastfm = async ({ liveDataEnabled = true } = {}) => {
+  const listEl = document.querySelector("[data-lastfm-list]");
+  const statusEl = document.querySelector("[data-lastfm-status]");
+
+  if (!listEl || !statusEl) return;
+
+  const limit = config.lastfm.limit || 6;
+
+  const loadData = async () => {
+    renderSkeleton(listEl, limit);
+    updateStatus(statusEl, "Loading Last.fm activity.");
+
+    if (!liveDataEnabled) {
+      renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch tracks");
+      updateStatus(statusEl, "Live data disabled.");
       return;
     }
 
-    const selected = tracks.slice(0, limit);
-    const covers = await Promise.all(
-      selected.map((track) => resolveTrackCover(track))
-    );
-    const cards = selected.map((track, index) =>
-      createTrackCard(track, covers[index])
-    );
-    listEl.replaceChildren(...cards);
-    statusEl.textContent = "Updated from Last.fm";
-  } catch (error) {
-    statusEl.textContent = "Could not load Last.fm tracks.";
-    renderPlaceholder(listEl, limit, "Last.fm unavailable", "Try again later");
-  }
+    if (!config.lastfm.apiKey) {
+      renderPlaceholder(listEl, limit, "Add Last.fm API key", "scripts/config.js");
+      updateStatus(statusEl, "Add your Last.fm API key in scripts/config.js.");
+      return;
+    }
+
+    try {
+      const data = await fetchLastfmData(limit);
+      const tracks = data?.recenttracks?.track || [];
+
+      if (!tracks.length) {
+        renderPlaceholder(listEl, limit, "No recent tracks", "Check Last.fm profile");
+        updateStatus(statusEl, "No recent tracks found.", new Date(), loadData);
+        return;
+      }
+
+      const selected = tracks.slice(0, limit);
+      const covers = await Promise.all(
+        selected.map((track) => resolveTrackCover(track))
+      );
+
+      const cards = selected.map((track, index) =>
+        createMediaCard({
+          href: track.url || "https://www.last.fm/user/" + config.lastfm.user,
+          coverUrl: covers[index],
+          coverAlt: track.name ? `${track.name} album art` : "Album art",
+          title: track.name || "Untitled track",
+          subtitle: getTrackArtist(track) || "Unknown artist",
+          badge:
+            track?.["@attr"]?.nowplaying === "true" ? "Now playing" : null,
+        })
+      );
+
+      listEl.replaceChildren(...cards);
+      finishLoading(listEl);
+      updateStatus(statusEl, "Updated from Last.fm", new Date());
+    } catch (error) {
+      renderPlaceholder(listEl, limit, "Last.fm unavailable", "Try again later");
+      updateStatus(statusEl, "Could not load Last.fm tracks.", null, loadData);
+    }
+  };
+
+  await loadData();
 };

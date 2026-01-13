@@ -45,14 +45,14 @@ module.exports = function (eleventyConfig) {
       .sort((a, b) => b.date - a.date)
   );
 
-  eleventyConfig.addPassthroughCopy("index.html");
-  eleventyConfig.addPassthroughCopy("styles.css");
-  eleventyConfig.addPassthroughCopy("scripts");
-  eleventyConfig.addPassthroughCopy("images");
-  eleventyConfig.addPassthroughCopy("data");
-  eleventyConfig.addPassthroughCopy("favicon.svg");
-  eleventyConfig.addPassthroughCopy("admin");
-  eleventyConfig.addPassthroughCopy("assets");
+  eleventyConfig.addPassthroughCopy({ "index.html": "index.html" });
+  eleventyConfig.addPassthroughCopy({ "styles.css": "styles.css" });
+  eleventyConfig.addPassthroughCopy({ scripts: "scripts" });
+  eleventyConfig.addPassthroughCopy({ images: "images" });
+  eleventyConfig.addPassthroughCopy({ data: "data" });
+  eleventyConfig.addPassthroughCopy({ "favicon.svg": "favicon.svg" });
+  eleventyConfig.addPassthroughCopy("content/admin");
+  eleventyConfig.addPassthroughCopy("content/assets");
 
   return {
     dir: {

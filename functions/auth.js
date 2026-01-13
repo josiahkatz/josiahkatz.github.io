@@ -1,3 +1,5 @@
+import { checkEnvOrFail } from "./_shared/env-validation.js";
+
 const GITHUB_AUTHORIZE_URL = "https://github.com/login/oauth/authorize";
 
 const buildStateCookie = (state, isSecure) => {
@@ -15,9 +17,8 @@ const buildStateCookie = (state, isSecure) => {
 };
 
 export async function onRequestGet({ request, env }) {
-  if (!env.GITHUB_CLIENT_ID) {
-    return new Response("Missing GITHUB_CLIENT_ID", { status: 500 });
-  }
+  const envError = checkEnvOrFail(env, ["GITHUB_CLIENT_ID"]);
+  if (envError) return envError;
 
   const url = new URL(request.url);
   const origin = url.origin;
