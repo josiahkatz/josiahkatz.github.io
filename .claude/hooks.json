@@ -3,5 +3,9 @@
     "command": "npm install && npm run build && npm run serve",
     "background": true,
     "description": "Build site and start local server"
+  },
+  "sessionEnd": {
+    "command": "pkill -f 'wrangler pages dev' || true",
+    "description": "Gracefully stop local server"
   }
 }
