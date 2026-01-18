@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design & Media Portfolio - Prototype</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --color-bg: #fafafa;
+      --color-text: #1a1a1a;
+      --color-accent: #ff6b35;
+      --color-border: #e0e0e0;
+      --color-hover: #f4f4f4;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 2rem 5%;
+      border-bottom: 1px solid var(--color-border);
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .header p {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .filters {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--color-border);
+      background: white;
+      border-radius: 100px;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .filter-btn:hover {
+      background: var(--color-hover);
+      border-color: var(--color-text);
+    }
+
+    .filter-btn.active {
+      background: var(--color-text);
+      color: white;
+      border-color: var(--color-text);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      padding: 3rem 5%;
+      max-width: 1800px;
+      margin: 0 auto;
+    }
+
+    .work-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .work-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+      border-color: var(--color-text);
+    }
+
+    .work-card.hidden {
+      display: none;
+    }
+
+    .card-image {
+      width: 100%;
+      aspect-ratio: 16/10;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-image.product-design {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .card-image.front-end {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    .card-image.photography {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    .card-image.video {
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    }
+
+    .card-image.graphic-design {
+      background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    }
+
+    .card-image.3d {
+      background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+    }
+
+    .card-image-placeholder {
+      font-size: 3rem;
+      opacity: 0.3;
+      color: white;
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 4px 12px;
+      background: rgba(0,0,0,0.75);
+      color: white;
+      font-size: 0.75rem;
+      border-radius: 100px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .card-content {
+      padding: 1.25rem;
+    }
+
+    .card-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--color-text);
+    }
+
+    .card-description {
+      font-size: 0.875rem;
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .card-tag {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      background: var(--color-hover);
+      border-radius: 4px;
+      color: #666;
+    }
+
+    .stats {
+      padding: 2rem 5%;
+      text-align: center;
+      background: white;
+      border-top: 1px solid var(--color-border);
+      margin-top: 3rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 2rem auto 0;
+    }
+
+    .stat-item {
+      padding: 1.5rem;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--color-accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+        padding: 2rem 4%;
+        gap: 1.25rem;
+      }
+
+      .header {
+        padding: 1.5rem 4%;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Design & Media</h1>
+    <p>Creating and building interfaces and assets with craft and creativity</p>
+
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All Work</button>
+      <button class="filter-btn" data-filter="product-design">Product Design</button>
+      <button class="filter-btn" data-filter="front-end">Front-End Dev</button>
+      <button class="filter-btn" data-filter="photography">Photography</button>
+      <button class="filter-btn" data-filter="video">Video</button>
+      <button class="filter-btn" data-filter="graphic-design">Graphic Design</button>
+      <button class="filter-btn" data-filter="3d">3D Media</button>
+    </div>
+  </header>
+
+  <div class="grid" id="workGrid"></div>
+
+  <section class="stats">
+    <h2 style="font-size: 2rem; margin-bottom: 1rem;">Impact by the Numbers</h2>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number">127</div>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">5</div>
+        <div class="stat-label">Brand Websites</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">2,400+</div>
+        <div class="stat-label">Products Photographed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">89</div>
+        <div class="stat-label">Videos Produced</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">340+</div>
+        <div class="stat-label">3D Models Created</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">24%</div>
+        <div class="stat-label">Conversion Increase</div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const projects = [
+      {
+        title: "WebstaurantStore Homepage Redesign",
+        discipline: "product-design",
+        badge: "Product Design",
+        description: "Complete redesign of the homepage to improve navigation and product discovery. Increased conversion by 18%.",
+        tags: ["UI Design", "UX Research", "A/B Testing"],
+        icon: "🎨"
+      },
+      {
+        title: "Mobile App Navigation System",
+        discipline: "product-design",
+        badge: "Product Design",
+        description: "Reimagined navigation for the mobile shopping experience with improved category browsing and search.",
+        tags: ["Mobile UI", "Information Architecture", "Prototyping"],
+        icon: "📱"
+      },
+      {
+        title: "Design System & Component Library",
+        discipline: "front-end",
+        badge: "Front-End",
+        description: "Built a comprehensive design system with 120+ reusable components to ensure consistency across brands.",
+        tags: ["React", "CSS Architecture", "Documentation"],
+        icon: "⚡"
+      },
+      {
+        title: "Product Page Performance Optimization",
+        discipline: "front-end",
+        badge: "Front-End",
+        description: "Improved page load times by 45% through lazy loading, code splitting, and image optimization.",
+        tags: ["Performance", "JavaScript", "SEO"],
+        icon: "🚀"
+      },
+      {
+        title: "Commercial Kitchen Equipment Photoshoot",
+        discipline: "photography",
+        badge: "Photography",
+        description: "Product photography session capturing 300+ commercial ovens, ranges, and refrigeration units.",
+        tags: ["Product Photography", "Lighting", "Post-Production"],
+        icon: "📸"
+      },
+      {
+        title: "Lifestyle & Environmental Photography",
+        discipline: "photography",
+        badge: "Photography",
+        description: "On-location shoots at restaurants and commercial kitchens showcasing products in real environments.",
+        tags: ["Environmental", "Lifestyle", "Art Direction"],
+        icon: "🌟"
+      },
+      {
+        title: "How-To: Commercial Pizza Oven Setup",
+        discipline: "video",
+        badge: "Video",
+        description: "Educational video series showing installation and operation of commercial pizza ovens. 150K+ views.",
+        tags: ["Videography", "Education", "YouTube"],
+        icon: "🎬"
+      },
+      {
+        title: "Brand Launch Campaign Video",
+        discipline: "video",
+        badge: "Video",
+        description: "30-second brand introduction video for new private label launch across social and web channels.",
+        tags: ["Motion Graphics", "Brand Video", "Social Media"],
+        icon: "🎥"
+      },
+      {
+        title: "Avantco Brand Identity System",
+        discipline: "graphic-design",
+        badge: "Graphic Design",
+        description: "Complete brand identity including logo, color system, typography, and brand guidelines for private label.",
+        tags: ["Branding", "Identity Design", "Style Guide"],
+        icon: "✨"
+      },
+      {
+        title: "Holiday Campaign Graphics",
+        discipline: "graphic-design",
+        badge: "Graphic Design",
+        description: "Seasonal campaign graphics for email, web banners, and social media promoting holiday deals.",
+        tags: ["Campaign Design", "Marketing", "Email Design"],
+        icon: "🎁"
+      },
+      {
+        title: "Commercial Refrigerator 3D Visualization",
+        discipline: "3d",
+        badge: "3D Media",
+        description: "Photorealistic 3D models of refrigeration units for website, marketing materials, and interactive viewers.",
+        tags: ["3D Modeling", "Product Visualization", "Rendering"],
+        icon: "🧊"
+      },
+      {
+        title: "Interactive Product Configurator",
+        discipline: "3d",
+        badge: "3D Media",
+        description: "Web-based 3D configurator allowing customers to customize finishes and features before purchase.",
+        tags: ["Three.js", "Interactive", "WebGL"],
+        icon: "🎮"
+      },
+      {
+        title: "Bakers Lane Website Launch",
+        discipline: "product-design",
+        badge: "Product Design",
+        description: "Full website design for new baking equipment brand targeting bakeries and pastry shops.",
+        tags: ["Web Design", "E-commerce", "User Experience"],
+        icon: "🍰"
+      },
+      {
+        title: "Checkout Flow Optimization",
+        discipline: "product-design",
+        badge: "Product Design",
+        description: "Streamlined checkout reducing steps from 5 to 3, improving mobile conversion by 22%.",
+        tags: ["Conversion Optimization", "User Testing", "Mobile"],
+        icon: "💳"
+      },
+      {
+        title: "Custom JavaScript Filter System",
+        discipline: "front-end",
+        badge: "Front-End",
+        description: "Advanced filtering and sorting for product catalog with 50,000+ items, sub-second response times.",
+        tags: ["JavaScript", "Performance", "Search"],
+        icon: "🔍"
+      },
+      {
+        title: "Accessibility Audit & Remediation",
+        discipline: "front-end",
+        badge: "Front-End",
+        description: "WCAG 2.1 AA compliance project improving keyboard navigation, screen reader support, and color contrast.",
+        tags: ["Accessibility", "ARIA", "Compliance"],
+        icon: "♿"
+      },
+      {
+        title: "Product Demo Video Series",
+        discipline: "video",
+        badge: "Video",
+        description: "12-part video series demonstrating features of commercial cooking equipment. Total views: 890K.",
+        tags: ["Product Demo", "Scripting", "YouTube"],
+        icon: "📺"
+      },
+      {
+        title: "Behind-the-Scenes Team Culture Video",
+        discipline: "video",
+        badge: "Video",
+        description: "Recruitment and culture video showcasing the Design & Media team's creative process and workspace.",
+        tags: ["Culture", "Recruitment", "Documentary"],
+        icon: "🎞️"
+      },
+      {
+        title: "Smallwares Product Photography",
+        discipline: "photography",
+        badge: "Photography",
+        description: "High-volume shoot of 800+ kitchen tools, utensils, and smallwares with consistent studio lighting.",
+        tags: ["High-Volume", "Studio", "Product"],
+        icon: "🔪"
+      },
+      {
+        title: "360° Product Photography",
+        discipline: "photography",
+        badge: "Photography",
+        description: "Interactive 360-degree product photography for premium items allowing customers to view all angles.",
+        tags: ["360 Photography", "Interactive", "Product Detail"],
+        icon: "🔄"
+      },
+      {
+        title: "Packaging Design for Private Label",
+        discipline: "graphic-design",
+        badge: "Graphic Design",
+        description: "Product packaging design for Avantco equipment line balancing brand identity with retail requirements.",
+        tags: ["Packaging", "Print Design", "Branding"],
+        icon: "📦"
+      },
+      {
+        title: "Social Media Content Templates",
+        discipline: "graphic-design",
+        badge: "Graphic Design",
+        description: "Modular template system enabling rapid creation of on-brand social media posts across platforms.",
+        tags: ["Templates", "Social Media", "Efficiency"],
+        icon: "📱"
+      },
+      {
+        title: "Restaurant Equipment 3D Exploded View",
+        discipline: "3d",
+        badge: "3D Media",
+        description: "Technical exploded-view 3D animations showing internal components for service manuals and training.",
+        tags: ["Technical Illustration", "Animation", "Training"],
+        icon: "🔧"
+      },
+      {
+        title: "VR Showroom Experience",
+        discipline: "3d",
+        badge: "3D Media",
+        description: "Virtual reality showroom allowing customers to explore commercial kitchen layouts in immersive 3D.",
+        tags: ["VR", "Unity", "Experiential"],
+        icon: "🥽"
+      }
+    ];
+
+    // Render all projects
+    const grid = document.getElementById('workGrid');
+
+    projects.forEach(project => {
+      const card = document.createElement('div');
+      card.className = `work-card ${project.discipline}`;
+      card.dataset.discipline = project.discipline;
+
+      card.innerHTML = `
+        <div class="card-image ${project.discipline}">
+          <div class="card-image-placeholder">${project.icon}</div>
+          <div class="card-badge">${project.badge}</div>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">${project.title}</h3>
+          <p class="card-description">${project.description}</p>
+          <div class="card-tags">
+            ${project.tags.map(tag => `<span class="card-tag">${tag}</span>`).join('')}
+          </div>
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+
+    // Filter functionality
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const workCards = document.querySelectorAll('.work-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+
+        // Update active state
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Filter cards
+        workCards.forEach(card => {
+          if (filter === 'all' || card.dataset.discipline === filter) {
+            card.classList.remove('hidden');
+            setTimeout(() => {
+              card.style.opacity = '0';
+              card.style.transform = 'scale(0.95)';
+              setTimeout(() => {
+                card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'scale(1)';
+              }, 10);
+            }, 10);
+          } else {
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+              card.classList.add('hidden');
+            }, 300);
+          }
+        });
+      });
+    });
+
+    // Add hover effect to cards
+    workCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const title = card.querySelector('.card-title').textContent;
+        alert(`Project clicked: ${title}\n\nIn a full implementation, this would open a detailed case study page with:\n• Challenge & objectives\n• Process & approach\n• Team involved\n• Final deliverables\n• Business impact & metrics`);
+      });
+    });
+  </script>
+</body>
+</html>
