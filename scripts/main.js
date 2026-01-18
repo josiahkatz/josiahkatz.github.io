@@ -4,6 +4,9 @@ import { initBooks } from "./books.js";
 import { initStrava } from "./strava.js";
 import { config } from "./config.js";
 
+// Development mode: disable live API calls to avoid hitting rate limits
+const DEV_MODE = true; // TODO: Set to false for production
+
 // Request deduplication for settings API
 let settingsPromise = null;
 
@@ -65,24 +68,28 @@ const createSectionObserver = (callback) => {
 document.addEventListener("DOMContentLoaded", async () => {
   const settings = await getSettings();
 
+  // Override live data setting in dev mode
+  const liveDataEnabled = DEV_MODE ? false : settings.liveDataEnabled;
+
   // Set up lazy loading with Intersection Observer
   const observer = createSectionObserver(async (section) => {
     const sectionId = section.id;
 
     switch (sectionId) {
       case "now-playing":
-        await initLastfm({ liveDataEnabled: settings.liveDataEnabled });
+        await initLastfm({ liveDataEnabled });
         break;
       case "videos":
-        await initYouTube({ liveDataEnabled: settings.liveDataEnabled });
+        await initYouTube({ liveDataEnabled });
         break;
       case "books":
-        await initBooks({ liveDataEnabled: settings.liveDataEnabled });
+        await initBooks({ liveDataEnabled });
         break;
       case "workouts":
         await initStrava({
-          liveDataEnabled: settings.liveDataEnabled,
+          liveDataEnabled,
           stravaEnabled: settings.stravaEnabled,
+          useMockData: DEV_MODE, // Use mock data in dev mode
         });
         break;
     }
