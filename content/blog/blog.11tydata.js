@@ -9,6 +9,8 @@ module.exports = {
       data.page.inputPath.endsWith(".md")
         ? "layouts/blog-post.njk"
         : data.layout,
+    mainClass: (data) =>
+      data.page.inputPath.endsWith(".md") ? "blog" : data.mainClass,
     ogType: (data) =>
       data.page.inputPath.endsWith(".md") ? "article" : data.ogType,
     tags: (data) => {
