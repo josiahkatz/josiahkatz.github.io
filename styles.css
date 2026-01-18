@@ -432,9 +432,57 @@ footer {
 	color: rgba(var(--color-forest-rgb), 0.7);
 }
 
+/* Carousel */
+.carousel {
+	position: relative;
+	margin-right: calc(-50vw + 50%);
+}
+.carousel__track {
+	overflow-x: clip;
+	overflow-y: visible;
+	padding: 20px 0;
+	margin: -20px 0;
+}
+.carousel__btn {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 10;
+	width: 40px;
+	height: 40px;
+	border: 1px solid var(--color-highlight);
+	border-radius: 50%;
+	background: var(--color-mint);
+	color: var(--color-forest);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 1;
+	transition: opacity 200ms ease, background-color 200ms ease, transform 200ms ease;
+	box-shadow: 0 2px 8px rgba(var(--color-forest-rgb), 0.1);
+}
+.carousel__btn:hover {
+	background: var(--color-highlight);
+	transform: translateY(-50%) scale(1.05);
+}
+.carousel__btn--prev {
+	left: -20px;
+}
+.carousel__btn--next {
+	right: calc(10vw - 20px);
+}
+.carousel__btn--hidden {
+	opacity: 0;
+	pointer-events: none;
+}
+.carousel__btn svg {
+	width: 20px;
+	height: 20px;
+}
+
 .media-row {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+	display: flex;
 	gap: 16px;
 	padding: 0;
 	margin: 0;
@@ -442,33 +490,41 @@ footer {
 	opacity: 1;
 	transition: opacity 300ms ease;
 }
+.media-row::after {
+	content: "";
+	flex: 0 0 calc(50vw - 50% - 16px);
+}
 .media-row.loading {
 	opacity: 0.6;
 }
-[data-strava-list] {
-	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+.media-card {
+	flex: 0 0 clamp(140px, 35vw, 160px);
+	scroll-snap-align: start;
+}
+[data-youtube-list] .media-card,
+[data-strava-list] .media-card {
+	flex: 0 0 clamp(180px, 45vw, 220px);
 }
 
 @media (max-width:700px) {
-	.media-row {
-		display: flex;
-		overflow-x: auto;
-		scroll-snap-type: x mandatory;
-		gap: 12px;
-		padding: 0 20px 10px 0;
+	.carousel {
 		margin-right: -20px;
-		-webkit-overflow-scrolling: touch;
+	}
+	.carousel__btn {
+		display: none;
+	}
+	.media-row {
+		gap: 12px;
 	}
 	.media-row::after {
-		content: "";
-		flex: 0 0 20px;
+		flex: 0 0 8px;
 	}
 	.media-card {
-		flex: 0 0 clamp(180px, 70vw, 240px);
-		scroll-snap-align: start;
+		flex: 0 0 clamp(140px, 50vw, 160px);
 	}
+	[data-youtube-list] .media-card,
 	[data-strava-list] .media-card {
-		flex: 0 0 clamp(260px, 80vw, 320px);
+		flex: 0 0 clamp(180px, 70vw, 220px);
 	}
 }
 
@@ -585,11 +641,19 @@ footer {
 	font-size: 14px;
 	line-height: 1.2;
 	font-weight: 800;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
 }
 .media-card__subtitle {
 	font-size: 12px;
 	letter-spacing: 0.4px;
 	color: rgba(var(--color-forest-rgb), 0.7);
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
 }
 
 .media-card--placeholder {

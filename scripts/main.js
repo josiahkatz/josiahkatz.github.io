@@ -3,6 +3,7 @@ import { initYouTube } from "./youtube.js";
 import { initBooks } from "./books.js";
 import { initStrava } from "./strava.js";
 import { config } from "./config.js";
+import { initCarousel } from "./utils/carousel.js";
 
 // Development mode: disable live API calls to avoid hitting rate limits
 const DEV_MODE = false;
@@ -92,6 +93,12 @@ document.addEventListener("DOMContentLoaded", async () => {
           useMockData: DEV_MODE, // Use mock data in dev mode
         });
         break;
+    }
+
+    // Initialize carousel arrows for this section
+    const mediaRow = section.querySelector(".media-row");
+    if (mediaRow) {
+      initCarousel(mediaRow);
     }
   });
 
