@@ -169,6 +169,34 @@ Admin UI at `/admin/` for managing blog posts and notes:
 - Uploads media to `assets/uploads/`
 - Writes markdown files to `content/blog/` and `content/notes/`
 
+### Creating & Previewing Blog Posts
+
+**Manual creation workflow:**
+1. Create new markdown file in `content/blog/` with frontmatter:
+   ```markdown
+   ---
+   title: Post Title
+   date: YYYY-MM-DD
+   summary: Brief description
+   tags: [tag1, tag2]
+   featured_image: /images/blog-placeholder.svg
+   ---
+   Post content here...
+   ```
+
+2. Build the site to compile markdown to HTML:
+   ```bash
+   npm run build
+   ```
+
+3. Preview locally with Cloudflare Pages Functions:
+   ```bash
+   npm run serve
+   ```
+   Site available at: http://127.0.0.1:8788
+
+**Important:** Always run `npm run build` after creating or editing blog posts. The dev server (`npm run serve`) serves from the `dist/` directory, so changes in `content/` won't appear until Eleventy rebuilds them.
+
 ### Styling Approach
 
 - Single `styles.css` file (no preprocessor)
