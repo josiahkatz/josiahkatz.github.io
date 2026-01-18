@@ -100,8 +100,11 @@ blockquote {
 /* Accessibility */
 .skip-link {
 	position: absolute;
-	top: -40px;
-	left: 0;
+	left: -9999px;
+	top: auto;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
 	background: var(--color-forest);
 	color: var(--color-mint);
 	padding: 8px 16px;
@@ -110,7 +113,12 @@ blockquote {
 	border: 2px solid var(--color-highlight);
 }
 .skip-link:focus {
-	top: 0;
+	position: fixed;
+	top: 8px;
+	left: 8px;
+	width: auto;
+	height: auto;
+	overflow: visible;
 }
 
 /* Layout */
