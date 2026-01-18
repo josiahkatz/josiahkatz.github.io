@@ -1,0 +1,7 @@
+{
+  "sessionStart": {
+    "command": "npm install && npm run build && npm run serve",
+    "background": true,
+    "description": "Build site and start local server"
+  }
+}
