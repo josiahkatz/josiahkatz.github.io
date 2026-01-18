@@ -5,7 +5,7 @@ import { initStrava } from "./strava.js";
 import { config } from "./config.js";
 
 // Development mode: disable live API calls to avoid hitting rate limits
-const DEV_MODE = true; // TODO: Set to false for production
+const DEV_MODE = false;
 
 // Request deduplication for settings API
 let settingsPromise = null;
