@@ -154,7 +154,7 @@ const createActivityCard = (activity) => {
   } else {
     // Show time as main metric
     metricValue.textContent = formatDuration(activity.moving_time_s);
-    metricUnit.textContent = "minutes";
+    metricUnit.textContent = "time";
   }
 
   metricContainer.append(metricValue, metricUnit);
