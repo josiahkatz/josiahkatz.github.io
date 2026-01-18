@@ -15,14 +15,5 @@ mainClass: blog
   <div class="post-body">
     {{ content | safe }}
   </div>
-  {% if tags %}
-    <div class="post-tags-footer">
-      {% for tag in tags | sort %}
-        {% if tag != "blog" %}
-          <a href="/blog/tags/{{ tag | slugify }}/">{{ tag }}</a>
-        {% endif %}
-      {% endfor %}
-    </div>
-  {% endif %}
   <p class="post-back"><a href="/blog/">← Back to Blog</a></p>
 </article>

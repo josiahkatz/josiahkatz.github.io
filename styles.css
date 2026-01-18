@@ -788,25 +788,6 @@ main.page {
 	border-radius: 20px;
 	border: 1px solid var(--color-highlight);
 }
-.post-tags-footer {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 8px;
-	margin-top: 32px;
-	padding-top: 24px;
-	border-top: 1px solid var(--color-highlight);
-}
-.post-tags-footer a {
-	font-size: 12px;
-	font-weight: 500;
-	color: rgba(var(--color-forest-rgb), 0.55);
-	border-bottom: none;
-	padding: 0;
-}
-.post-tags-footer a:hover {
-	color: var(--color-forest);
-	background: none;
-}
 .post-back {
 	display: inline-flex;
 	align-items: center;
