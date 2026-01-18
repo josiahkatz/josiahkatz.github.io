@@ -8,7 +8,7 @@
   "scripts": {
     "build": "eleventy",
     "dev": "eleventy --watch",
-    "serve": "npx wrangler pages dev . --ip 127.0.0.1 --port 8788",
+    "serve": "npx wrangler pages dev dist --ip 127.0.0.1 --port 8788",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
