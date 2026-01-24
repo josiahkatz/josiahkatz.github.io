@@ -443,6 +443,17 @@ footer {
 	padding: 20px 0;
 	margin: -20px 0;
 }
+@media (max-width:700px) {
+	.carousel__track {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		scroll-snap-type: x mandatory;
+	}
+	.media-row {
+		transform: none !important;
+		transition: none !important;
+	}
+}
 .carousel__btn {
 	position: absolute;
 	top: 50%;
