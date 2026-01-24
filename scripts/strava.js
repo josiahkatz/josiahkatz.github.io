@@ -205,7 +205,7 @@ const fetchStravaData = async (limit) => {
   return response.json();
 };
 
-export const initStrava = async ({ liveDataEnabled = true, stravaEnabled = true, useMockData = true } = {}) => {
+export const initStrava = async ({ liveDataEnabled = true, stravaEnabled = true, useMockData = true, skeletonDelay = 0 } = {}) => {
   const section = document.querySelector("[data-strava-section]");
   const listEl = document.querySelector("[data-strava-list]");
   const statusEl = document.querySelector("[data-strava-status]");
@@ -220,8 +220,12 @@ export const initStrava = async ({ liveDataEnabled = true, stravaEnabled = true,
   const limit = config.strava?.limit || 6;
 
   const loadData = async () => {
-    renderSkeleton(listEl, limit);
+    renderSkeleton(listEl, limit, "activity");
     updateStatus(statusEl, "Loading Strava activity.");
+
+    if (skeletonDelay > 0) {
+      await new Promise((r) => setTimeout(r, skeletonDelay));
+    }
 
     // If using mock data, skip live data check
     if (!useMockData && !liveDataEnabled) {

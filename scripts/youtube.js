@@ -138,7 +138,7 @@ const fetchYouTubeData = async (limit) => {
   return response.json();
 };
 
-export const initYouTube = async ({ liveDataEnabled = true } = {}) => {
+export const initYouTube = async ({ liveDataEnabled = true, skeletonDelay = 0 } = {}) => {
   const listEl = document.querySelector("[data-youtube-list]");
   const statusEl = document.querySelector("[data-youtube-status]");
 
@@ -147,8 +147,12 @@ export const initYouTube = async ({ liveDataEnabled = true } = {}) => {
   const limit = config.youtube.maxResults || 6;
 
   const loadData = async () => {
-    renderSkeleton(listEl, limit);
+    renderSkeleton(listEl, limit, "video");
     updateStatus(statusEl, "Loading YouTube videos.");
+
+    if (skeletonDelay > 0) {
+      await new Promise((r) => setTimeout(r, skeletonDelay));
+    }
 
     if (!liveDataEnabled) {
       const cacheKey = `youtube-cache:${config.youtube.channelId}:${limit}`;

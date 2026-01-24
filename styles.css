@@ -675,6 +675,23 @@ footer {
 .media-card--placeholder .skeleton-line--short {
 	width: 70%;
 }
+.media-card--placeholder .skeleton-badge {
+	height: 1.25rem;
+	width: 5rem;
+	border-radius: 999px;
+	background: linear-gradient(120deg, var(--color-shimmer-1), var(--color-shimmer-2), var(--color-shimmer-1));
+	background-size: 200% 100%;
+	animation: shimmer 1.6s infinite;
+}
+.media-card--placeholder .skeleton-metric {
+	height: 2rem;
+	width: 4rem;
+	margin-bottom: 0.5rem;
+	border-radius: 4px;
+	background: linear-gradient(120deg, var(--color-shimmer-1), var(--color-shimmer-2), var(--color-shimmer-1));
+	background-size: 200% 100%;
+	animation: shimmer 1.6s infinite;
+}
 
 @keyframes shimmer {
 	0% {

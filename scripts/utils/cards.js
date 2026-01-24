@@ -2,32 +2,61 @@
  * Shared utilities for creating media cards
  */
 
-export const createSkeletonCard = () => {
+/**
+ * Skeleton card types matching actual content:
+ * - "music": Square album art (1:1)
+ * - "video": Wide video thumbnail (16:9)
+ * - "book": Tall book cover (2:3)
+ * - "activity": Strava workout card (8:1 with metric)
+ */
+export const createSkeletonCard = (type = "music") => {
   const card = document.createElement("li");
   card.className = "media-card media-card--placeholder";
 
   const cover = document.createElement("div");
-  cover.className = "media-card__cover";
+  const coverClasses = {
+    music: "media-card__cover",
+    video: "media-card__cover media-card__cover--wide",
+    book: "media-card__cover media-card__cover--tall",
+    activity: "media-card__cover media-card__cover--activity",
+  };
+  cover.className = coverClasses[type] || coverClasses.music;
+
+  // Activity cards have a badge in the cover
+  if (type === "activity") {
+    const badgeSkeleton = document.createElement("div");
+    badgeSkeleton.className = "skeleton-badge";
+    cover.append(badgeSkeleton);
+  }
 
   const meta = document.createElement("div");
   meta.className = "media-card__meta";
 
-  const line1 = document.createElement("div");
-  line1.className = "skeleton-line";
+  // Activity cards have a large metric instead of standard lines
+  if (type === "activity") {
+    const metricSkeleton = document.createElement("div");
+    metricSkeleton.className = "skeleton-metric";
+    const line1 = document.createElement("div");
+    line1.className = "skeleton-line";
+    const line2 = document.createElement("div");
+    line2.className = "skeleton-line skeleton-line--short";
+    meta.append(metricSkeleton, line1, line2);
+  } else {
+    const line1 = document.createElement("div");
+    line1.className = "skeleton-line";
+    const line2 = document.createElement("div");
+    line2.className = "skeleton-line skeleton-line--short";
+    meta.append(line1, line2);
+  }
 
-  const line2 = document.createElement("div");
-  line2.className = "skeleton-line skeleton-line--short";
-
-  meta.append(line1, line2);
   card.append(cover, meta);
-
   return card;
 };
 
-export const renderSkeleton = (listEl, count) => {
+export const renderSkeleton = (listEl, count, type = "music") => {
   if (!listEl) return;
   listEl.classList.add("loading");
-  const cards = Array.from({ length: count }, () => createSkeletonCard());
+  const cards = Array.from({ length: count }, () => createSkeletonCard(type));
   listEl.replaceChildren(...cards);
 };
 

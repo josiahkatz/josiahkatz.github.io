@@ -114,7 +114,7 @@ const applyGoogleBooksCovers = async (books) =>
     })
   );
 
-export const initBooks = async ({ liveDataEnabled = true } = {}) => {
+export const initBooks = async ({ liveDataEnabled = true, skeletonDelay = 0 } = {}) => {
   const listEl = document.querySelector("[data-books-list]");
   const statusEl = document.querySelector("[data-books-status]");
 
@@ -123,8 +123,12 @@ export const initBooks = async ({ liveDataEnabled = true } = {}) => {
   const limit = config.books.limit || 6;
 
   const loadData = async () => {
-    renderSkeleton(listEl, limit);
+    renderSkeleton(listEl, limit, "book");
     updateStatus(statusEl, "Loading books.");
+
+    if (skeletonDelay > 0) {
+      await new Promise((r) => setTimeout(r, skeletonDelay));
+    }
 
     if (!liveDataEnabled) {
       renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch books");

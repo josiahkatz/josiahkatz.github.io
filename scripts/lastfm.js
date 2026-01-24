@@ -105,7 +105,7 @@ const fetchLastfmData = async (limit) => {
   return response.json();
 };
 
-export const initLastfm = async ({ liveDataEnabled = true } = {}) => {
+export const initLastfm = async ({ liveDataEnabled = true, skeletonDelay = 0 } = {}) => {
   const listEl = document.querySelector("[data-lastfm-list]");
   const statusEl = document.querySelector("[data-lastfm-status]");
 
@@ -116,6 +116,10 @@ export const initLastfm = async ({ liveDataEnabled = true } = {}) => {
   const loadData = async () => {
     renderSkeleton(listEl, limit);
     updateStatus(statusEl, "Loading Last.fm activity.");
+
+    if (skeletonDelay > 0) {
+      await new Promise((r) => setTimeout(r, skeletonDelay));
+    }
 
     if (!liveDataEnabled) {
       renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch tracks");

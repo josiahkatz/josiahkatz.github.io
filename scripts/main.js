@@ -8,6 +8,9 @@ import { initCarousel } from "./utils/carousel.js";
 // Development mode: disable live API calls to avoid hitting rate limits
 const DEV_MODE = false;
 
+// Skeleton preview: add delay to see loading states (set to 0 for production)
+const SKELETON_DELAY = 0;
+
 // Request deduplication for settings API
 let settingsPromise = null;
 
@@ -78,19 +81,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     switch (sectionId) {
       case "now-playing":
-        await initLastfm({ liveDataEnabled });
+        await initLastfm({ liveDataEnabled, skeletonDelay: SKELETON_DELAY });
         break;
       case "videos":
-        await initYouTube({ liveDataEnabled });
+        await initYouTube({ liveDataEnabled, skeletonDelay: SKELETON_DELAY });
         break;
       case "books":
-        await initBooks({ liveDataEnabled });
+        await initBooks({ liveDataEnabled, skeletonDelay: SKELETON_DELAY });
         break;
       case "workouts":
         await initStrava({
           liveDataEnabled,
           stravaEnabled: settings.stravaEnabled,
-          useMockData: DEV_MODE, // Use mock data in dev mode
+          useMockData: DEV_MODE,
+          skeletonDelay: SKELETON_DELAY,
         });
         break;
     }
