@@ -39,19 +39,12 @@ module.exports = function (eleventyConfig) {
     return [...tags].sort();
   });
 
-  eleventyConfig.addCollection("notes", (collectionApi) =>
-    collectionApi
-      .getFilteredByGlob("content/notes/*.md")
-      .sort((a, b) => b.date - a.date)
-  );
-
   eleventyConfig.addPassthroughCopy({ "index.html": "index.html" });
   eleventyConfig.addPassthroughCopy({ "styles.css": "styles.css" });
   eleventyConfig.addPassthroughCopy({ scripts: "scripts" });
   eleventyConfig.addPassthroughCopy({ images: "images" });
   eleventyConfig.addPassthroughCopy({ data: "data" });
   eleventyConfig.addPassthroughCopy({ "favicon.svg": "favicon.svg" });
-  eleventyConfig.addPassthroughCopy("content/admin");
   eleventyConfig.addPassthroughCopy("content/assets");
 
   return {

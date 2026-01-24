@@ -9,14 +9,23 @@
     "build": "eleventy",
     "dev": "eleventy --watch",
     "serve": "npx wrangler pages dev dist --ip 127.0.0.1 --port 8788",
+    "test": "npm run test:build && npm run test:api",
+    "test:build": "node --test test/blog.test.mjs",
+    "test:api": "node --test test/api.test.mjs",
+    "test:visual": "npx playwright test",
+    "test:visual:update": "npx playwright test --update-snapshots",
+    "test:all": "npm run test && npm run test:visual",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",
+    "@playwright/test": "^1.58.0",
     "eslint": "^8.57.0",
+    "husky": "^9.1.7",
     "prettier": "^3.2.5"
   }
 }
