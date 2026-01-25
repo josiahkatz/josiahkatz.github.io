@@ -1,89 +1,40 @@
 ---
-title: Vibe Coding and Building in Public
-date: 2026-01-24
-summary: How AI-assisted coding brought back the joy of shipping side projects, and what I built in a few weeks with Claude and Codex.
+title: Making Stuff with Computers (and AI)
+date: 2026-01-25
+summary: How AI-assisted coding brought back the joy of side projects
 tags: [AI, web design, development]
 ---
 
-I've been coding again. Like, *actually* coding—not just managing developers or reviewing pull requests, but sitting down and building things myself. And it's been incredibly fun.
+I've been coding again. Well, vibe coding. I haven't shipped code to any of our company codebases since 2020. At this point for my team, it would be irresponsible for me to stop leading and managing to start designing or coding stuff at work.
 
-Simon Willison recently wrote about [coding again](https://simonwillison.net/2026/Jan/4/coding-again/) after years of being too busy with other things. His key insight resonated: "AI assistance means you can get something useful done in half an hour, or even while you are doing other stuff." This is exactly what I've experienced.
+But Claude Code and ChatGPT Codex have unlocked something in my brain that I haven't felt for a long time. It's been hard to want to do anything else but sit down at my computer (or chat with Claude on my phone?!) and make stuff! I can squeeze in a couple minutes here or there to write a prompt and make something.
 
-I'm calling it "vibe coding"—that flow state where you describe what you want, collaborate with an AI coding assistant, and ship features in the time it used to take just to set up your development environment. It's not about replacing programming knowledge; it's about removing the friction that kept me from *using* that knowledge.
+## Others Feel It Too
 
-## What I Built
+Simon Willison wrote in [coding again](https://simonwillison.net/2026/Jan/4/coding-again/):
 
-In the past three weeks, I've transformed my personal site from a static "under construction" page into a dynamic dashboard of my digital life. Here's what's live:
+> Something I like about our weird new LLM-assisted world is the number of people I know who are coding again, having mostly stopped as they moved into management roles or lost their personal side project time to becoming parents.
+>
+> AI assistance means you can get something useful done in half an hour.
 
-**Live API Integrations:**
-- **Last.fm** - Recently played music with album art
-- **YouTube** - Latest videos from my channel
-- **Google Books** - Currently reading with cover images
-- **Strava** - Recent workouts (with privacy-first data sanitization)
+That's exactly what I've experienced.
 
-**Developer Experience Improvements:**
-- **Claude Code hooks** - Auto-builds and serves the site when I start a coding session, gracefully stops the server when I'm done
-- **CLAUDE.md** - A comprehensive guide that teaches Claude Code about my codebase architecture, build commands, and coding patterns
-- **Test suite** - Build verification, API validation, and visual regression tests with Playwright
+Mattias Geniar shared in [Web development is fun again](https://ma.ttias.be/web-development-is-fun-again/):
 
-**Performance Optimizations:**
-- **Lazy loading** with Intersection Observer - Sections only fetch data when scrolled into view (75% reduction in initial API calls)
-- **Stale-while-revalidate caching** - Cloudflare Functions serve cached content instantly while fetching fresh data in the background
-- **Exponential backoff retry logic** - Graceful handling of API failures
+> Claude and Codex gave me the leverage I desperately needed. They've brought me back to levels of productivity I haven't felt in years. I feel like I can manage the entire stack again, with confidence. I can go from idea to execution in days.
 
-**UX Polish:**
-- Carousel navigation with arrow controls
-- Skeleton loaders that match final content dimensions
-- Mobile-optimized horizontal scrolling with snap points
-- Unified card component system for all media types
+Roberto Selbach described it perfectly in [Your App Subscription Is Now My Weekend Project](https://rselbach.com/your-sub-is-now-my-weekend-project/):
 
-## The Vibe Coding Workflow
+> I have never written a single macOS application. I've never even read Swift code in my life, and yet, I now can get an app up and running in a couple of hours. This is crazy.
 
-Here's what my typical coding session looks like now:
+## What I've Built
 
-1. **Open Claude Code** - My custom hooks automatically run `npm run build` and `npm run serve`
-2. **Describe what I want** - "Add carousel navigation to the media sections" or "Improve the skeleton loaders"
-3. **Collaborate on implementation** - Claude reads the codebase, suggests an approach, I provide feedback, we iterate
-4. **Ship it** - Tests run automatically on push, Cloudflare Pages deploys immediately
+In three weeks, I turned my personal site from a static placeholder page into a dashboard of my digital life: recently played music with Last.fm, a stream of YouTube videos I've made, what I'm currently reading, and recent Strava workouts. Any one of those things would have taken my UI designer/developer brain much more work than I care to share.
 
-The CLAUDE.md file has been transformative. It's a 300+ line guide that documents everything from build commands to architectural decisions to UX patterns. Claude Code reads it at the start of each session and *understands* my codebase. It knows that I use vanilla JavaScript modules (no bundler), that Eleventy only processes the blog, that API keys live in Cloudflare environment variables.
+Last night I built a native Swift app that shows me some live stats from our company in widgets on my home screen. I've wanted something like this for years, but it was never worth asking a dev to build it for us.
 
-This is what Willison meant by "management-adjacent skills." I'm not writing every line of code myself—I'm providing clear requirements, architectural guidance, and feedback. It's like having a very fast junior developer who never gets tired and always remembers the exact syntax for CSS Grid properties.
+The future isn't writing requirements to pass through a product owner, analyst, and developer. I can solve it myself and leave the bigger projects to the professionals.
 
-## The Joy of Iteration
+And don't even get me started about Google's Nano Banana and image creation...
 
-One of my favorite things about this workflow is how easy it is to *change my mind*.
-
-I spent a day adding Decap CMS so I could write blog posts from my phone. Got it working, used it once, realized I didn't actually need it. A week later: "Claude, remove the CMS and notes system. Simplify the blog to just markdown files." Done in 20 minutes.
-
-Tried different layouts for the Strava workout cards. Experimented with card aspect ratios. Tweaked the skeleton loader animations. Added a design preview page to mockup blog post styles, then removed it from production once I'd decided on the design.
-
-The low friction of making changes means I can actually *experiment*. I'm not locked into architectural decisions because they took two days to implement. If something doesn't feel right, I can try something else.
-
-## What I'm Learning
-
-A few observations after three weeks of intensive vibe coding:
-
-**AI assistants are opinionated** - Claude will often suggest adding error handling, TypeScript, or abstractions I don't need yet. I've learned to be specific: "Keep this simple. No extra error handling. Just solve the immediate problem."
-
-**Reading code is still essential** - I always read files before making changes. The AI needs to understand the existing patterns to maintain consistency. "Show me how the YouTube integration works" before "Now add the same pattern for Strava."
-
-**Documentation for AI is documentation for humans** - CLAUDE.md started as instructions for Claude Code, but it's turned into the best documentation I've ever written. It's comprehensive because it *has* to be—the AI can't guess my architectural decisions.
-
-**Shipping is addictive** - When you can implement a feature in 30 minutes instead of 3 hours, you ship more. When you ship more, you learn faster. When you learn faster, you build better things.
-
-## What's Next
-
-Here are the next experiments I'm excited about (and yes, this is also a convenient list to test ordered lists):
-
-1. Add webmentions for blog posts (replies from social media)
-2. RSS feed with full post content
-3. Add a "now" page with manual updates on what I'm focused on
-4. Experiment with view transitions API for smoother navigation
-5. Maybe add comments? (Still torn on this one)
-
-The point isn't to plan everything out—it's to stay in the flow of building and shipping. To keep the momentum going. To remember why I fell in love with making things for the web in the first place.
-
-If you haven't tried coding with AI assistance yet, I'd encourage you to experiment. Not because it's magic or will replace developers, but because it might help you actually *finish* that side project you've been thinking about for years.
-
-The web is fun again. Let's build things.
+Since I was a little kid, I knew I wanted to "make stuff with computers" and many years later, I'm still getting to learn what that meant!
