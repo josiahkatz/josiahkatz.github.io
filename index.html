@@ -18,13 +18,40 @@
     <meta property="twitter:title" content="Josiah Katz">
     <meta property="twitter:description" content="VP of Design &amp; Media">
     <meta property="twitter:image" content="https://josiahkatz.com/optimus.jpg">
+    <!-- Performance Optimizations -->
+    <!-- Preconnect to external domains for faster resource loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;800&display=swap" rel="stylesheet">
     <link rel="dns-prefetch" href="https://ws.audioscrobbler.com">
     <link rel="dns-prefetch" href="https://itunes.apple.com">
     <link rel="dns-prefetch" href="https://www.googleapis.com">
+
+    <!-- Preload critical fonts for immediate rendering -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;800&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;800&display=swap" rel="stylesheet">
+
+    <!-- Inline critical CSS for above-the-fold content -->
+    <style>
+      /* Critical CSS - Inlined for faster initial render */
+      html,body{overflow-x:hidden;margin:0;padding:0}
+      body{font-family:"Manrope",sans-serif;background-color:var(--color-mint);color:var(--color-forest);line-height:1.5}
+      :root{--color-mint:#F3FAF6;--color-highlight:#D0ECDC;--color-forest:#002D13;--color-forest-rgb:0,45,19;--color-surface:rgba(255,255,255,0.6);--color-marquee-bg:#111;--color-marquee-text:#f2ff86;--marquee-gap:32px}
+      @media (prefers-color-scheme:dark){:root{--color-mint:#141c18;--color-highlight:#2c3b33;--color-forest:#e6f3ec;--color-forest-rgb:230,243,236;--color-surface:rgba(36,49,42,0.72)}}
+      .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+      .site-marquee{background:var(--color-marquee-bg);color:var(--color-marquee-text);text-transform:uppercase;letter-spacing:6px;font-size:12px;font-weight:800;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.2)}
+      .site-header{display:flex;position:relative;justify-content:center;z-index:1;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin:20px 0 7vw}
+      .site-avatar{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;margin:0;border-radius:999px;overflow:hidden;border:2px solid transparent}
+      .big-type{font-family:"DM Serif Display",serif;font-size:40vw;line-height:28vw;letter-spacing:-0.5vw;margin:0 -3.5vw 0}
+      h1{font-size:28px;line-height:1.1em;font-weight:800;text-transform:uppercase;letter-spacing:3px}
+      @media (min-width:600px){.big-type{font-size:18vw;line-height:14.5vw;margin:0 -1.5vw 0;white-space:nowrap;text-align:center}}
+    </style>
+
+    <!-- Preload main stylesheet -->
+    <link rel="preload" as="style" href="./styles.css">
     <link rel="stylesheet" href="./styles.css">
+
+    <!-- Preload main JavaScript module -->
+    <link rel="modulepreload" href="./scripts/main.js">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -72,7 +99,7 @@
     <header class="site-header">
       <nav class="site-nav" aria-label="Primary">
         <a class="site-avatar" href="/" aria-label="Josiah Katz homepage">
-          <img src="./images/avatar.jpg" alt="Josiah Katz">
+          <img src="./images/avatar.jpg" alt="Josiah Katz" width="500" height="500" fetchpriority="high">
         </a>
         <div class="site-links">
           <a href="/blog/">Blog</a>
