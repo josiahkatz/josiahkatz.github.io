@@ -15,6 +15,7 @@
     "test:visual": "npx playwright test",
     "test:visual:update": "npx playwright test --update-snapshots",
     "test:all": "npm run test && npm run test:visual",
+    "test:perf": "node test/performance.test.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
@@ -23,9 +24,12 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",
+    "@fontsource/dm-serif-display": "^5.2.8",
+    "@fontsource/manrope": "^5.2.8",
     "@playwright/test": "^1.58.0",
     "eslint": "^8.57.0",
     "husky": "^9.1.7",
+    "lighthouse": "^13.0.1",
     "prettier": "^3.2.5"
   }
 }
