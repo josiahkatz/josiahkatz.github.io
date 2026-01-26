@@ -43,6 +43,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "styles.css": "styles.css" });
   eleventyConfig.addPassthroughCopy({ scripts: "scripts" });
   eleventyConfig.addPassthroughCopy({ images: "images" });
+  eleventyConfig.addPassthroughCopy({ fonts: "fonts" });
   eleventyConfig.addPassthroughCopy({ data: "data" });
   eleventyConfig.addPassthroughCopy({ "favicon.svg": "favicon.svg" });
   eleventyConfig.addPassthroughCopy({ "_headers": "_headers" });

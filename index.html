@@ -19,16 +19,15 @@
     <meta property="twitter:description" content="VP of Design &amp; Media">
     <meta property="twitter:image" content="https://josiahkatz.com/optimus.jpg">
     <!-- Performance Optimizations -->
-    <!-- Preconnect to external domains for faster resource loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Preload self-hosted fonts (Latin subset only) -->
+    <link rel="preload" href="/fonts/manrope-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/manrope-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/dm-serif-display-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- DNS prefetch for external APIs -->
     <link rel="dns-prefetch" href="https://ws.audioscrobbler.com">
     <link rel="dns-prefetch" href="https://itunes.apple.com">
     <link rel="dns-prefetch" href="https://www.googleapis.com">
-
-    <!-- Preload critical fonts for immediate rendering -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;800&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;800&display=swap" rel="stylesheet">
 
     <!-- Inline critical CSS for above-the-fold content -->
     <style>
