@@ -45,6 +45,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ images: "images" });
   eleventyConfig.addPassthroughCopy({ data: "data" });
   eleventyConfig.addPassthroughCopy({ "favicon.svg": "favicon.svg" });
+  eleventyConfig.addPassthroughCopy({ "_headers": "_headers" });
   eleventyConfig.addPassthroughCopy("content/assets");
 
   return {
