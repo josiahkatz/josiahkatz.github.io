@@ -408,14 +408,14 @@ footer {
 }
 .section-header {
 	display: flex;
-	align-items: flex-end;
+	align-items: center;
 	justify-content: space-between;
 	gap: 16px;
 	flex-wrap: wrap;
 	margin-bottom: 18px;
 }
 .section-header h2 {
-	margin: 0 0 6px;
+	margin: 0;
 }
 .section-kicker {
 	margin: 0;
