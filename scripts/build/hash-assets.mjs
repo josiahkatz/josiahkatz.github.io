@@ -3,33 +3,47 @@
  *
  * This script:
  * 1. Minifies CSS files
- * 2. Generates content hashes for CSS and JS files
+ * 2. Generates content hashes for CSS and ALL JS files
  * 3. Renames files with hashes (e.g., styles.a1b2c3d4.css)
- * 4. Updates HTML files to reference the hashed filenames
+ * 4. Updates imports within JS files to reference hashed filenames
+ * 5. Updates HTML files to reference the hashed filenames
  *
  * Run after Eleventy build: node scripts/build/hash-assets.mjs
  */
 
 import { createHash } from "crypto";
-import { readFileSync, writeFileSync, readdirSync, unlinkSync } from "fs";
+import { readFileSync, writeFileSync, readdirSync, unlinkSync, existsSync } from "fs";
 import { join, basename, dirname, extname } from "path";
 import { execSync } from "child_process";
 
 const DIST_DIR = "dist";
 
-// Files to hash (relative to dist)
-const ASSETS_TO_HASH = [
+// CSS files to hash
+const CSS_FILES = [
   { path: "styles.css", minify: true },
-  { path: "scripts/main.js", minify: false },
 ];
 
-// HTML files to update (relative to dist)
-const HTML_FILES = [
-  "index.html",
-  "blog/index.html",
-];
+// JS files are discovered automatically from dist/scripts
 
-// Also find all blog post HTML files
+function findAllJsFiles(dir, files = []) {
+  const entries = readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      // Skip build directory
+      if (entry.name !== "build") {
+        findAllJsFiles(fullPath, files);
+      }
+    } else if (entry.name.endsWith(".js") && !entry.name.includes(".")) {
+      // Skip already-hashed files (contain hash pattern)
+      files.push(fullPath);
+    } else if (entry.name.endsWith(".js")) {
+      files.push(fullPath);
+    }
+  }
+  return files;
+}
+
 function findBlogPostHtmlFiles() {
   const blogDir = join(DIST_DIR, "blog");
   const htmlFiles = [];
@@ -42,7 +56,6 @@ function findBlogPostHtmlFiles() {
         if (file.isDirectory()) {
           walkDir(fullPath);
         } else if (file.name === "index.html") {
-          // Get path relative to dist
           htmlFiles.push(fullPath.replace(DIST_DIR + "/", ""));
         }
       }
@@ -66,12 +79,103 @@ function minifyCSS(inputPath, outputPath) {
   });
 }
 
+function getRelativePath(fromFile, toFile) {
+  // Both paths are relative to DIST_DIR
+  const fromDir = dirname(fromFile);
+  const toDir = dirname(toFile);
+  const toName = basename(toFile);
+
+  if (fromDir === toDir) {
+    return `./${toName}`;
+  }
+
+  // Handle utils subdirectory
+  if (fromDir === "scripts" && toDir === "scripts/utils") {
+    return `./utils/${toName}`;
+  }
+  if (fromDir === "scripts/utils" && toDir === "scripts") {
+    return `../${toName}`;
+  }
+  if (fromDir === "scripts/utils" && toDir === "scripts/utils") {
+    return `./${toName}`;
+  }
+
+  return `./${toName}`;
+}
+
+function buildDependencyGraph(jsFiles) {
+  // Map of file path -> files it imports (local only)
+  const graph = new Map();
+  // Map of file path -> files that import it
+  const reverseGraph = new Map();
+
+  for (const file of jsFiles) {
+    const relativePath = file.replace(DIST_DIR + "/", "");
+    graph.set(relativePath, []);
+    reverseGraph.set(relativePath, []);
+  }
+
+  for (const file of jsFiles) {
+    const relativePath = file.replace(DIST_DIR + "/", "");
+    const content = readFileSync(file, "utf-8");
+    const fileDir = dirname(relativePath);
+
+    // Find all imports
+    const importRegex = /from\s+["'](\.[^"']+)["']/g;
+    let match;
+    while ((match = importRegex.exec(content)) !== null) {
+      const importPath = match[1];
+      // Resolve the import path relative to the file
+      let resolvedPath;
+      if (importPath.startsWith("./utils/")) {
+        resolvedPath = join(fileDir, importPath.slice(2)).replace(/\\/g, "/");
+      } else if (importPath.startsWith("../")) {
+        resolvedPath = join(fileDir, importPath).replace(/\\/g, "/");
+      } else if (importPath.startsWith("./")) {
+        resolvedPath = join(fileDir, importPath.slice(2)).replace(/\\/g, "/");
+      } else {
+        continue;
+      }
+
+      if (graph.has(resolvedPath)) {
+        graph.get(relativePath).push(resolvedPath);
+        reverseGraph.get(resolvedPath).push(relativePath);
+      }
+    }
+  }
+
+  return { graph, reverseGraph };
+}
+
+function topologicalSort(graph) {
+  const visited = new Set();
+  const result = [];
+
+  function visit(node) {
+    if (visited.has(node)) return;
+    visited.add(node);
+
+    for (const dep of graph.get(node) || []) {
+      visit(dep);
+    }
+
+    result.push(node);
+  }
+
+  for (const node of graph.keys()) {
+    visit(node);
+  }
+
+  return result; // Leaves first, then dependents
+}
+
 function processAssets() {
   console.log("\n📦 Processing assets for production...\n");
 
-  const hashMap = {}; // original filename -> hashed filename
+  const hashMap = {}; // original path -> hashed path
 
-  for (const asset of ASSETS_TO_HASH) {
+  // Process CSS files first
+  for (const asset of CSS_FILES) {
     const originalPath = join(DIST_DIR, asset.path);
     const ext = extname(asset.path);
     const dir = dirname(asset.path);
@@ -79,42 +183,111 @@ function processAssets() {
 
     console.log(`Processing: ${asset.path}`);
 
-    // Read original file
     let content;
     if (asset.minify && ext === ".css") {
-      // Minify CSS to a temp file, then read it
       const tempPath = join(DIST_DIR, `${name}.min${ext}`);
       minifyCSS(originalPath, tempPath);
       content = readFileSync(tempPath);
-      unlinkSync(tempPath); // Remove temp file
+      unlinkSync(tempPath);
     } else {
       content = readFileSync(originalPath);
     }
 
-    // Generate hash
+    const hash = generateHash(content);
+    const hashedFilename = `${name}.${hash}${ext}`;
+    const hashedPath = join(DIST_DIR, dir === "." ? "" : dir, hashedFilename);
+
+    writeFileSync(hashedPath, content);
+    console.log(`  Created: ${hashedFilename}`);
+
+    hashMap[`./${asset.path}`] = `./${hashedFilename}`;
+    hashMap[`/${asset.path}`] = `/${hashedFilename}`;
+  }
+
+  // Find all JS files in dist/scripts
+  const scriptsDir = join(DIST_DIR, "scripts");
+  const jsFiles = findAllJsFiles(scriptsDir);
+
+  console.log(`\nFound ${jsFiles.length} JS files to process\n`);
+
+  // Build dependency graph and get processing order
+  const { graph, reverseGraph } = buildDependencyGraph(jsFiles);
+  const processingOrder = topologicalSort(graph);
+
+  // Process JS files in dependency order (leaves first)
+  const jsHashMap = new Map(); // relativePath -> hashedFilename
+
+  for (const relativePath of processingOrder) {
+    const fullPath = join(DIST_DIR, relativePath);
+    const ext = extname(relativePath);
+    const dir = dirname(relativePath);
+    const name = basename(relativePath, ext);
+
+    console.log(`Processing: ${relativePath}`);
+
+    // Read content and update imports to use hashed paths
+    let content = readFileSync(fullPath, "utf-8");
+
+    // Update imports to reference hashed files
+    for (const [origPath, hashedName] of jsHashMap) {
+      const importPatterns = [
+        // Handle ./filename.js
+        new RegExp(`(from\\s+["'])(\\.\\.?/[^"']*${basename(origPath).replace(".", "\\.")})(['")])`, "g"),
+      ];
+
+      // Build the correct relative import path from this file to the hashed file
+      const origDir = dirname(origPath);
+      const thisDir = dirname(relativePath);
+
+      let newImportPath;
+      if (thisDir === origDir) {
+        newImportPath = `./${hashedName}`;
+      } else if (thisDir === "scripts" && origDir === "scripts/utils") {
+        newImportPath = `./utils/${hashedName}`;
+      } else if (thisDir === "scripts/utils" && origDir === "scripts") {
+        newImportPath = `../${hashedName}`;
+      } else if (thisDir === "scripts/utils" && origDir === "scripts/utils") {
+        newImportPath = `./${hashedName}`;
+      }
+
+      if (newImportPath) {
+        const origFilename = basename(origPath);
+        // Match various import patterns
+        const patterns = [
+          [`"./${origFilename}"`, `"${newImportPath}"`],
+          [`'./${origFilename}'`, `'${newImportPath}'`],
+          [`"./utils/${origFilename}"`, `"./utils/${hashedName}"`],
+          [`'./utils/${origFilename}'`, `'./utils/${hashedName}'`],
+          [`"../${origFilename}"`, `"../${hashedName}"`],
+          [`'../${origFilename}'`, `'../${hashedName}'`],
+        ];
+
+        for (const [from, to] of patterns) {
+          if (content.includes(from)) {
+            content = content.split(from).join(to);
+          }
+        }
+      }
+    }
+
+    // Generate hash of updated content
     const hash = generateHash(content);
     const hashedFilename = `${name}.${hash}${ext}`;
     const hashedPath = join(DIST_DIR, dir, hashedFilename);
 
-    // Write hashed file
+    // Write hashed file with updated imports
     writeFileSync(hashedPath, content);
-    console.log(`  Created: ${dir ? dir + "/" : ""}${hashedFilename}`);
+    console.log(`  Created: ${dir}/${hashedFilename}`);
 
-    // Store mapping for HTML updates
-    // Handle paths correctly (dir is "." for root files)
-    const isRootFile = dir === ".";
-    const originalRef = `./${asset.path}`;
-    const hashedRef = isRootFile
-      ? `./${hashedFilename}`
-      : `./${dir}/${hashedFilename}`;
+    // Store mapping
+    jsHashMap.set(relativePath, hashedFilename);
 
-    hashMap[originalRef] = hashedRef;
-
-    // Also handle absolute path references
-    const absoluteHashed = isRootFile
-      ? `/${hashedFilename}`
-      : `/${dir}/${hashedFilename}`;
-    hashMap[`/${asset.path}`] = absoluteHashed;
+    // Add to main hashMap for HTML updates
+    const relDir = dir.replace("scripts", "");
+    if (relativePath === "scripts/main.js") {
+      hashMap[`./scripts/main.js`] = `./scripts/${hashedFilename}`;
+      hashMap[`/scripts/main.js`] = `/scripts/${hashedFilename}`;
+    }
   }
 
   return hashMap;
@@ -123,10 +296,14 @@ function processAssets() {
 function updateHtmlFiles(hashMap) {
   console.log("\n📝 Updating HTML files...\n");
 
-  // Get all HTML files including dynamically found blog posts
-  const allHtmlFiles = [...new Set([...HTML_FILES, ...findBlogPostHtmlFiles()])];
+  const htmlFiles = [
+    "index.html",
+    "blog/index.html",
+    ...findBlogPostHtmlFiles(),
+  ];
+  const uniqueHtmlFiles = [...new Set(htmlFiles)];
 
-  for (const htmlFile of allHtmlFiles) {
+  for (const htmlFile of uniqueHtmlFiles) {
     const htmlPath = join(DIST_DIR, htmlFile);
 
     try {
@@ -156,25 +333,32 @@ function cleanOldHashedFiles() {
   // Clean hashed CSS files in dist root
   const distFiles = readdirSync(DIST_DIR);
   for (const file of distFiles) {
-    // Match pattern: name.hash.ext where hash is 8 hex chars
     if (/^styles\.[a-f0-9]{8}\.css$/.test(file)) {
       unlinkSync(join(DIST_DIR, file));
       console.log(`  Removed: ${file}`);
     }
   }
 
-  // Clean hashed JS files in dist/scripts
-  try {
-    const scriptFiles = readdirSync(join(DIST_DIR, "scripts"));
-    for (const file of scriptFiles) {
-      if (/^main\.[a-f0-9]{8}\.js$/.test(file)) {
-        unlinkSync(join(DIST_DIR, "scripts", file));
-        console.log(`  Removed: scripts/${file}`);
+  // Clean ALL hashed JS files in dist/scripts (recursively)
+  function cleanHashedJs(dir) {
+    try {
+      const files = readdirSync(dir, { withFileTypes: true });
+      for (const file of files) {
+        const fullPath = join(dir, file.name);
+        if (file.isDirectory()) {
+          cleanHashedJs(fullPath);
+        } else if (/\.[a-f0-9]{8}\.js$/.test(file.name)) {
+          unlinkSync(fullPath);
+          const relPath = fullPath.replace(DIST_DIR + "/", "");
+          console.log(`  Removed: ${relPath}`);
+        }
       }
+    } catch (e) {
+      // Directory doesn't exist
     }
-  } catch (e) {
-    // scripts dir doesn't exist yet
   }
+
+  cleanHashedJs(join(DIST_DIR, "scripts"));
 }
 
 // Main execution
