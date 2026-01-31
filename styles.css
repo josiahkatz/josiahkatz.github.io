@@ -244,7 +244,7 @@ h1 {
 }
 
 h2 {
-	font-size: 30px;
+	font-size: 24px;
 	line-height: 1em;
 	margin: 0 0 10px;
 }
@@ -262,12 +262,12 @@ p {
 
 @media (min-width:600px) {
     h2 {
-        font-size: 40px;
-        line-height: 42px;
+        font-size: 36px;
+        line-height: 40px;
     }
 
     p {
-        font-size: 20px;
+        font-size: 18px;
         letter-spacing: 0.5px;
         margin: 0 0 20px;
     }
@@ -404,7 +404,7 @@ footer {
 
 /* Media sections */
 .media-section {
-	margin: 50px 0 70px;
+	margin: 32px 0 48px;
 }
 .section-header {
 	display: flex;
@@ -422,8 +422,11 @@ footer {
 	text-transform: uppercase;
 	font-weight: 600;
 	letter-spacing: 2px;
-	font-size: 12px;
+	font-size: 11px;
 	color: rgba(var(--color-forest-rgb), 0.7)
+}
+.section-kicker:empty {
+	display: none;
 }
 .section-kicker .retry-button {
 	margin-left: 8px;
@@ -553,17 +556,30 @@ footer {
 		display: none;
 	}
 	.media-row {
-		gap: 12px;
+		gap: 10px;
 	}
 	.media-row::after {
 		flex: 0 0 8px;
 	}
 	.media-card {
-		flex: 0 0 clamp(140px, 50vw, 160px);
+		flex: 0 0 clamp(110px, 42vw, 130px);
+		padding: 6px;
+	}
+	.media-card__link {
+		gap: 6px;
+	}
+	.media-card__meta {
+		gap: 2px;
+	}
+	.media-card__title {
+		font-size: 13px;
+	}
+	.media-card__subtitle {
+		font-size: 11px;
 	}
 	[data-youtube-list] .media-card,
 	[data-strava-list] .media-card {
-		flex: 0 0 clamp(180px, 70vw, 220px);
+		flex: 0 0 clamp(160px, 65vw, 200px);
 	}
 }
 
@@ -743,13 +759,13 @@ footer {
 
 @media (min-width:600px) {
 	.media-card__title {
-		font-size: 16px;
+		font-size: 15px;
 	}
 	.media-card__subtitle {
-		font-size: 14px;
+		font-size: 13px;
 	}
 	.media-section {
-		margin: 70px 0 90px;
+		margin: 50px 0 70px;
 	}
 }
 

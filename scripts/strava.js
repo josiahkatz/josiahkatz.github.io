@@ -221,7 +221,7 @@ export const initStrava = async ({ liveDataEnabled = true, stravaEnabled = true,
 
   const loadData = async () => {
     renderSkeleton(listEl, limit, "activity");
-    updateStatus(statusEl, "Loading Strava activity.");
+    updateStatus(statusEl, "");
 
     if (skeletonDelay > 0) {
       await new Promise((r) => setTimeout(r, skeletonDelay));
@@ -230,7 +230,7 @@ export const initStrava = async ({ liveDataEnabled = true, stravaEnabled = true,
     // If using mock data, skip live data check
     if (!useMockData && !liveDataEnabled) {
       renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch workouts");
-      updateStatus(statusEl, "Live data disabled.");
+      updateStatus(statusEl, "");
       return;
     }
 
@@ -240,17 +240,17 @@ export const initStrava = async ({ liveDataEnabled = true, stravaEnabled = true,
       if (useMockData) {
         // Use mock data for development
         activities = MOCK_WORKOUTS.slice(0, limit);
-        updateStatus(statusEl, "Using mock data", new Date());
+        updateStatus(statusEl, "");
       } else {
         // Fetch from Strava API
         const data = await fetchStravaData(limit);
         activities = data?.activities || [];
-        updateStatus(statusEl, "Updated from Strava", new Date());
+        updateStatus(statusEl, "");
       }
 
       if (!activities.length) {
         renderPlaceholder(listEl, limit, "No recent workouts", "Check Strava");
-        updateStatus(statusEl, "No recent workouts found.", new Date(), loadData);
+        updateStatus(statusEl, "", null, loadData);
         return;
       }
 
@@ -259,7 +259,7 @@ export const initStrava = async ({ liveDataEnabled = true, stravaEnabled = true,
       finishLoading(listEl);
     } catch (error) {
       renderPlaceholder(listEl, limit, "Strava unavailable", "Try again later");
-      updateStatus(statusEl, "Could not load Strava activities.", null, loadData);
+      updateStatus(statusEl, "Retry", null, loadData);
     }
   };
 

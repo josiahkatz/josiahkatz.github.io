@@ -115,7 +115,7 @@ export const initLastfm = async ({ liveDataEnabled = true, skeletonDelay = 0 } =
 
   const loadData = async () => {
     renderSkeleton(listEl, limit);
-    updateStatus(statusEl, "Loading Last.fm activity.");
+    updateStatus(statusEl, "");
 
     if (skeletonDelay > 0) {
       await new Promise((r) => setTimeout(r, skeletonDelay));
@@ -123,13 +123,13 @@ export const initLastfm = async ({ liveDataEnabled = true, skeletonDelay = 0 } =
 
     if (!liveDataEnabled) {
       renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch tracks");
-      updateStatus(statusEl, "Live data disabled.");
+      updateStatus(statusEl, "");
       return;
     }
 
     if (!config.lastfm.apiKey) {
       renderPlaceholder(listEl, limit, "Add Last.fm API key", "scripts/config.js");
-      updateStatus(statusEl, "Add your Last.fm API key in scripts/config.js.");
+      updateStatus(statusEl, "");
       return;
     }
 
@@ -139,7 +139,7 @@ export const initLastfm = async ({ liveDataEnabled = true, skeletonDelay = 0 } =
 
       if (!tracks.length) {
         renderPlaceholder(listEl, limit, "No recent tracks", "Check Last.fm profile");
-        updateStatus(statusEl, "No recent tracks found.", new Date(), loadData);
+        updateStatus(statusEl, "", null, loadData);
         return;
       }
 
@@ -162,10 +162,10 @@ export const initLastfm = async ({ liveDataEnabled = true, skeletonDelay = 0 } =
 
       listEl.replaceChildren(...cards);
       finishLoading(listEl);
-      updateStatus(statusEl, "Updated from Last.fm", new Date());
+      updateStatus(statusEl, "");
     } catch (error) {
       renderPlaceholder(listEl, limit, "Last.fm unavailable", "Try again later");
-      updateStatus(statusEl, "Could not load Last.fm tracks.", null, loadData);
+      updateStatus(statusEl, "Retry", null, loadData);
     }
   };
 

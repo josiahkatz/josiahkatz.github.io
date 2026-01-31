@@ -148,7 +148,7 @@ export const initYouTube = async ({ liveDataEnabled = true, skeletonDelay = 0 } 
 
   const loadData = async () => {
     renderSkeleton(listEl, limit, "video");
-    updateStatus(statusEl, "Loading YouTube videos.");
+    updateStatus(statusEl, "");
 
     if (skeletonDelay > 0) {
       await new Promise((r) => setTimeout(r, skeletonDelay));
@@ -164,17 +164,17 @@ export const initYouTube = async ({ liveDataEnabled = true, skeletonDelay = 0 } 
           cached.payload.durationsById,
           limit
         );
-        updateStatus(statusEl, "Live data off. Showing cached videos.");
+        updateStatus(statusEl, "");
       } else {
         renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch videos");
-        updateStatus(statusEl, "Live data disabled.");
+        updateStatus(statusEl, "");
       }
       return;
     }
 
     if (!config.youtube.channelId) {
       renderPlaceholder(listEl, limit, "Add YouTube channel ID", "scripts/config.js");
-      updateStatus(statusEl, "Add your YouTube channel ID in scripts/config.js.");
+      updateStatus(statusEl, "");
       return;
     }
 
@@ -188,7 +188,7 @@ export const initYouTube = async ({ liveDataEnabled = true, skeletonDelay = 0 } 
         cached.payload.durationsById,
         limit
       );
-      updateStatus(statusEl, "Showing cached YouTube videos.");
+      updateStatus(statusEl, "");
       return;
     }
 
@@ -199,7 +199,7 @@ export const initYouTube = async ({ liveDataEnabled = true, skeletonDelay = 0 } 
 
       if (!items.length) {
         renderPlaceholder(listEl, limit, "No videos found", "Check channel ID");
-        updateStatus(statusEl, "No recent videos found.", new Date(), loadData);
+        updateStatus(statusEl, "", null, loadData);
         return;
       }
 
@@ -212,7 +212,7 @@ export const initYouTube = async ({ liveDataEnabled = true, skeletonDelay = 0 } 
 
       renderVideos(listEl, items, formattedDurationsById, limit);
       writeCache(cacheKey, { items, durationsById: formattedDurationsById });
-      updateStatus(statusEl, "Updated from YouTube", new Date());
+      updateStatus(statusEl, "");
     } catch (error) {
       if (cached?.payload?.items?.length) {
         renderVideos(
@@ -221,17 +221,12 @@ export const initYouTube = async ({ liveDataEnabled = true, skeletonDelay = 0 } 
           cached.payload.durationsById,
           limit
         );
-        updateStatus(
-          statusEl,
-          "Showing cached YouTube videos (API unavailable).",
-          null,
-          loadData
-        );
+        updateStatus(statusEl, "Retry", null, loadData);
         return;
       }
 
       renderPlaceholder(listEl, limit, "YouTube unavailable", "Try again later");
-      updateStatus(statusEl, "Could not load YouTube videos.", null, loadData);
+      updateStatus(statusEl, "Retry", null, loadData);
     }
   };
 

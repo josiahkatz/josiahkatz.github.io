@@ -124,7 +124,7 @@ export const initBooks = async ({ liveDataEnabled = true, skeletonDelay = 0 } = 
 
   const loadData = async () => {
     renderSkeleton(listEl, limit, "book");
-    updateStatus(statusEl, "Loading books.");
+    updateStatus(statusEl, "");
 
     if (skeletonDelay > 0) {
       await new Promise((r) => setTimeout(r, skeletonDelay));
@@ -132,7 +132,7 @@ export const initBooks = async ({ liveDataEnabled = true, skeletonDelay = 0 } = 
 
     if (!liveDataEnabled) {
       renderPlaceholder(listEl, limit, "Live data off", "Enable to fetch books");
-      updateStatus(statusEl, "Live data disabled.");
+      updateStatus(statusEl, "");
       return;
     }
 
@@ -143,10 +143,7 @@ export const initBooks = async ({ liveDataEnabled = true, skeletonDelay = 0 } = 
         "Add Open Library username",
         "scripts/config.js"
       );
-      updateStatus(
-        statusEl,
-        "Add your Open Library username in scripts/config.js."
-      );
+      updateStatus(statusEl, "");
       return;
     }
 
@@ -170,7 +167,7 @@ export const initBooks = async ({ liveDataEnabled = true, skeletonDelay = 0 } = 
 
       if (!books.length) {
         renderPlaceholder(listEl, limit, "No books found", "Update Open Library");
-        updateStatus(statusEl, "No books found.", new Date(), loadData);
+        updateStatus(statusEl, "", null, loadData);
         return;
       }
 
@@ -188,14 +185,10 @@ export const initBooks = async ({ liveDataEnabled = true, skeletonDelay = 0 } = 
 
       listEl.replaceChildren(...cards);
       finishLoading(listEl);
-      updateStatus(
-        statusEl,
-        "Updated from Open Library; covers from Google Books when available.",
-        new Date()
-      );
+      updateStatus(statusEl, "");
     } catch (error) {
       renderPlaceholder(listEl, limit, "Books unavailable", "Try again later");
-      updateStatus(statusEl, "Could not load book list.", null, loadData);
+      updateStatus(statusEl, "Retry", null, loadData);
     }
   };
 
