@@ -24,7 +24,7 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy": "^3.1.5",
     "@fontsource/dm-serif-display": "^5.2.8",
     "@fontsource/manrope": "^5.2.8",
     "@playwright/test": "^1.58.0",
