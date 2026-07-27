@@ -12,16 +12,14 @@
  */
 
 import { createHash } from "crypto";
-import { readFileSync, writeFileSync, readdirSync, unlinkSync, existsSync } from "fs";
+import { readFileSync, writeFileSync, readdirSync, unlinkSync } from "fs";
 import { join, basename, dirname, extname } from "path";
-import { execSync } from "child_process";
+import CleanCSS from "clean-css";
 
 const DIST_DIR = "dist";
 
 // CSS files to hash
-const CSS_FILES = [
-  { path: "styles.css", minify: true },
-];
+const CSS_FILES = [{ path: "styles.css", minify: true }];
 
 // JS files are discovered automatically from dist/scripts
 
@@ -59,7 +57,7 @@ function findBlogPostHtmlFiles() {
           htmlFiles.push(fullPath.replace(DIST_DIR + "/", ""));
         }
       }
-    } catch (e) {
+    } catch {
       // Directory doesn't exist, skip
     }
   }
@@ -74,45 +72,20 @@ function generateHash(content) {
 
 function minifyCSS(inputPath, outputPath) {
   console.log(`  Minifying ${inputPath}...`);
-  execSync(`npx cleancss -o "${outputPath}" "${inputPath}"`, {
-    stdio: "inherit",
-  });
-}
-
-function getRelativePath(fromFile, toFile) {
-  // Both paths are relative to DIST_DIR
-  const fromDir = dirname(fromFile);
-  const toDir = dirname(toFile);
-  const toName = basename(toFile);
-
-  if (fromDir === toDir) {
-    return `./${toName}`;
+  const output = new CleanCSS({ returnPromise: false }).minify([inputPath]);
+  if (output.errors.length > 0) {
+    throw new Error(`CSS minification failed: ${output.errors.join(", ")}`);
   }
-
-  // Handle utils subdirectory
-  if (fromDir === "scripts" && toDir === "scripts/utils") {
-    return `./utils/${toName}`;
-  }
-  if (fromDir === "scripts/utils" && toDir === "scripts") {
-    return `../${toName}`;
-  }
-  if (fromDir === "scripts/utils" && toDir === "scripts/utils") {
-    return `./${toName}`;
-  }
-
-  return `./${toName}`;
+  writeFileSync(outputPath, output.styles);
 }
 
 function buildDependencyGraph(jsFiles) {
   // Map of file path -> files it imports (local only)
   const graph = new Map();
-  // Map of file path -> files that import it
-  const reverseGraph = new Map();
 
   for (const file of jsFiles) {
     const relativePath = file.replace(DIST_DIR + "/", "");
     graph.set(relativePath, []);
-    reverseGraph.set(relativePath, []);
   }
 
   for (const file of jsFiles) {
@@ -139,12 +112,11 @@ function buildDependencyGraph(jsFiles) {
 
       if (graph.has(resolvedPath)) {
         graph.get(relativePath).push(resolvedPath);
-        reverseGraph.get(resolvedPath).push(relativePath);
       }
     }
   }
 
-  return { graph, reverseGraph };
+  return graph;
 }
 
 function topologicalSort(graph) {
@@ -211,7 +183,7 @@ function processAssets() {
   console.log(`\nFound ${jsFiles.length} JS files to process\n`);
 
   // Build dependency graph and get processing order
-  const { graph, reverseGraph } = buildDependencyGraph(jsFiles);
+  const graph = buildDependencyGraph(jsFiles);
   const processingOrder = topologicalSort(graph);
 
   // Process JS files in dependency order (leaves first)
@@ -230,11 +202,6 @@ function processAssets() {
 
     // Update imports to reference hashed files
     for (const [origPath, hashedName] of jsHashMap) {
-      const importPatterns = [
-        // Handle ./filename.js
-        new RegExp(`(from\\s+["'])(\\.\\.?/[^"']*${basename(origPath).replace(".", "\\.")})(['")])`, "g"),
-      ];
-
       // Build the correct relative import path from this file to the hashed file
       const origDir = dirname(origPath);
       const thisDir = dirname(relativePath);
@@ -283,7 +250,6 @@ function processAssets() {
     jsHashMap.set(relativePath, hashedFilename);
 
     // Add to main hashMap for HTML updates
-    const relDir = dir.replace("scripts", "");
     if (relativePath === "scripts/main.js") {
       hashMap[`./scripts/main.js`] = `./scripts/${hashedFilename}`;
       hashMap[`/scripts/main.js`] = `/scripts/${hashedFilename}`;
@@ -296,11 +262,7 @@ function processAssets() {
 function updateHtmlFiles(hashMap) {
   console.log("\n📝 Updating HTML files...\n");
 
-  const htmlFiles = [
-    "index.html",
-    "blog/index.html",
-    ...findBlogPostHtmlFiles(),
-  ];
+  const htmlFiles = ["index.html", "blog/index.html", ...findBlogPostHtmlFiles()];
   const uniqueHtmlFiles = [...new Set(htmlFiles)];
 
   for (const htmlFile of uniqueHtmlFiles) {
@@ -321,7 +283,7 @@ function updateHtmlFiles(hashMap) {
         writeFileSync(htmlPath, content);
         console.log(`  Updated: ${htmlFile}`);
       }
-    } catch (e) {
+    } catch {
       // File doesn't exist, skip
     }
   }
@@ -353,7 +315,7 @@ function cleanOldHashedFiles() {
           console.log(`  Removed: ${relPath}`);
         }
       }
-    } catch (e) {
+    } catch {
       // Directory doesn't exist
     }
   }
