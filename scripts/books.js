@@ -42,9 +42,15 @@ const fetchOpenLibraryShelf = async (user, shelf) => {
 
   return entries.map((entry) => ({
     title: entry.work?.title || "Untitled",
+    authors: entry.work?.author_names || [],
     author: (entry.work?.author_names || []).join(", "),
+    editionKey:
+      entry.logged_edition?.split("/").pop() ||
+      entry.work?.cover_edition_key ||
+      entry.work?.edition_key?.[0] ||
+      "",
     coverUrl: entry.work?.cover_id
-      ? `https://covers.openlibrary.org/b/id/${entry.work.cover_id}-M.jpg`
+      ? `https://covers.openlibrary.org/b/id/${entry.work.cover_id}-L.jpg`
       : "",
     link: entry.work?.key ? `https://openlibrary.org${entry.work.key}` : "",
   }));
@@ -59,22 +65,39 @@ const buildGoogleBooksQuery = (title, author) => {
   return terms.join(" ");
 };
 
-const fetchGoogleBooksCover = async (title, author) => {
-  const query = buildGoogleBooksQuery(title, author);
-  if (!query) return "";
+const normalizeMetadata = (value = "") =>
+  value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 
-  const url = `/api/books?${new URLSearchParams({
-    q: query,
-  })}`;
+const titlesMatch = (left, right) => {
+  const normalizedLeft = normalizeMetadata(left);
+  const normalizedRight = normalizeMetadata(right);
 
-  const response = await fetchWithRetry(url);
-  if (!response.ok) {
-    throw new Error(`Google Books error ${response.status}`);
-  }
+  return (
+    normalizedLeft === normalizedRight ||
+    normalizedLeft.startsWith(`${normalizedRight} `) ||
+    normalizedRight.startsWith(`${normalizedLeft} `)
+  );
+};
 
-  const data = await response.json();
-  const item = data.items?.[0];
-  const imageLinks = item?.volumeInfo?.imageLinks || {};
+const metadataMatches = (book, volumeInfo = {}) => {
+  if (!titlesMatch(book.title, volumeInfo.title)) return false;
+
+  const expectedAuthors = book.authors.map(normalizeMetadata).filter(Boolean);
+  const resultAuthors = (volumeInfo.authors || []).map(normalizeMetadata).filter(Boolean);
+
+  return (
+    !expectedAuthors.length || resultAuthors.some((author) => expectedAuthors.includes(author))
+  );
+};
+
+const getCoverUrl = (volumeInfo = {}) => {
+  const imageLinks = volumeInfo.imageLinks || {};
   const coverUrl =
     imageLinks.extraLarge ||
     imageLinks.large ||
@@ -95,19 +118,50 @@ const fetchGoogleBooksCover = async (title, author) => {
       if (zoom === "1") url.searchParams.set("zoom", "2");
       upgraded = url.toString();
     }
-  } catch (error) {
+  } catch {
     // Keep original upgraded URL if parsing fails.
   }
 
   return upgraded;
 };
 
+const fetchGoogleBooksCover = async (book) => {
+  const query = buildGoogleBooksQuery(book.title, book.author);
+  if (!query) return "";
+
+  const url = `/api/books?${new URLSearchParams({
+    q: query,
+    ...(book.editionKey ? { edition: book.editionKey } : {}),
+  })}`;
+
+  const response = await fetchWithRetry(url);
+  if (!response.ok) {
+    throw new Error(`Google Books error ${response.status}`);
+  }
+
+  const data = await response.json();
+  const items = data.items || [];
+  const item =
+    data.matchType === "isbn"
+      ? items.find((candidate) => getCoverUrl(candidate.volumeInfo))
+      : items.find(
+          (candidate) =>
+            metadataMatches(book, candidate.volumeInfo) && getCoverUrl(candidate.volumeInfo)
+        );
+
+  return getCoverUrl(item?.volumeInfo);
+};
+
 const applyGoogleBooksCovers = async (books) =>
   Promise.all(
     books.map(async (book) => {
+      // The shelf's cover ID points to the selected Open Library work/edition.
+      // Google Books is less consistent, so use it only as an identifier-matched fallback.
+      if (book.coverUrl) return book;
+
       try {
-        const coverUrl = await fetchGoogleBooksCover(book.title, book.author);
-        return { ...book, coverUrl: coverUrl || book.coverUrl };
+        const coverUrl = await fetchGoogleBooksCover(book);
+        return { ...book, coverUrl };
       } catch (error) {
         return book;
       }

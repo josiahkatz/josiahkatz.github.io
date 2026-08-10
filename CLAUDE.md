@@ -116,12 +116,12 @@ The homepage displays live data from multiple APIs. This is orchestrated through
 2. **Service-Specific Modules** (`scripts/*.js`):
    - `lastfm.js` - Now playing / recent tracks (uses iTunes Search for album art fallback)
    - `youtube.js` - Latest videos (decodes HTML entities in titles, duration badges)
-   - `books.js` - Currently reading (Open Library for data, Google Books ALWAYS for covers)
+   - `books.js` - Currently reading (Open Library covers, identifier-matched Google Books fallback)
    - `strava.js` - Recent workouts with mock data support
 
    **API Data Source Decisions:**
    - Last.fm provides music data; iTunes Search is fallback for album art
-   - Open Library supplies book metadata; Google Books API used exclusively for cover images
+   - Open Library supplies book metadata and preferred covers; Google Books fills missing covers using edition ISBNs, with validated title/author matching as a fallback
    - Strava responses are sanitized server-side to strip all location/map fields for privacy
 
 3. **Shared Utilities** (`scripts/utils/`):

@@ -89,6 +89,14 @@ describe("API Endpoints", () => {
         "Error should mention query"
       );
     });
+
+    it("rejects malformed Open Library edition IDs", async () => {
+      const res = await fetch(`${BASE_URL}/api/books?q=test&edition=not-an-edition`);
+      assert.strictEqual(res.status, 400);
+
+      const data = await res.json();
+      assert.ok(data.error.toLowerCase().includes("edition"));
+    });
   });
 
   describe("Static file serving", () => {
