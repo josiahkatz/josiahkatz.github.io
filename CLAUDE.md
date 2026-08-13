@@ -288,7 +288,7 @@ Workout cards have special handling:
 
 ### Known Limitations & Context
 - **API Quotas:** YouTube/Google Books quotas can block responses even with caching
-- **Node Version:** Wrangler requires Node v20+ (check `engines` in package.json)
+- **Node Version:** Node v22.19+ (check `engines` in package.json); CI uses Node 24
 - **Work Page:** Intentionally removed after experimentation - don't recreate without discussion
 
 ### UX Patterns to Maintain

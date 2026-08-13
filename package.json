@@ -3,13 +3,13 @@
   "private": true,
   "type": "commonjs",
   "engines": {
-    "node": ">=20"
+    "node": ">=22.19"
   },
   "scripts": {
     "build": "eleventy && node scripts/build/hash-assets.mjs",
     "build:dev": "eleventy",
     "dev": "eleventy --watch",
-    "serve": "npx wrangler pages dev dist --ip 127.0.0.1 --port 8788",
+    "serve": "npx wrangler pages dev dist --ip 127.0.0.1 --port 8788 --compatibility-date=2026-08-08",
     "test": "npm run test:build && npm run test:api",
     "test:build": "node --test test/blog.test.mjs",
     "test:api": "node --test test/api.test.mjs",
@@ -37,6 +37,7 @@
     "prettier": "^3.8.1"
   },
   "overrides": {
-    "@11ty/recursive-copy": "5.0.2"
+    "@11ty/recursive-copy": "5.0.2",
+    "brace-expansion": "5.0.9"
   }
 }
