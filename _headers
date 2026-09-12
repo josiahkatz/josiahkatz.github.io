@@ -8,9 +8,6 @@
 /
   Cache-Control: public, max-age=0, must-revalidate
 
-/blog/*
-  Cache-Control: public, max-age=0, must-revalidate
-
 # Hashed assets - immutable, cache for 1 year
 # These files have content hashes in filenames (e.g., styles.a1b2c3d4.css)
 /*.*.css
@@ -38,7 +35,3 @@
 # Fonts (if self-hosted in future)
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
-
-# RSS feed - short cache
-/blog/feed.xml
-  Cache-Control: public, max-age=3600, stale-while-revalidate=600

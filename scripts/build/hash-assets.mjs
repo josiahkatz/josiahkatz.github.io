@@ -8,7 +8,7 @@
  * 4. Updates imports within JS files to reference hashed filenames
  * 5. Updates HTML files to reference the hashed filenames
  *
- * Run after Eleventy build: node scripts/build/hash-assets.mjs
+ * Run after static files are copied to dist by build-site.mjs.
  */
 
 import { createHash } from "crypto";
@@ -40,30 +40,6 @@ function findAllJsFiles(dir, files = []) {
     }
   }
   return files;
-}
-
-function findBlogPostHtmlFiles() {
-  const blogDir = join(DIST_DIR, "blog");
-  const htmlFiles = [];
-
-  function walkDir(dir) {
-    try {
-      const files = readdirSync(dir, { withFileTypes: true });
-      for (const file of files) {
-        const fullPath = join(dir, file.name);
-        if (file.isDirectory()) {
-          walkDir(fullPath);
-        } else if (file.name === "index.html") {
-          htmlFiles.push(fullPath.replace(DIST_DIR + "/", ""));
-        }
-      }
-    } catch {
-      // Directory doesn't exist, skip
-    }
-  }
-
-  walkDir(blogDir);
-  return htmlFiles;
 }
 
 function generateHash(content) {
@@ -262,10 +238,7 @@ function processAssets() {
 function updateHtmlFiles(hashMap) {
   console.log("\n📝 Updating HTML files...\n");
 
-  const htmlFiles = ["index.html", "blog/index.html", ...findBlogPostHtmlFiles()];
-  const uniqueHtmlFiles = [...new Set(htmlFiles)];
-
-  for (const htmlFile of uniqueHtmlFiles) {
+  for (const htmlFile of ["index.html"]) {
     const htmlPath = join(DIST_DIR, htmlFile);
 
     try {

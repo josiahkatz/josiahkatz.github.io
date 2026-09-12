@@ -6,12 +6,12 @@
     "node": ">=22.19"
   },
   "scripts": {
-    "build": "eleventy && node scripts/build/hash-assets.mjs",
-    "build:dev": "eleventy",
-    "dev": "eleventy --watch",
+    "build": "node scripts/build/build-site.mjs",
+    "build:dev": "node scripts/build/build-site.mjs",
+    "dev": "node scripts/build/build-site.mjs",
     "serve": "npx wrangler pages dev dist --ip 127.0.0.1 --port 8788 --compatibility-date=2026-08-08",
     "test": "npm run test:build && npm run test:api",
-    "test:build": "node --test test/blog.test.mjs",
+    "test:build": "node --test test/build.test.mjs",
     "test:api": "node --test test/api.test.mjs",
     "test:visual": "npx playwright test",
     "test:visual:update": "npx playwright test --update-snapshots",
@@ -24,7 +24,6 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.6",
     "@eslint/js": "^10.0.1",
     "@fontsource/dm-serif-display": "^5.2.8",
     "@fontsource/manrope": "^5.2.8",
@@ -37,7 +36,6 @@
     "prettier": "^3.8.1"
   },
   "overrides": {
-    "@11ty/recursive-copy": "5.0.2",
     "brace-expansion": "5.0.9"
   }
 }

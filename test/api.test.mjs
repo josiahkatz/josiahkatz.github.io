@@ -70,10 +70,7 @@ describe("API Endpoints", () => {
 
       const data = await res.json();
       assert.ok(data.error, "Should have error field");
-      assert.ok(
-        data.error.toLowerCase().includes("channelid"),
-        "Error should mention channelId"
-      );
+      assert.ok(data.error.toLowerCase().includes("channelid"), "Error should mention channelId");
     });
   });
 
@@ -84,10 +81,7 @@ describe("API Endpoints", () => {
 
       const data = await res.json();
       assert.ok(data.error, "Should have error field");
-      assert.ok(
-        data.error.toLowerCase().includes("query"),
-        "Error should mention query"
-      );
+      assert.ok(data.error.toLowerCase().includes("query"), "Error should mention query");
     });
 
     it("rejects malformed Open Library edition IDs", async () => {
@@ -104,9 +98,7 @@ describe("API Endpoints", () => {
       const res = await fetch(BASE_URL);
       assert.strictEqual(res.status, 200);
       const text = await res.text();
-      assert.ok(
-        text.includes("<!doctype html>") || text.includes("<!DOCTYPE html>")
-      );
+      assert.ok(text.includes("<!doctype html>") || text.includes("<!DOCTYPE html>"));
     });
 
     it("serves CSS file", async () => {
@@ -116,21 +108,11 @@ describe("API Endpoints", () => {
       assert.ok(contentType?.includes("text/css"), "Should serve CSS");
     });
 
-    it("serves blog index", async () => {
-      const res = await fetch(`${BASE_URL}/blog/`);
-      assert.strictEqual(res.status, 200);
-      const text = await res.text();
-      assert.ok(text.includes("Blog"), "Should have Blog content");
-    });
-
     it("serves JavaScript files", async () => {
       const res = await fetch(`${BASE_URL}/scripts/main.js`);
       assert.strictEqual(res.status, 200);
       const contentType = res.headers.get("content-type");
-      assert.ok(
-        contentType?.includes("javascript"),
-        "Should serve JavaScript"
-      );
+      assert.ok(contentType?.includes("javascript"), "Should serve JavaScript");
     });
   });
 });
