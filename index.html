@@ -34,10 +34,9 @@
       /* Critical CSS - Inlined for faster initial render */
       html,body{overflow-x:hidden;margin:0;padding:0}
       body{font-family:"Manrope",sans-serif;background-color:var(--color-mint);color:var(--color-forest);line-height:1.5}
-      :root{--color-mint:#F3FAF6;--color-highlight:#D0ECDC;--color-forest:#002D13;--color-forest-rgb:0,45,19;--color-surface:rgba(255,255,255,0.6);--color-marquee-bg:#111;--color-marquee-text:#f2ff86;--marquee-gap:32px}
+      :root{--color-mint:#F3FAF6;--color-highlight:#D0ECDC;--color-forest:#002D13;--color-forest-rgb:0,45,19;--color-surface:rgba(255,255,255,0.6)}
       @media (prefers-color-scheme:dark){:root{--color-mint:#141c18;--color-highlight:#2c3b33;--color-forest:#e6f3ec;--color-forest-rgb:230,243,236;--color-surface:rgba(36,49,42,0.72)}}
       .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
-      .site-marquee{background:var(--color-marquee-bg);color:var(--color-marquee-text);text-transform:uppercase;letter-spacing:6px;font-size:12px;font-weight:800;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.2)}
       .site-header{display:flex;position:relative;justify-content:center;z-index:1;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin:20px 0 7vw}
       .site-avatar{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;margin:0;border-radius:999px;overflow:hidden;border:2px solid transparent}
       .big-type{font-family:"DM Serif Display",serif;font-size:40vw;line-height:28vw;letter-spacing:-0.5vw;margin:0 -3.5vw 0}
@@ -75,26 +74,6 @@
   </head>
   <body class="home">
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <div class="site-marquee" aria-label="Under construction notice">
-      <div class="site-marquee__track">
-        <div class="site-marquee__group">
-          <span>UNDER CONSTRUCTION</span>
-          <span aria-hidden="true">UNDER CONSTRUCTION</span>
-          <span aria-hidden="true">UNDER CONSTRUCTION</span>
-          <span aria-hidden="true">UNDER CONSTRUCTION</span>
-          <span aria-hidden="true">UNDER CONSTRUCTION</span>
-          <span aria-hidden="true">UNDER CONSTRUCTION</span>
-        </div>
-        <div class="site-marquee__group" aria-hidden="true">
-          <span>UNDER CONSTRUCTION</span>
-          <span>UNDER CONSTRUCTION</span>
-          <span>UNDER CONSTRUCTION</span>
-          <span>UNDER CONSTRUCTION</span>
-          <span>UNDER CONSTRUCTION</span>
-          <span>UNDER CONSTRUCTION</span>
-        </div>
-      </div>
-    </div>
     <header class="site-header">
       <nav class="site-nav" aria-label="Primary">
         <a class="site-avatar" href="/" aria-label="Josiah Katz homepage">
