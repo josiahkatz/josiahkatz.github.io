@@ -155,7 +155,7 @@ export const initYouTube = async ({ liveDataEnabled = true, skeletonDelay = 0 } 
     }
 
     if (!liveDataEnabled) {
-      const cacheKey = `youtube-cache:${config.youtube.channelId}:${limit}`;
+      const cacheKey = `youtube-cache:v2:${config.youtube.channelId}:${limit}`;
       const cached = readCache(cacheKey);
       if (cached?.payload?.items?.length) {
         renderVideos(
@@ -178,7 +178,7 @@ export const initYouTube = async ({ liveDataEnabled = true, skeletonDelay = 0 } 
       return;
     }
 
-    const cacheKey = `youtube-cache:${config.youtube.channelId}:${limit}`;
+    const cacheKey = `youtube-cache:v2:${config.youtube.channelId}:${limit}`;
     const cached = readCache(cacheKey);
 
     if (cached?.isFresh) {

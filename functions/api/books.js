@@ -30,6 +30,7 @@ export async function onRequestGet({ request, env }) {
   cacheUrl.search = new URLSearchParams({
     q: query,
     ...(edition ? { edition } : {}),
+    cacheVersion: "2",
   });
   const cacheKey = new Request(cacheUrl);
 
@@ -67,7 +68,7 @@ export async function onRequestGet({ request, env }) {
   let upstreamResponse = await fetchGoogleBooks(isbn ? `isbn:${isbn}` : query);
   let data = await upstreamResponse.json();
 
-  if (isbn && upstreamResponse.ok && !data.items?.length) {
+  if (isbn && (!upstreamResponse.ok || !data.items?.length)) {
     matchType = "metadata";
     upstreamResponse = await fetchGoogleBooks(query);
     data = await upstreamResponse.json();
@@ -79,10 +80,15 @@ export async function onRequestGet({ request, env }) {
     status: upstreamResponse.status,
     headers: {
       "Content-Type": "application/json",
-      "Cache-Control": "public, max-age=0, s-maxage=86400, stale-while-revalidate=172800",
+      "Cache-Control": upstreamResponse.ok
+        ? "public, max-age=0, s-maxage=86400, stale-while-revalidate=172800"
+        : "no-store",
     },
   });
 
-  await cache.put(cacheKey, response.clone());
+  // A transient Google Books error should never hide a cover for a full day.
+  if (upstreamResponse.ok) {
+    await cache.put(cacheKey, response.clone());
+  }
   return response;
 }
