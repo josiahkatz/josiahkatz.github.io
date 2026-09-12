@@ -132,6 +132,7 @@ const fetchGoogleBooksCover = async (book) => {
   const url = `/api/books?${new URLSearchParams({
     q: query,
     ...(book.editionKey ? { edition: book.editionKey } : {}),
+    cacheVersion: "2",
   })}`;
 
   const response = await fetchWithRetry(url);

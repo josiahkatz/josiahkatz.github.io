@@ -128,6 +128,7 @@ const fetchYouTubeData = async (limit) => {
   const url = `/api/youtube?${new URLSearchParams({
     channelId: config.youtube.channelId,
     maxResults: String(limit),
+    source: "uploads-v1",
   })}`;
 
   const response = await fetchWithRetry(url);
